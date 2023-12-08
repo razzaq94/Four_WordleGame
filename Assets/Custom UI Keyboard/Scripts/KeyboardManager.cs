@@ -84,9 +84,13 @@ public class KeyboardManager : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     public RawImage backgroundImage; // Keyboard background image
 
     public bool isShifted = true; // Is shift enabled
-
+    [SerializeField] private Button enterButton;
+    public static KeyboardManager Instance;
     bool isValidate;
-
+    private void Awake()
+    {
+        Instance = this;
+    }
     public enum States { // All available states
         MainKeyboard,
         AdditionalKeyboard,
@@ -109,6 +113,7 @@ public class KeyboardManager : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         if (!isNotHide && Application.isPlaying) {
             transform.GetChild(0).gameObject.SetActive(false);
         }
+        UpdateEnterButton(false);
     }
 
     /// <summary>
@@ -145,6 +150,9 @@ public class KeyboardManager : MonoBehaviour, IPointerDownHandler, IPointerUpHan
             InitKeyboard();
         }
     }
+
+
+
 
     /// <summary>
     /// Press shift
@@ -539,4 +547,58 @@ public class KeyboardManager : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     public void OnPointerUp (PointerEventData eventData) {
         isPressKeyboard = false;
     }
+
+
+    // user defined functions
+    public void UpdateEnterButton(bool status)
+    {
+        if(status == true && WordManager.Instance.GetCurrentWordLength() == (int) GlobalData.Instance.gameMode)
+        {
+            enterButton.interactable = true;
+        }
+        else
+        {
+            enterButton.interactable = false;
+        }
+    }
+
+    public void ChangeKeyColor(string myKey, Color color)
+    {
+        for (int i = 0; i < keyList.Count; i++)
+        {
+            for (int j = 0; j < keyList[i].keys.Count; j++)
+            {
+                if ((j == 0 && i == keyList.Count - 1) || (j == keyList[i].keys.Count - 1 && i == keyList.Count - 1))
+                { }
+                else if ((keyList[i].keys[j].keyValue == myKey))
+                {
+                    Color existingBGColor = keyList[i].keys[j].keyButtonScript.transform.Find("Back (1)").GetComponent<Image>().color;
+                    if ((existingBGColor == WordManager.Instance.partiallyRevealedColor && color == WordManager.Instance.revealedColor) || (existingBGColor == WordManager.Instance.concealedColor && color != WordManager.Instance.concealedColor) || (existingBGColor == WordManager.Instance.originalBgColor))
+                    {
+                        keyList[i].keys[j].keyButtonScript.transform.Find("Back (1)").GetComponent<Image>().color = color;
+                    }
+                }
+            }
+        }
+
+    }
+    public void ClearKeyColor()
+    {
+        for (int i = 0; i < keyList.Count; i++)
+        {
+            print("count i j " + keyList.Count + " " + keyList[i].keys.Count);
+            for (int j = 0; j < keyList[i].keys.Count; j++)
+            {
+                if ((j == 0 && i == keyList.Count - 1) || (j == keyList[i].keys.Count - 1 && i == keyList.Count - 1))
+                { }
+                else
+                {
+                    keyList[i].keys[j].keyButtonScript.transform.Find("Back (1)").GetComponent<Image>().color = WordManager.Instance.originalBgColor;
+
+
+                }
+            }
+        }
+    }
+
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.IO;
 using Newtonsoft.Json;
 using UnityEngine.Networking;
 
@@ -16,7 +17,13 @@ public class WordManager : MonoBehaviour
     public int CurrentRowNumber = 0;
     public int CurrentColNumber = 0;
     public bool CanWrite = true;
+    public Color revealedColor;
+    public Color partiallyRevealedColor;
+    public Color concealedColor;
+    public Color originalBgColor;
+
     public string WordToGuess = "ABROAD";
+    public string WordDefinition = null;
 
     private void Awake()
     {
@@ -25,6 +32,8 @@ public class WordManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+      //  GetWord();
+        originalBgColor = Color.white;
     }
 
     // Update is called once per frame
@@ -35,15 +44,17 @@ public class WordManager : MonoBehaviour
 
     public void SetNextColNumber()
     {
-        if ((CurrentColNumber + 1) != (int)GlobalData.Instance.gameMode)
+        if ((CurrentColNumber ) != ((int)GlobalData.Instance.gameMode) -1)
         {
             CurrentColNumber++;
+            CanWrite = true;
+            KeyboardManager.Instance.UpdateEnterButton(false);
+
         }
-        else
+        else if (CurrentColNumber == (((int)GlobalData.Instance.gameMode) - 1))
         {
             CanWrite = false;
-            //CheckWord();
-//            StartCoroutine(test());
+            KeyboardManager.Instance.UpdateEnterButton(true);
         }
 
     }
@@ -61,15 +72,15 @@ public class WordManager : MonoBehaviour
             CurrentRowNumber++;
             CurrentColNumber = 0;
             CanWrite = true;
+            KeyboardManager.Instance.UpdateEnterButton(false);
         }
 
     }
 
-    public void CheckWord(string WordDefinition)
+    public void CheckWord(string WrdDefinition)
     {
-        if (WordDefinition!= null)
+        if (WrdDefinition != null)
         {
-            int gCount = 0;
             List<string> alreadyCheckedLetters = new List<string>();
             // set background Yellow or Red
             GameObject rowPanel = UIManager.Instance.GamePanel.transform.Find("GridPanel").transform.GetChild(CurrentRowNumber).gameObject;
@@ -78,33 +89,52 @@ public class WordManager : MonoBehaviour
                 string letter = rowPanel.transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text.ToString();
                 if (WordToGuess.Contains(letter) && !(alreadyCheckedLetters.Contains(letter)))
                 {
-                    rowPanel.transform.GetChild(i).GetComponent<Image>().color = Color.yellow;
+                    rowPanel.transform.GetChild(i).GetComponent<Image>().color = partiallyRevealedColor;
+                    KeyboardManager.Instance.ChangeKeyColor(letter, partiallyRevealedColor);
                     alreadyCheckedLetters.Add(letter);
                 }
                 else
                 {
-                    rowPanel.transform.GetChild(i).GetComponent<Image>().color = Color.grey;
+                    rowPanel.transform.GetChild(i).GetComponent<Image>().color = concealedColor;
+                    KeyboardManager.Instance.ChangeKeyColor(letter, concealedColor);
+
                 }
 
             }
+            int gCount = 0;
 
             //  Green
             for (int i = 0; i < (int)GlobalData.Instance.gameMode; i++)
             {
-                if (rowPanel.transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text.ToString() == WordToGuess[i].ToString())
+                string letter = rowPanel.transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text.ToString();         
+                if (letter == WordToGuess[i].ToString())
                 {
-                    rowPanel.transform.GetChild(i).GetComponent<Image>().color = Color.green;
+                    rowPanel.transform.GetChild(i).GetComponent<Image>().color = revealedColor;
+                    KeyboardManager.Instance.ChangeKeyColor(letter, revealedColor);
+                    gCount++;
+
                 }
 
             }
             if (gCount == (int)GlobalData.Instance.gameMode)
             {
                 print("Definition : " + WordDefinition);
-                // Game over
+                Timer.Instance.StopTimer(true);
+                GameOverPanelUI.ShowUI();
+                GameOverPanelUI.Instance.SetText("Congratulations !!!", WordToGuess, WordDefinition);
             }
             else
             {
-                SetNextRowNumber();
+                if (CurrentRowNumber < 5)
+                {
+                    SetNextRowNumber();
+                }
+                else
+                {
+                    GameOverPanelUI.ShowUI();
+                    GameOverPanelUI.Instance.SetText("BetterLuck next time !!!", WordToGuess, WordDefinition);
+
+                }
             }
         }
         else
@@ -116,6 +146,7 @@ public class WordManager : MonoBehaviour
 
     public string CheckWordOnline()
     {
+        KeyboardManager.Instance.UpdateEnterButton(false);
         string wordToCheck = UIManager.Instance.GetToCheckWord();
         string definition = null;
         NetworkAPIManager.Instance.CheckWordOnline(wordToCheck,
@@ -131,9 +162,12 @@ public class WordManager : MonoBehaviour
                         definition = "Definition : " + data[0]["meanings"][0]["definitions"][0]["definition"].Value;
                         CheckWord(definition);
 
+
                     }
                     else
                     {
+                        WarningPanelUI.ShowUI();
+                        WarningPanelUI.Instance.CallToQuitPanelAutomatically();
                         print("This word does not exist....");
                     }
                 }
@@ -141,7 +175,8 @@ public class WordManager : MonoBehaviour
             (error, type) =>
             {
                 print(error);
-
+                    WarningPanelUI.ShowUI();
+                    WarningPanelUI.Instance.CallToQuitPanelAutomatically();
                 if (type == UnityEngine.Networking.UnityWebRequest.Result.ConnectionError)
                 {
                     
@@ -164,13 +199,109 @@ public class WordManager : MonoBehaviour
                      //    UIManager.Instance.UpdatePlayerGhostUI(false, CharList, CharacterColorList);
                  }
             });
-
+        KeyboardManager.Instance.UpdateEnterButton(true);
         return definition;
 
     }
 
 
+    public void GetWord()
+    {    
+        WordToGuess =   ReadString();
+    }
+    public static string ReadString()
+    {
+             string str = Resources.Load("WordList").ToString();
+      
 
+        string[] rowOfIndex = str.Split('\n');
+        GlobalData.Instance.WordList.Clear();
+        for (int i = 0; i < rowOfIndex.Length; i++)
+        {
+            if (rowOfIndex[i].Length == (int)GlobalData.Instance.gameMode+1 )
+            {
+                //   print(rowOfIndex[i]);
+                GlobalData.Instance.WordList.Add(rowOfIndex[i]);
+            }
+        }
+
+        int index = Random.Range(0, GlobalData.Instance.WordList.Count);
+
+
+        return (GlobalData.Instance.WordList[index].ToUpper()).TrimEnd();
+
+        
+    }
+
+    public void getWordDefinition()
+    {
+        NetworkAPIManager.Instance.CheckWordOnline(WordToGuess,
+            (resposne) =>
+            {
+                JSONArray data = JSON.Parse(resposne).AsArray;
+
+                if (data.Count > 0)
+                {
+                    if (data[0]["word"].Value.ToLower() == WordToGuess.ToLower())
+                    {
+                        WordDefinition = "Definition : " + data[0]["meanings"][0]["definitions"][0]["definition"].Value;
+
+
+                        print(WordDefinition);
+
+                    }
+                    else
+                    {
+                        print("This word does not exist....");
+    
+                    }
+                }
+            },
+            (error, type) =>
+            {
+                print(error);
+
+                if (type == UnityEngine.Networking.UnityWebRequest.Result.ConnectionError)
+                {
+
+                    //....... For testing only 
+                    //  GameManager.Instance.ResetGame();
+                    //..........
+
+                    //            string title = "Network Error";
+                    //         string definition = "No internet connection. Please try again.";
+                    //             ErrorPanelUI.ShowUI();
+                    //       ErrorPanelUI.instance.setText(title, definition);
+                }
+                else
+                {
+                    //     if (LoadingPanelUI.instance != null)
+                    //   {
+                    //     LoadingPanelUI.instance.OnBackPressed();
+                    //}
+
+                    //    UIManager.Instance.UpdatePlayerGhostUI(false, CharList, CharacterColorList);
+                }
+            });
+    }
+    public int GetCurrentWordLength()
+    {
+        int row = CurrentRowNumber;
+        int length = 0;
+        for (int i = 0; i < (int)GlobalData.Instance.gameMode; i++)
+        {
+            string letterOnCurrentCell = UIManager.Instance.GamePanel.transform.Find("GridPanel").transform.GetChild(row).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text;
+            if (letterOnCurrentCell != "" )
+            {
+                length++;
+            }
+            else
+            {
+                break;
+            }
+        }
+        return length;
+    }
     public IEnumerator test()
     {
         yield return new WaitForSeconds(5f);

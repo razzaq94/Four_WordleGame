@@ -5,21 +5,37 @@ using UnityEngine;
 public class GlobalData : MonoBehaviour
 {
     public GameMode gameMode = GameMode.Hard;
+    public List<string> WordList;
     public static GlobalData Instance;
     private void Awake()
     {
-        Instance = this;
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+        if (Instance == null)
+        {
+            Instance = this; // In first scene, make us the singleton.
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject); // On reload, singleton already set, so destroy duplicate.
+        }
 
-    // Update is called once per frame
-    void Update()
+    }
+    public void SetGamemode(int gm)
     {
-        
+        if(gm == 1)
+        {
+            gameMode = GameMode.Easy;
+        }
+        else if(gm == 2)
+        {
+            gameMode = GameMode.Medium;
+
+        }
+        else if(gm == 3)
+        {
+            gameMode = GameMode.Hard;
+
+        }
     }
 
     public enum GameMode

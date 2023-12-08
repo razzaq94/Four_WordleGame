@@ -7,8 +7,7 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] public GameObject GamePanel;
-
-    
+  
     public static UIManager Instance;
     private void Awake()
     {
@@ -16,9 +15,29 @@ public class UIManager : MonoBehaviour
     }
     private void Start()
     {
-        ResetGamePanelUI();
+       
     }
+    public void SetGameGridUI()
+    {
+        GameObject GridPanel = GamePanel.transform.Find("GridPanel").gameObject;
+        for (int i = 0; i < GridPanel.transform.childCount; i++)
+        {
+            GameObject RowPanel = GridPanel.transform.GetChild(i).gameObject;
+            if(GlobalData.Instance.gameMode == GlobalData.GameMode.Medium)
+            {
+                RowPanel.GetComponent<HorizontalLayoutGroup>().padding.left = 40;
+            }
+            else if(GlobalData.Instance.gameMode == GlobalData.GameMode.Easy)
+            {
+                RowPanel.GetComponent<HorizontalLayoutGroup>().padding.left = 70;
+            }
+            for (int j = (int)GlobalData.Instance.gameMode; j < RowPanel.transform.childCount; j++)
+            {
+                RowPanel.transform.GetChild(j).gameObject.SetActive(false);
+            }
 
+        }
+    }
     public void ResetGamePanelUI()
     {
         GameObject GridPanel = GamePanel.transform.Find("GridPanel").gameObject;
@@ -49,6 +68,10 @@ public class UIManager : MonoBehaviour
             WordManager.Instance.SetNextColNumber();
 
         }
+        if(WordManager.Instance.CurrentColNumber == (((int)GlobalData.Instance.gameMode)-1))
+        {
+            KeyboardManager.Instance.UpdateEnterButton(true);
+        }
 
     }
     public void RemoveLetter()
@@ -69,6 +92,7 @@ public class UIManager : MonoBehaviour
 
         }
         WordManager.Instance.CanWrite = true;
+        KeyboardManager.Instance.UpdateEnterButton(false);
 
     }
 
@@ -84,6 +108,15 @@ public class UIManager : MonoBehaviour
 
         return tempWordToCheck;
     }
+
+
+    public void OpenQuitPanel()
+    {
+        QuitPanelUI.ShowUI();
+    }
+
+
+
 
 
 }
