@@ -21,7 +21,7 @@ public class WordManager : MonoBehaviour
     public Color partiallyRevealedColor;
     public Color concealedColor;
     public Color originalBgColor;
-
+    public List<Color> colors;
     public string WordToGuess = "ABROAD";
     public string WordDefinition = null;
 
@@ -34,6 +34,7 @@ public class WordManager : MonoBehaviour
     {
       //  GetWord();
         originalBgColor = Color.white;
+
     }
 
     // Update is called once per frame
@@ -65,9 +66,9 @@ public class WordManager : MonoBehaviour
             CurrentColNumber--;
         }
     }
-        public void SetNextRowNumber()
+    public void SetNextRowNumber()
     {
-        if(CurrentRowNumber < 5)
+        if (CurrentRowNumber < 5)
         {
             CurrentRowNumber++;
             CurrentColNumber = 0;
@@ -75,6 +76,39 @@ public class WordManager : MonoBehaviour
             KeyboardManager.Instance.UpdateEnterButton(false);
         }
 
+    }
+    private void countCorrectLetterAndShow(string WrdDefinition)
+    {
+        int letterCount=0;
+        if (WrdDefinition != null)
+        {
+            List<string> alreadyCheckedLetters = new List<string>();
+            // set background Yellow or Red
+            GameObject rowPanel = UIManager.Instance.ContentHolder.transform.GetChild(0).gameObject;
+            for (int i = 0; i < (int)GlobalData.Instance.gameMode; i++)
+            {
+                string letter = rowPanel.transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text.ToString();
+                
+                if (WordToGuess.Contains(letter) && !(alreadyCheckedLetters.Contains(letter)))
+                {                 
+                    alreadyCheckedLetters.Add(letter);
+                    print("1");
+                    for (int j = 0; j < WordToGuess.Length; j++)
+                    {
+                        print("2");
+                        if(WordToGuess[j].ToString() == letter)
+                        {
+                            letterCount++;
+                            print("letter count : " + letterCount);
+                        }
+                    }
+                }
+                
+
+            }
+
+            rowPanel.transform.GetChild((int)GlobalData.Instance.gameMode).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = letterCount.ToString();
+        }
     }
 
     public void CheckWord(string WrdDefinition)
@@ -119,7 +153,7 @@ public class WordManager : MonoBehaviour
             if (gCount == (int)GlobalData.Instance.gameMode)
             {
                 print("Definition : " + WordDefinition);
-                Timer.Instance.StopTimer(true);
+                TimerUp.Instance.StopTimer(true);
                 GameOverPanelUI.ShowUI();
                 GameOverPanelUI.Instance.SetText("Congratulations !!!", WordToGuess, WordDefinition);
             }
@@ -160,12 +194,24 @@ public class WordManager : MonoBehaviour
                     {
 
                         definition = "Definition : " + data[0]["meanings"][0]["definitions"][0]["definition"].Value;
-                        CheckWord(definition);
+                        //CheckWord(definition);
+                        countCorrectLetterAndShow(definition);
 
-
+                        if (wordToCheck == WordToGuess)
+                        {
+                            print("Definition : " + WordDefinition);
+                            TimerUp.Instance.StopTimer(true);
+                            GameOverPanelUI.ShowUI();
+                            GameOverPanelUI.Instance.SetText("Congratulations !!!", WordToGuess, WordDefinition);
+                        }
+                        else
+                        {
+                            UIManager.Instance.CreateEmptyRow();
+                        }
                     }
                     else
                     {
+                        UIManager.Instance.ClearCurrentRow();
                         WarningPanelUI.ShowUI();
                         WarningPanelUI.Instance.CallToQuitPanelAutomatically();
                         print("This word does not exist....");
@@ -175,7 +221,8 @@ public class WordManager : MonoBehaviour
             (error, type) =>
             {
                 print(error);
-                    WarningPanelUI.ShowUI();
+                UIManager.Instance.ClearCurrentRow();
+                WarningPanelUI.ShowUI();
                     WarningPanelUI.Instance.CallToQuitPanelAutomatically();
                 if (type == UnityEngine.Networking.UnityWebRequest.Result.ConnectionError)
                 {
@@ -235,6 +282,7 @@ public class WordManager : MonoBehaviour
 
     public void getWordDefinition()
     {
+        print("Word to guess : " + WordToGuess);
         NetworkAPIManager.Instance.CheckWordOnline(WordToGuess,
             (resposne) =>
             {
@@ -286,11 +334,11 @@ public class WordManager : MonoBehaviour
     }
     public int GetCurrentWordLength()
     {
-        int row = CurrentRowNumber;
+        int row = 0;
         int length = 0;
         for (int i = 0; i < (int)GlobalData.Instance.gameMode; i++)
         {
-            string letterOnCurrentCell = UIManager.Instance.GamePanel.transform.Find("GridPanel").transform.GetChild(row).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text;
+            string letterOnCurrentCell = UIManager.Instance.ContentHolder.transform.GetChild(row).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text;
             if (letterOnCurrentCell != "" )
             {
                 length++;
@@ -302,6 +350,24 @@ public class WordManager : MonoBehaviour
         }
         return length;
     }
+    public void Reveal()
+    {
+        List<string> letterList = getLetterList();
+        for(int i =0;i<letterList.Count;i++)
+        {
+
+        }
+    }
+    private List<string> getLetterList()
+    {
+        List<string> letterList = new List<string>();
+        for(int i=0;i< WordToGuess.Length;i++)
+        {
+            letterList.Add(WordToGuess[i].ToString());
+        }
+        return letterList;
+    }
+
     public IEnumerator test()
     {
         yield return new WaitForSeconds(5f);

@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 using UnityEditor;
+using Unity.VisualScripting;
 
 /// <summary>
 /// Class for abstract keys
@@ -286,7 +287,7 @@ public class KeyboardManager : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         print("Key : " + key);
         if (key == "Enter")
         {
-            WordManager.Instance.CheckWordOnline();
+           // WordManager.Instance.CheckWordOnline();
         }
         else if (key == "Backspace")
         {
@@ -295,6 +296,7 @@ public class KeyboardManager : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         else
         {
             UIManager.Instance.WriteLetter(key);
+            
         }
         if(targetInput == null) {
             return;
@@ -429,6 +431,7 @@ public class KeyboardManager : MonoBehaviour, IPointerDownHandler, IPointerUpHan
                             case KeyClass.KeyType.Enter:
                                 keyScript = Instantiate(templateEnterButton, keyboardLine).GetComponent<KeyButtonScript>();
                                 keyScript.gameObject.SetActive(false);
+
                                 break;
                             case KeyClass.KeyType.Space:
                                 keyScript = Instantiate(templateSpaceButton, keyboardLine).GetComponent<KeyButtonScript>();
@@ -552,31 +555,73 @@ public class KeyboardManager : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     // user defined functions
     public void UpdateEnterButton(bool status)
     {
-        if(status == true && WordManager.Instance.GetCurrentWordLength() == (int) GlobalData.Instance.gameMode)
-        {
-            enterButton.interactable = true;
-        }
-        else
-        {
-            enterButton.interactable = false;
-        }
+        //if(status == true && WordManager.Instance.GetCurrentWordLength() == (int) GlobalData.Instance.gameMode)
+        //{
+        //    enterButton.interactable = true;
+
+        //}
+        //else
+        //{
+        //    enterButton.interactable = false;
+        //}
     }
 
+    public Color GetKeyColor(string myKey)
+    {
+        for (int i = 0; i < keyList.Count; i++)
+        {
+            for (int j = 0; j < keyList[i].keys.Count; j++)
+            {
+                //if ((j == 0 && i == keyList.Count - 1) || (j == keyList[i].keys.Count - 1 && i == keyList.Count - 1))
+                if ( (j == keyList[i].keys.Count - 1 && i == keyList.Count - 1))
+                { }
+                else if ((keyList[i].keys[j].keyValue == myKey))
+                {
+                    //     Color existingBGColor = keyList[i].keys[j].keyButtonScript.transform.Find("Back (1)").GetComponent<Image>().color;
+                    //   if ((existingBGColor == WordManager.Instance.partiallyRevealedColor && color == WordManager.Instance.revealedColor) || (existingBGColor == WordManager.Instance.concealedColor && color != WordManager.Instance.concealedColor) || (existingBGColor == WordManager.Instance.originalBgColor))
+                    // {
+                    return keyList[i].keys[j].keyButtonScript.transform.Find("Back (1)").GetComponent<Image>().color;
+                    //}
+                }
+            }
+        }
+        return Color.cyan;
+
+    } 
+
+    public void ChangeKeySize(string myKey,Vector2 size)
+    {
+        for (int i = 0; i < keyList.Count; i++)
+        {
+            for (int j = 0; j < keyList[i].keys.Count; j++)
+            {
+                // if ((j == 0 && i == keyList.Count - 1) || (j == keyList[i].keys.Count - 1 && i == keyList.Count - 1))
+                if ((j == keyList[i].keys.Count - 1 && i == keyList.Count - 1))
+                { }
+                else if ((keyList[i].keys[j].keyValue == myKey))
+                {
+                    keyList[i].keys[j].keyButtonScript.gameObject.GetComponent<RectTransform>().sizeDelta = size;
+                }
+            }
+        }
+
+    }
     public void ChangeKeyColor(string myKey, Color color)
     {
         for (int i = 0; i < keyList.Count; i++)
         {
             for (int j = 0; j < keyList[i].keys.Count; j++)
             {
-                if ((j == 0 && i == keyList.Count - 1) || (j == keyList[i].keys.Count - 1 && i == keyList.Count - 1))
+               // if ((j == 0 && i == keyList.Count - 1) || (j == keyList[i].keys.Count - 1 && i == keyList.Count - 1))
+                if (  (j == keyList[i].keys.Count - 1 && i == keyList.Count - 1))
                 { }
                 else if ((keyList[i].keys[j].keyValue == myKey))
                 {
-                    Color existingBGColor = keyList[i].keys[j].keyButtonScript.transform.Find("Back (1)").GetComponent<Image>().color;
-                    if ((existingBGColor == WordManager.Instance.partiallyRevealedColor && color == WordManager.Instance.revealedColor) || (existingBGColor == WordManager.Instance.concealedColor && color != WordManager.Instance.concealedColor) || (existingBGColor == WordManager.Instance.originalBgColor))
-                    {
+               //     Color existingBGColor = keyList[i].keys[j].keyButtonScript.transform.Find("Back (1)").GetComponent<Image>().color;
+                 //   if ((existingBGColor == WordManager.Instance.partiallyRevealedColor && color == WordManager.Instance.revealedColor) || (existingBGColor == WordManager.Instance.concealedColor && color != WordManager.Instance.concealedColor) || (existingBGColor == WordManager.Instance.originalBgColor))
+                   // {
                         keyList[i].keys[j].keyButtonScript.transform.Find("Back (1)").GetComponent<Image>().color = color;
-                    }
+                    //}
                 }
             }
         }
@@ -589,7 +634,8 @@ public class KeyboardManager : MonoBehaviour, IPointerDownHandler, IPointerUpHan
             print("count i j " + keyList.Count + " " + keyList[i].keys.Count);
             for (int j = 0; j < keyList[i].keys.Count; j++)
             {
-                if ((j == 0 && i == keyList.Count - 1) || (j == keyList[i].keys.Count - 1 && i == keyList.Count - 1))
+                //if ((j == 0 && i == keyList.Count - 1) || (j == keyList[i].keys.Count - 1 && i == keyList.Count - 1))
+                if ( (j == keyList[i].keys.Count - 1 && i == keyList.Count - 1))
                 { }
                 else
                 {
