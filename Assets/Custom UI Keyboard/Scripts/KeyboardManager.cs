@@ -284,7 +284,7 @@ public class KeyboardManager : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     /// <param name="key"></param>
     public void PressKey(string key) {
         
-        print("Key : " + key);
+       // print("Key : " + key);
         if (key == "Enter")
         {
            // WordManager.Instance.CheckWordOnline();

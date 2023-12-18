@@ -31,7 +31,9 @@ public class WarningPanelUI : MonoBehaviour
 	}
 	public void OnBackPressed()
 	{
+		WordManager.Instance.CanWrite = true;
 		Destroy(gameObject);
+
 	}
 	public void CallToQuitPanelAutomatically()
 	{

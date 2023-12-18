@@ -18,7 +18,6 @@ public class WordManager : MonoBehaviour
     public int CurrentColNumber = 0;
     public bool CanWrite = true;
     public Color revealedColor;
-    public Color partiallyRevealedColor;
     public Color concealedColor;
     public Color originalBgColor;
     public List<Color> colors;
@@ -33,7 +32,7 @@ public class WordManager : MonoBehaviour
     void Start()
     {
       //  GetWord();
-        originalBgColor = Color.white;
+      //  originalBgColor = Color.white;
 
     }
 
@@ -92,14 +91,14 @@ public class WordManager : MonoBehaviour
                 if (WordToGuess.Contains(letter) && !(alreadyCheckedLetters.Contains(letter)))
                 {                 
                     alreadyCheckedLetters.Add(letter);
-                    print("1");
+                 //   print("1");
                     for (int j = 0; j < WordToGuess.Length; j++)
                     {
-                        print("2");
+                   //     print("2");
                         if(WordToGuess[j].ToString() == letter)
                         {
                             letterCount++;
-                            print("letter count : " + letterCount);
+                          //  print("letter count : " + letterCount);
                         }
                     }
                 }
@@ -123,14 +122,14 @@ public class WordManager : MonoBehaviour
                 string letter = rowPanel.transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text.ToString();
                 if (WordToGuess.Contains(letter) && !(alreadyCheckedLetters.Contains(letter)))
                 {
-                    rowPanel.transform.GetChild(i).GetComponent<Image>().color = partiallyRevealedColor;
-                    KeyboardManager.Instance.ChangeKeyColor(letter, partiallyRevealedColor);
+                    rowPanel.transform.GetChild(i).GetComponent<Image>().color = concealedColor;
+                    KeyboardManager.Instance.ChangeKeyColor(letter, concealedColor);
                     alreadyCheckedLetters.Add(letter);
                 }
                 else
                 {
-                    rowPanel.transform.GetChild(i).GetComponent<Image>().color = concealedColor;
-                    KeyboardManager.Instance.ChangeKeyColor(letter, concealedColor);
+                    rowPanel.transform.GetChild(i).GetComponent<Image>().color = originalBgColor;
+                    KeyboardManager.Instance.ChangeKeyColor(letter, originalBgColor);
 
                 }
 
@@ -183,6 +182,7 @@ public class WordManager : MonoBehaviour
         KeyboardManager.Instance.UpdateEnterButton(false);
         string wordToCheck = UIManager.Instance.GetToCheckWord();
         string definition = null;
+        CanWrite = false;
         NetworkAPIManager.Instance.CheckWordOnline(wordToCheck,
             (resposne) =>
             {
@@ -207,6 +207,13 @@ public class WordManager : MonoBehaviour
                         else
                         {
                             UIManager.Instance.CreateEmptyRow();
+                            // BoosterManager.Instance.AutoColorLatestRow();
+                            if (BoosterManager.Instance.isAutoColor)
+                            {
+                                BoosterManager.Instance.AutoColor();
+                            }
+                            CanWrite = true;
+
                         }
                     }
                     else
@@ -215,6 +222,8 @@ public class WordManager : MonoBehaviour
                         WarningPanelUI.ShowUI();
                         WarningPanelUI.Instance.CallToQuitPanelAutomatically();
                         print("This word does not exist....");
+                      
+
                     }
                 }
             },
@@ -251,16 +260,34 @@ public class WordManager : MonoBehaviour
 
     }
 
+    private bool isUniqueLettersString(string str)
+    {
+        str = str.TrimEnd();
+        int limit = str.Length;
+     //   print("Limit : " + limit);
+        for (int i=0; i<limit-1 && str.Length>1; i++)
+        {
+            string s = str[0].ToString();
+            str =  str.Substring(1);
+       //     print("s : " + s + "str : " + str);
+            if((str != null) && str.Contains(s))
+            {
+                return false;
+            }
 
+        }
+
+
+
+        return true;
+    }
     public void GetWord()
     {    
         WordToGuess =   ReadString();
     }
     public static string ReadString()
     {
-             string str = Resources.Load("WordList").ToString();
-      
-
+        string str = Resources.Load("WordList").ToString();     
         string[] rowOfIndex = str.Split('\n');
         GlobalData.Instance.WordList.Clear();
         for (int i = 0; i < rowOfIndex.Length; i++)
@@ -268,12 +295,16 @@ public class WordManager : MonoBehaviour
             if (rowOfIndex[i].Length == (int)GlobalData.Instance.gameMode+1 )
             {
                 //   print(rowOfIndex[i]);
-                GlobalData.Instance.WordList.Add(rowOfIndex[i]);
+                if (WordManager.Instance.isUniqueLettersString(rowOfIndex[i]))
+                {
+                   // print(rowOfIndex[i]);
+                    GlobalData.Instance.WordList.Add(rowOfIndex[i]);
+                }
             }
         }
 
         int index = Random.Range(0, GlobalData.Instance.WordList.Count);
-
+        print("word list : " + GlobalData.Instance.WordList.Count);
 
         return (GlobalData.Instance.WordList[index].ToUpper()).TrimEnd();
 
@@ -350,15 +381,8 @@ public class WordManager : MonoBehaviour
         }
         return length;
     }
-    public void Reveal()
-    {
-        List<string> letterList = getLetterList();
-        for(int i =0;i<letterList.Count;i++)
-        {
-
-        }
-    }
-    private List<string> getLetterList()
+    
+    public List<string> getLetterList()
     {
         List<string> letterList = new List<string>();
         for(int i=0;i< WordToGuess.Length;i++)

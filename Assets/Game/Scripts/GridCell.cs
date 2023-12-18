@@ -21,7 +21,7 @@ public class GridCell : MonoBehaviour
     }
     public void ChangeColor()
     {
-        if (CellText.text.ToString() != "")
+        if (CellText.text.ToString() != "" && BoosterManager.Instance.isAutoColor == false)
         {
             int ind = currentColorIndex % WordManager.Instance.colors.Count;
             switch (ind)
@@ -32,14 +32,14 @@ public class GridCell : MonoBehaviour
                     UIManager.Instance.ChangeKeyColor(CellText.text.ToString(), WordManager.Instance.revealedColor);
                     break;
                 case 1:
-                    bg_image.color = WordManager.Instance.partiallyRevealedColor;
-                    KeyboardManager.Instance.ChangeKeyColor(CellText.text.ToString(), WordManager.Instance.partiallyRevealedColor);
-                    UIManager.Instance.ChangeKeyColor(CellText.text.ToString(), WordManager.Instance.partiallyRevealedColor);
-                    break;
-                case 2:
                     bg_image.color = WordManager.Instance.concealedColor;
                     KeyboardManager.Instance.ChangeKeyColor(CellText.text.ToString(), WordManager.Instance.concealedColor);
                     UIManager.Instance.ChangeKeyColor(CellText.text.ToString(), WordManager.Instance.concealedColor);
+                    break;
+                case 2:
+                    bg_image.color = WordManager.Instance.originalBgColor;
+                    KeyboardManager.Instance.ChangeKeyColor(CellText.text.ToString(), WordManager.Instance.originalBgColor);
+                    UIManager.Instance.ChangeKeyColor(CellText.text.ToString(), WordManager.Instance.originalBgColor);
                     break;
 
             }
