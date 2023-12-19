@@ -8,6 +8,7 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] public GameObject GamePanel;
+    [SerializeField] public GameObject TopRow;
     [SerializeField] public GameObject ContentHolder;
     [SerializeField] public GameObject Row_PF;
     [SerializeField] public GameObject Cell_PF;
@@ -57,14 +58,22 @@ public class UIManager : MonoBehaviour
 
 
     }
+    public void CopyLetters()
+    {
+        for (int i = 0; i <= (int)GlobalData.Instance.gameMode; i++)
+        {
+            TopRow.transform.GetChild(0).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = ContentHolder.transform.GetChild(0).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text;
+            TopRow.transform.GetChild(0).transform.GetChild(i).transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.originalBgColor;
+        }
+    }
     public void ClearCurrentRow()
     {
         for (int i = 0; i <= (int)GlobalData.Instance.gameMode; i++)
         {
-           // print(ContentHolder.transform.GetChild(0).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text);
             ContentHolder.transform.GetChild(0).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = "";
             ContentHolder.transform.GetChild(0).transform.GetChild(i).transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.originalBgColor;
-        //    print(ContentHolder.transform.GetChild(0).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text);
+   //         TopRow.transform.GetChild(0).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = "";
+     //       TopRow.transform.GetChild(0).transform.GetChild(i).transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.originalBgColor;
         }
         WordManager.Instance.CurrentColNumber = 0;
         WordManager.Instance.CurrentRowNumber = 0;
@@ -175,7 +184,9 @@ public class UIManager : MonoBehaviour
             if (WordManager.Instance.GetCurrentWordLength() == (((int)GlobalData.Instance.gameMode)))
             {
 
-                WordManager.Instance.CheckWordOnline();
+                //WordManager.Instance.CheckWordOnline();
+                WordManager.Instance.CheckWordOffline();
+       
                 //KeyboardManager.Instance.UpdateEnterButton(true);
             }
         }

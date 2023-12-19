@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.IO;
+using System.Text;
 using Newtonsoft.Json;
 using UnityEngine.Networking;
 
 //using UnityEngine.UI.Extensions;
 using SimpleJSON;
-
+using Unity.VisualScripting;
 
 public class WordManager : MonoBehaviour
 {
@@ -88,7 +89,7 @@ public class WordManager : MonoBehaviour
             {
                 string letter = rowPanel.transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text.ToString();
                 
-                if (WordToGuess.Contains(letter) && !(alreadyCheckedLetters.Contains(letter)))
+                if (WordToGuess.Contains(letter))// && !(alreadyCheckedLetters.Contains(letter)))
                 {                 
                     alreadyCheckedLetters.Add(letter);
                  //   print("1");
@@ -259,6 +260,57 @@ public class WordManager : MonoBehaviour
         return definition;
 
     }
+    
+    public string CheckWordOffline()
+    {
+        KeyboardManager.Instance.UpdateEnterButton(false);
+        string wordToCheck = UIManager.Instance.GetToCheckWord();
+        string definition = null;
+        CanWrite = false;
+
+        if (wordToCheck.Length > 0)
+        {
+            if ((myDictionary.Exists(x => x.word.Equals(wordToCheck))))
+            {
+
+                //   definition = "Definition : " + data[0]["meanings"][0]["definitions"][0]["definition"].Value;
+                //CheckWord(definition);
+                countCorrectLetterAndShow("exists");
+
+                if (wordToCheck == WordToGuess)
+                {
+                    print("Definition : " + WordDefinition);
+                    TimerUp.Instance.StopTimer(true);
+                    GameOverPanelUI.ShowUI();
+                    GameOverPanelUI.Instance.SetText("Congratulations !!!", WordToGuess, WordDefinition);
+                }
+                else
+                {
+                    UIManager.Instance.CreateEmptyRow();
+                    // BoosterManager.Instance.AutoColorLatestRow();
+                    if (BoosterManager.Instance.isAutoColor)
+                    {
+                        BoosterManager.Instance.AutoColor();
+                    }
+                    CanWrite = true;
+
+                }
+            }
+            else
+            {
+                UIManager.Instance.ClearCurrentRow();
+                WarningPanelUI.ShowUI();
+                WarningPanelUI.Instance.CallToQuitPanelAutomatically();
+                print("This word does not exist....");
+
+
+            }
+        }
+           
+        KeyboardManager.Instance.UpdateEnterButton(true);
+        return definition;
+
+    }
 
     private bool isUniqueLettersString(string str)
     {
@@ -284,33 +336,139 @@ public class WordManager : MonoBehaviour
     public void GetWord()
     {    
         WordToGuess =   ReadString();
+        print("WordToGuess : " + WordToGuess);
     }
+    /*  public static string ReadString()
+      {
+          char fileName = 'A';
+          for (int count = 0; count < 26; count++)
+          {
+              //    string str = Resources.Load("WordList").ToString();     
+
+              string str = Resources.Load(fileName.ToString()).ToString();
+              string[] rowOfIndex = str.Split('\n');
+              GlobalData.Instance.WordList.Clear();
+              for (int i = 0; i < rowOfIndex.Length; i++)
+              {
+                  // if (rowOfIndex[i].Length == (int)GlobalData.Instance.gameMode+1 )
+                  //{ 
+               //   print(rowOfIndex[i].TrimEnd() + " count : " + rowOfIndex[i].Length);
+                  // if (WordManager.Instance.isUniqueLettersString(rowOfIndex[i]))
+                  if (rowOfIndex[i].Length != 1)
+                  {
+                      // print(rowOfIndex[i]);
+                      GlobalData.Instance.WordList.Add(rowOfIndex[i].Replace('"', ' ').TrimStart());
+
+                  }
+                  //}
+              }
+
+              int index = Random.Range(0, GlobalData.Instance.WordList.Count);
+              print("word list : " + GlobalData.Instance.WordList.Count);
+              WriteString(fileName.ToString());
+              fileName++;
+          }
+          //return (GlobalData.Instance.WordList[index].ToUpper()).TrimEnd();
+          return "NONE";
+
+
+      }
+      public static void WriteString(string fName)
+      {
+          //StreamWriter sw = new StreamWriter("D:\\Dictionary.txt", true, Encoding.ASCII);
+          StreamWriter sw = new StreamWriter("D:\\Dictionary"+ GlobalData.Instance.gameMode + ".txt", true, Encoding.ASCII);
+
+          string prevStr = "";
+          //Write out the numbers 1 to 10 on the same line.
+          for (int i = 0; i < GlobalData.Instance.WordList.Count; i++)
+          {
+              //       string str = (GlobalData.Instance.WordList[i]).Split(' ')[0] + "," + (GlobalData.Instance.WordList[i]).Split(')')[1];
+              string myStr = (GlobalData.Instance.WordList[i]).Split(' ')[0];
+             // if ( myStr.Length >= 4 && myStr.Length <=6 && (!(myStr.Contains('-'))))//  && (GlobalData.Instance.WordList[i]).Split(' ')[0].ToString().Length <=6)
+              if ( myStr.Length == (int)GlobalData.Instance.gameMode && (!(myStr.Contains('-'))))//  && (GlobalData.Instance.WordList[i]).Split(' ')[0].ToString().Length <=6)
+              {
+                  if (prevStr != myStr)
+                  {
+                      sw.Write((GlobalData.Instance.WordList[i]).Split(' ')[0]);
+                      sw.Write(",");
+                      sw.Write(((GlobalData.Instance.WordList[i]).Split(')')[0]).Split('(')[1]);
+                      sw.Write(",");
+                      sw.Write(((GlobalData.Instance.WordList[i]).Split(')')[1]));
+                      sw.Write('\n');
+                      Word wrd = new Word();
+                      wrd.word = (GlobalData.Instance.WordList[i]).Split(' ')[0];
+                      wrd.type = ((GlobalData.Instance.WordList[i]).Split(')')[0]).Split('(')[1];
+                      wrd.definition = ((GlobalData.Instance.WordList[i]).Split(')')[1]);
+                      mydictionary.Add(wrd);
+
+                      prevStr = myStr;
+                  }
+              }
+          }
+
+          //close the file
+          sw.Close();
+
+          //for(int i =0; i< mydictionary.Count; i++)
+          //{
+          //    print(mydictionary[i].word + "   " + mydictionary[i].type + "   " + mydictionary[i].definition);
+          //}
+
+
+      }
+    */
+    public static List<Word> myDictionary = new List<Word>();
+
     public static string ReadString()
     {
-        string str = Resources.Load("WordList").ToString();     
+        string dictionarName = "Dictionary" + GlobalData.Instance.gameMode;
+      //  string str = Resources.Load("WordList").ToString();     
+        string str = Resources.Load(dictionarName).ToString();     
+       // string str = Resources.Load("Z").ToString();     
         string[] rowOfIndex = str.Split('\n');
         GlobalData.Instance.WordList.Clear();
         for (int i = 0; i < rowOfIndex.Length; i++)
         {
-            if (rowOfIndex[i].Length == (int)GlobalData.Instance.gameMode+1 )
+            Word myWord = new Word();
+             //      print(rowOfIndex[i]);
+            string[] tempStr = rowOfIndex[i].Split(',');
+            if (tempStr.Length >= 3)
             {
-                //   print(rowOfIndex[i]);
-                if (WordManager.Instance.isUniqueLettersString(rowOfIndex[i]))
+                myWord.word = rowOfIndex[i].Split(',')[0].ToUpper();
+                myWord.type = rowOfIndex[i].Split(',')[1];
+                myWord.definition = rowOfIndex[i].Split(',')[2];
+                //   if (rowOfIndex[i].Length == (int)GlobalData.Instance.gameMode+1 )
+                // { 
+
+                // if (WordManager.Instance.isUniqueLettersString(rowOfIndex[i]))
+                if (WordManager.Instance.isUniqueLettersString(myWord.word))
                 {
-                   // print(rowOfIndex[i]);
-                    GlobalData.Instance.WordList.Add(rowOfIndex[i]);
+                    GlobalData.Instance.WordList.Add(myWord.word);
                 }
+                //}
+                myDictionary.Add(myWord);
             }
         }
 
         int index = Random.Range(0, GlobalData.Instance.WordList.Count);
         print("word list : " + GlobalData.Instance.WordList.Count);
 
-        return (GlobalData.Instance.WordList[index].ToUpper()).TrimEnd();
+        return (GlobalData.Instance.WordList[index].ToUpper());
+      //  return (GlobalData.Instance.WordList[index].ToUpper()).TrimEnd();
+   //     return (GlobalData.Instance.WordList[0].ToUpper());
 
         
     }
-
+    public void GetWordDefinitionOffline()
+    {
+        for(int  i=0;i < myDictionary.Count;i++)
+        {
+            if(myDictionary[i].word ==  WordToGuess)
+            {
+                WordDefinition = myDictionary[i].definition;
+            }
+        }
+    }
     public void getWordDefinition()
     {
         print("Word to guess : " + WordToGuess);
@@ -400,4 +558,11 @@ public class WordManager : MonoBehaviour
 
 
 
+}
+
+public class Word 
+{
+    public string word;
+    public string type;
+    public string definition;
 }

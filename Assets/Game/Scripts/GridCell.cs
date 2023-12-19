@@ -27,20 +27,22 @@ public class GridCell : MonoBehaviour
             switch (ind)
             {
                 case 0:
-                    bg_image.color = WordManager.Instance.revealedColor;
-                    KeyboardManager.Instance.ChangeKeyColor(CellText.text.ToString(), WordManager.Instance.revealedColor);
-                    UIManager.Instance.ChangeKeyColor(CellText.text.ToString(), WordManager.Instance.revealedColor);
-                    break;
-                case 1:
                     bg_image.color = WordManager.Instance.concealedColor;
                     KeyboardManager.Instance.ChangeKeyColor(CellText.text.ToString(), WordManager.Instance.concealedColor);
                     UIManager.Instance.ChangeKeyColor(CellText.text.ToString(), WordManager.Instance.concealedColor);
+                    break;
+                case 1:
+                    bg_image.color = WordManager.Instance.revealedColor;
+                    KeyboardManager.Instance.ChangeKeyColor(CellText.text.ToString(), WordManager.Instance.revealedColor);
+                    UIManager.Instance.ChangeKeyColor(CellText.text.ToString(), WordManager.Instance.revealedColor);
                     break;
                 case 2:
                     bg_image.color = WordManager.Instance.originalBgColor;
                     KeyboardManager.Instance.ChangeKeyColor(CellText.text.ToString(), WordManager.Instance.originalBgColor);
                     UIManager.Instance.ChangeKeyColor(CellText.text.ToString(), WordManager.Instance.originalBgColor);
                     break;
+              
+               
 
             }
 

@@ -28,7 +28,8 @@ public class GameManager : MonoBehaviour
     IEnumerator waitAndCallGetWordDefinition()
     {
         yield return new WaitForSeconds(2f);
-        WordManager.Instance.getWordDefinition();
+        WordManager.Instance.GetWordDefinitionOffline();
+       // WordManager.Instance.getWordDefinition();
     }
     public void BackToMainMenu()
     {
