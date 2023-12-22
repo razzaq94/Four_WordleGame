@@ -165,7 +165,7 @@ Babe,n., An infant; a young child of either sex; a baby.
 Babu,n., A Hindoo gentleman; a native clerk who writes English; also, a Hindoo title answering to Mr. or Esquire. 
 Baby,n., An infant or young child of either sex; a babe.
 Bace,n., a., & v., See Base. 
-Back,n., A large shallow vat; a cistern, tub, or trough, used by brewers, distillers, dyers, picklers, gluemakers, and others, for mixing or cooling wort, holding water, hot glue, etc. 
+Back,n., The side or part of something that is away from the spectator or from the direction in which it moves or faces; the rear.. 
 Bade,, A form of the pat tense of Bid.
 Baff,n., A blow; a stroke.
 Baft,n., Same as Bafta.
@@ -212,11 +212,11 @@ Beal,v. i., To gather matter; to swell and come to a head, as a pimple.
 Beam,n., Any large piece of timber or iron long in proportion to its thickness, and prepared for use. 
 Bean,n., A name given to the seed of certain leguminous herbs, chiefly of the genera Faba, Phaseolus, and Dolichos; also, to the herbs. 
 Bore,imp., of Bear
-Bare,, of Bear
-Born,p. p., of Bear
+Bare,v, uncover (a part of the body or other thing) and expose it to view.
+Born,p. p., Come into existence as a result of birth
 Bear,v. t., To support or sustain; to hold up.
 Bere,n., Barley; the six-rowed barley or the four-rowed barley, commonly the former (Hord. vulgare
-Beat,imp., of Beat
+Beat,imp., Strike (a person or an animal) repeatedly and violently so as to hurt or injure them.
 Beau,n., A man who takes great care to dress in the latest fashion; a dandy.
 Beck,n., See Beak.
 Bede,v. t., To pray; also, to offer; to proffer. 
@@ -2394,14 +2394,14 @@ Pons,n., A bridge; -- applied to several parts which connect others, but especia
 Pony,n., A small horse.
 Pood,n., A Russian weight, equal to forty Russian pounds or about thirty-six English pounds avoirdupois. 
 Pooh,interj., Pshaw! pish! nonsense! -- an expression of scorn, dislike, or contempt. 
-Pool,n., A small and rather deep collection of (usually
+Pool,n., A small and rather deep collection of water.
 Poon,n., A name for several East Indian, or their wood, used for the masts and spars of vessels, as Calophyllum angustifolium, C. inophullum, and Sterculia foetida; -- called also peon. 
 Poop,n., See 2d Poppy.
 Poor,superl., Destitute of property; wanting in material riches or goods; needy; indigent.
 Pope,n., Any ecclesiastic, esp. a bishop. 
 Pore,v., One of the minute orifices in an animal or vegetable membrane, for transpiration, absorption, etc. 
 Pork,n., The flesh of swine, fresh or salted, used for food. 
-Port,n., A dark red or purple astringent wine made in Portugal. It contains a large percentage of alcohol.
+Port,n., A place where ships may ride secure from storms.
 Pory,a., Porous; as, pory stone. [R.] Dryden. 
 Pose,a., Standing still, with all the feet on the ground; -- said of the attitude of a lion, horse, or other beast. 
 Poss,v. t., To push; to dash; to throw.

@@ -12,5 +12,10 @@ public class NetworkAPIManager : SingletonBehaviourGameObject<NetworkAPIManager>
     {
         print("NetworkAPIManager....");
         new WebRequest(this, null, "https://api.dictionaryapi.dev/api/v2/entries/en/" + word, RequestMethod.GET, EncodeMethod.JSON, OnSuccess, OnFail);
+    } 
+    public void LogIn(string word, Action<string> OnSuccess, Action<string, UnityWebRequest.Result> OnFail)
+    {
+        print("NetworkAPIManager....");
+        new WebRequest(this, null, "https://api.dictionaryapi.dev/api/v2/entries/en/" + word, RequestMethod.GET, EncodeMethod.JSON, OnSuccess, OnFail);
     }
 }

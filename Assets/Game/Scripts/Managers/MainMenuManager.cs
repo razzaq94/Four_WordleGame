@@ -9,6 +9,11 @@ public class MainMenuManager : MonoBehaviour
 {
     [SerializeField] GameObject ModePanel;
     [SerializeField] Button PlayButton;
+    public static MainMenuManager Instance;
+    private void Awake()
+    {
+        Instance = this;
+    }
     private void Start()
     {
 

@@ -5,7 +5,7 @@ using TMPro;
 public class TimerUp : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timerText;
-    [SerializeField] private float CurrentTime = 3f;
+    [SerializeField] public float CurrentTime = 3f;
     //   [SerializeField] private Image progressImage;
     private bool stopTimer = false;
     public static TimerUp Instance;

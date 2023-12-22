@@ -33,7 +33,29 @@ public class UIManager : MonoBehaviour
         //CreateEmptyRow();
         KeyboardManager.Instance.ChangeKeySize("Backspace", new Vector2(200, 99));
     }
+    public void CreateTopRow()
+    {
+        adjustDimenssions();
+        GameObject row = Instantiate(Row_PF, TopRow.transform);
+        row.transform.GetComponent<HorizontalLayoutGroup>().padding.left = leftPadding;
+        row.transform.localPosition = new Vector3(row.transform.localPosition.x, 65, row.transform.localPosition.z);
+        row.transform.SetAsFirstSibling();
+        for (int i = 0; i <= (int)GlobalData.Instance.gameMode; i++)
+        {
+            GameObject cell = Instantiate(Cell_PF, row.transform);
+            cell.GetComponent<RectTransform>().sizeDelta = cellSize;
+            cell.transform.SetAsLastSibling();
+            if (i == (int)GlobalData.Instance.gameMode)
+            {
+                Destroy(cell.GetComponent<GridCell>());
+            }
+        }
+        WordManager.Instance.CurrentColNumber = 0;
+        WordManager.Instance.CurrentRowNumber = 0;
+        WordManager.Instance.CanWrite = true;
+        KeyboardManager.Instance.UpdateEnterButton(false);
 
+    }
     public void CreateEmptyRow()
     {
         adjustDimenssions();
@@ -62,18 +84,23 @@ public class UIManager : MonoBehaviour
     {
         for (int i = 0; i <= (int)GlobalData.Instance.gameMode; i++)
         {
-            TopRow.transform.GetChild(0).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = ContentHolder.transform.GetChild(0).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text;
-            TopRow.transform.GetChild(0).transform.GetChild(i).transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.originalBgColor;
+            string letter = TopRow.transform.GetChild(0).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text;
+            ContentHolder.transform.GetChild(0).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = letter;
+            if (i != (int)GlobalData.Instance.gameMode)
+            {
+                ContentHolder.transform.GetChild(0).transform.GetChild(i).GetComponent<GridCell>().SetCellBg_Color(KeyboardManager.Instance.GetKeyColor(letter));
+            }
+
         }
     }
     public void ClearCurrentRow()
     {
         for (int i = 0; i <= (int)GlobalData.Instance.gameMode; i++)
         {
-            ContentHolder.transform.GetChild(0).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = "";
-            ContentHolder.transform.GetChild(0).transform.GetChild(i).transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.originalBgColor;
-   //         TopRow.transform.GetChild(0).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = "";
-     //       TopRow.transform.GetChild(0).transform.GetChild(i).transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.originalBgColor;
+     //       ContentHolder.transform.GetChild(0).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = "";
+      //      ContentHolder.transform.GetChild(0).transform.GetChild(i).transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.originalBgColor;
+            TopRow.transform.GetChild(0).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = "";
+            TopRow.transform.GetChild(0).transform.GetChild(i).transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.originalBgColor;
         }
         WordManager.Instance.CurrentColNumber = 0;
         WordManager.Instance.CurrentRowNumber = 0;
@@ -165,19 +192,19 @@ public class UIManager : MonoBehaviour
             int row = 0;
             int col = WordManager.Instance.CurrentColNumber;
             //   string letterOnCurrentCell = GamePanel.transform.Find("GridPanel").transform.GetChild(row).transform.GetChild(col).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text;
-            string letterOnCurrentCell = ContentHolder.transform.GetChild(row).transform.GetChild(col).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text;
+            string letterOnCurrentCell = TopRow.transform.GetChild(row).transform.GetChild(col).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text;
             if (letter != "" && WordManager.Instance.CanWrite && letterOnCurrentCell == "")
             {
                 //   GamePanel.transform.Find("GridPanel").transform.GetChild(row).transform.GetChild(col).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = letter;
-                ContentHolder.transform.GetChild(row).transform.GetChild(col).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = letter;
-                ContentHolder.transform.GetChild(row).transform.GetChild(col).GetComponent<GridCell>().SetCellBg_Color(KeyboardManager.Instance.GetKeyColor(letter));
+                TopRow.transform.GetChild(row).transform.GetChild(col).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = letter;
+                TopRow.transform.GetChild(row).transform.GetChild(col).GetComponent<GridCell>().SetCellBg_Color(KeyboardManager.Instance.GetKeyColor(letter));
                 WordManager.Instance.SetNextColNumber();
             }
             else if (letter != "" && WordManager.Instance.CanWrite && letterOnCurrentCell != "" && col < ((int)GlobalData.Instance.gameMode - 1))
             {
                 //  GamePanel.transform.Find("GridPanel").transform.GetChild(row).transform.GetChild(col+1).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = letter;
-                ContentHolder.transform.GetChild(row).transform.GetChild(col + 1).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = letter;
-                ContentHolder.transform.GetChild(row).transform.GetChild(col).GetComponent<GridCell>().SetCellBg_Color(KeyboardManager.Instance.GetKeyColor(letter));
+                TopRow.transform.GetChild(row).transform.GetChild(col + 1).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = letter;
+                TopRow.transform.GetChild(row).transform.GetChild(col).GetComponent<GridCell>().SetCellBg_Color(KeyboardManager.Instance.GetKeyColor(letter));
                 WordManager.Instance.SetNextColNumber();
             }
             // print("wordlength : " + WordManager.Instance.GetCurrentWordLength() + "game mode count : " + (((int)GlobalData.Instance.gameMode)));
@@ -197,12 +224,12 @@ public class UIManager : MonoBehaviour
         int row = 0;
         int col = WordManager.Instance.CurrentColNumber;
         //string letterOnCurrentCell = GamePanel.transform.Find("GridPanel").transform.GetChild(row).transform.GetChild(col).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text;
-        string letterOnCurrentCell = ContentHolder.transform.GetChild(row).transform.GetChild(col).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text;
+        string letterOnCurrentCell = TopRow.transform.GetChild(row).transform.GetChild(col).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text;
         if(letterOnCurrentCell == "" && col-1 >=0)
         {
             //GamePanel.transform.Find("GridPanel").transform.GetChild(row).transform.GetChild(col-1).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = "";
-            ContentHolder.transform.GetChild(row).transform.GetChild(col-1).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = "";
-            ContentHolder.transform.GetChild(row).transform.GetChild(col - 1).transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.originalBgColor;
+            TopRow.transform.GetChild(row).transform.GetChild(col-1).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = "";
+            TopRow.transform.GetChild(row).transform.GetChild(col - 1).transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.originalBgColor;
             WordManager.Instance.SetPreviousColNumber();
 
         }
@@ -210,8 +237,8 @@ public class UIManager : MonoBehaviour
         {
          //   GamePanel.transform.Find("GridPanel").transform.GetChild(row).transform.GetChild(col).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = "";
            
-            ContentHolder.transform.GetChild(row).transform.GetChild(col).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = "";
-           ContentHolder.transform.GetChild(row).transform.GetChild(col ).transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.originalBgColor;
+            TopRow.transform.GetChild(row).transform.GetChild(col).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = "";
+           TopRow.transform.GetChild(row).transform.GetChild(col ).transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.originalBgColor;
            WordManager.Instance.SetPreviousColNumber();
 
         }
@@ -227,7 +254,7 @@ public class UIManager : MonoBehaviour
         for (int i = 0; i < (int)GlobalData.Instance.gameMode; i++)
         {
           //  string temp = GamePanel.transform.Find("GridPanel").transform.GetChild(WordManager.Instance.CurrentRowNumber).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text;
-            string temp = ContentHolder.transform.GetChild(0).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text;
+            string temp = TopRow.transform.GetChild(0).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text;
             tempWordToCheck += temp;
         }
 

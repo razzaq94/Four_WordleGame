@@ -21,8 +21,8 @@ public class GameManager : MonoBehaviour
     {
         WordManager.Instance.GetWord();
         UIManager.Instance.ResetGamePanelUI();
-        UIManager.Instance.CreateEmptyRow();
-       // UIManager.Instance.SetGameGridUI();
+        //   UIManager.Instance.CreateEmptyRow();
+        UIManager.Instance.CreateTopRow();
         StartCoroutine(waitAndCallGetWordDefinition());
     }
     IEnumerator waitAndCallGetWordDefinition()
