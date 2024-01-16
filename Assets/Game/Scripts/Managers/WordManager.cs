@@ -11,6 +11,7 @@ using UnityEngine.Networking;
 //using UnityEngine.UI.Extensions;
 using SimpleJSON;
 using Unity.VisualScripting;
+using System;
 
 public class WordManager : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class WordManager : MonoBehaviour
     public List<Color> colors;
     public string WordToGuess = "ABROAD";
     public string WordDefinition = null;
+    public List<Tuple<string, int>> guesses = new List<Tuple<string, int>>();
 
     private void Awake()
     {
@@ -80,6 +82,7 @@ public class WordManager : MonoBehaviour
     private void countCorrectLetterAndShow(string WrdDefinition)
     {
         int letterCount=0;
+        string newWord = "";
         if (WrdDefinition != null)
         {
             List<string> alreadyCheckedLetters = new List<string>();
@@ -88,7 +91,7 @@ public class WordManager : MonoBehaviour
             for (int i = 0; i < (int)GlobalData.Instance.gameMode; i++)
             {
                 string letter = rowPanel.transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text.ToString();
-                
+                newWord += letter;
                 if (WordToGuess.Contains(letter))// && !(alreadyCheckedLetters.Contains(letter)))
                 {                 
                     alreadyCheckedLetters.Add(letter);
@@ -108,6 +111,9 @@ public class WordManager : MonoBehaviour
             }
 
             rowPanel.transform.GetChild((int)GlobalData.Instance.gameMode).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = letterCount.ToString();
+            Tuple<string, int> guess = new Tuple<string, int>(newWord, letterCount);
+
+            guesses.Add(guess);
         }
     }
 
@@ -294,7 +300,8 @@ public class WordManager : MonoBehaviour
                     // BoosterManager.Instance.AutoColorLatestRow();
                     if (BoosterManager.Instance.isAutoColor)
                     {
-                        BoosterManager.Instance.AutoColor();
+                        // BoosterManager.Instance.AutoColor();
+                        AutoColorBooster.Instance.AutoColor();
                     }
                     CanWrite = true;
 
@@ -443,7 +450,7 @@ public class WordManager : MonoBehaviour
             }
         }
 
-        int index = Random.Range(0, GlobalData.Instance.WordList.Count);
+        int index = UnityEngine.Random.Range(0, GlobalData.Instance.WordList.Count);
         //print("word list : " + GlobalData.Instance.WordList.Count);
         return (GlobalData.Instance.WordList[index].ToUpper()).TrimEnd();
     }
@@ -482,7 +489,7 @@ public class WordManager : MonoBehaviour
             }
         }
 
-        int index = Random.Range(0, GlobalData.Instance.WordList.Count);
+        int index = UnityEngine.Random.Range(0, GlobalData.Instance.WordList.Count);
         print("word list : " + GlobalData.Instance.WordList.Count);
         return GetWordToGuess();
        // return (GlobalData.Instance.WordList[index].ToUpper());

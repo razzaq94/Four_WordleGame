@@ -6,7 +6,7 @@ using System.Globalization;
 
 public class GameOverPanelUI : MonoBehaviour
 {
-	[SerializeField] TextMeshProUGUI resultMessage;
+	//[SerializeField] TextMeshProUGUI resultMessage;
 	[SerializeField] TextMeshProUGUI word;
 	[SerializeField] TextMeshProUGUI definition;
 	public static GameOverPanelUI Instance;
@@ -36,7 +36,7 @@ public class GameOverPanelUI : MonoBehaviour
 	}
 	public void SetText(string rMessage, string wrd, string def )
     {
-		resultMessage.text = rMessage;
+		//resultMessage.text = rMessage;
 		word.text = wrd;
 		definition.text = def;
     }

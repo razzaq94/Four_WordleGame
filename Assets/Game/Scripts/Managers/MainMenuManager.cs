@@ -7,8 +7,6 @@ using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
 {
-    [SerializeField] GameObject ModePanel;
-    [SerializeField] Button PlayButton;
     public static MainMenuManager Instance;
     private void Awake()
     {
@@ -16,22 +14,10 @@ public class MainMenuManager : MonoBehaviour
     }
     private void Start()
     {
-
-
-    }
-    public void OnClick_PlayButton()
-    {
-        ModePanel.SetActive(true);
-        PlayButton.interactable = false;
+        MainPanelUI.ShowUI();
 
     }
+}
 
-    public void Loadlevel(string sceneName)
-    {
-        SceneManager.LoadScene(sceneName);
-    }
-    public void CallToSetGamemode(int gm)
-    {
-        GlobalData.Instance.SetGamemode(gm);
-    }
-    }
+   
+    

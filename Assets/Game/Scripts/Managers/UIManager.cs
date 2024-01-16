@@ -127,7 +127,22 @@ public class UIManager : MonoBehaviour
                 break;
         }
     }
-    public void ChangeKeyColor(string myKey, Color color)
+    public void ChangeAllKeyColorToDefault()
+    {
+        for (int i = 0; i < ContentHolder.transform.childCount; i++)
+        {
+            GameObject row = ContentHolder.transform.GetChild(i).gameObject;
+            for (int j = 0; j < row.transform.childCount - 1; j++)
+            {
+                GridCell cell = row.transform.GetChild(j).GetComponent<GridCell>();
+
+                cell.SetCellBg_Color(WordManager.Instance.originalBgColor);
+
+            }
+        }
+
+
+    } public void ChangeKeyColor(string myKey, Color color)
     {
         for(int i = 0; i <ContentHolder.transform.childCount;i++)
         {

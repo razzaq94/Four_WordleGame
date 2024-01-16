@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GlobalData : MonoBehaviour
 {
@@ -37,7 +38,10 @@ public class GlobalData : MonoBehaviour
 
         }
     }
-
+    public void Loadlevel(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
     public enum GameMode
     {
         Easy = 4,

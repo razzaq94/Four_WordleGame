@@ -10,7 +10,7 @@ public class BoosterManager : MonoBehaviour
 {
     [SerializeField] int revealBoosterCount = 2;
     [SerializeField] int eliminateBoosterCount = 3;
-    [SerializeField] int autocolorBoosterCount = 1;
+    [SerializeField]public int autocolorBoosterCount = 1;
     public bool isAutoColor = false;
     public static BoosterManager Instance;
     private void Awake()
