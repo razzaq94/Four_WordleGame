@@ -10,21 +10,23 @@ using UnityEngine.Networking;
 
 public class WebRequest
 {
+
+
     Coroutine coroutine;
 
     public WebRequest(MonoBehaviour mono, object data, string url, RequestMethod method, EncodeMethod encode, Action<string> onSuccess = null, Action<string, UnityWebRequest.Result> onFail = null)
     {
-        coroutine = mono.StartCoroutine(ToSendWebRequest(data, url, method, encode, onSuccess, onFail));
+        coroutine = mono.StartCoroutine(ToSendWebRequest(data, url, null, method, encode, onSuccess, onFail));
+    }
+
+    public WebRequest(MonoBehaviour mono, object data, string url, string authToken, RequestMethod method, EncodeMethod encode, Action<string> onSuccess = null, Action<string, UnityWebRequest.Result> onFail = null)
+    {
+        coroutine = mono.StartCoroutine(ToSendWebRequest(data, url, authToken, method, encode, onSuccess, onFail));
     }
 
     public WebRequest(MonoBehaviour mono, string url, Action<Sprite> onSuccess = null, Action<string, UnityWebRequest.Result> onFail = null)
     {
         coroutine = mono.StartCoroutine(ToSendTextureWebRequest(url, onSuccess, onFail));
-    }
-
-    public WebRequest(MonoBehaviour mono, string url, AudioType type = AudioType.MPEG, Action<AudioClip> onSuccess = null, Action<string, UnityWebRequest.Result> onFail = null)
-    {
-        coroutine = mono.StartCoroutine(ToSendAudioClipWebRequest(url, type, onSuccess, onFail));
     }
 
     public void Stop(MonoBehaviour mono)
@@ -33,36 +35,6 @@ public class WebRequest
         {
             mono.StopCoroutine(coroutine);
         }
-    }
-
-    IEnumerator ToSendAudioClipWebRequest(string url, AudioType type, Action<AudioClip> onSuccess, Action<string, UnityWebRequest.Result> onFail)
-    {
-        if (Application.internetReachability == NetworkReachability.NotReachable)
-        {
-            onFail?.Invoke("Internet not connected", UnityWebRequest.Result.ConnectionError);
-            yield break;
-        }
-
-        UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(url, type);
-        request.downloadHandler = new DownloadHandlerAudioClip(url, type);
-        yield return request.SendWebRequest();
-        if (request.result != UnityWebRequest.Result.ConnectionError)
-        {
-            if (request.result != UnityWebRequest.Result.ProtocolError)
-            {
-                AudioClip obtainedClip = ((DownloadHandlerAudioClip)request.downloadHandler).audioClip;
-                onSuccess?.Invoke(obtainedClip);
-            }
-            else
-            {
-                onFail?.Invoke(request.downloadHandler.text, request.result);
-            }
-        }
-        else
-        {
-            onFail?.Invoke(request.error, request.result);
-        }
-        request.Dispose();
     }
 
     IEnumerator ToSendTextureWebRequest(string url, Action<Sprite> onSuccess, Action<string, UnityWebRequest.Result> onFail)
@@ -96,7 +68,7 @@ public class WebRequest
         request.Dispose();
     }
 
-    IEnumerator ToSendWebRequest(object data, string url, RequestMethod method, EncodeMethod encode, Action<string> onSuccess, Action<string, UnityWebRequest.Result> onFail)
+    IEnumerator ToSendWebRequest(object data, string url, string authToken, RequestMethod method, EncodeMethod encode, Action<string> onSuccess, Action<string, UnityWebRequest.Result> onFail)
     {
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
@@ -109,6 +81,8 @@ public class WebRequest
         {
             if (encode == EncodeMethod.JSON)
             {
+                string s = JsonUtility.ToJson(data);
+                Debug.Log("DATA::: " + s);
                 byte[] jsonBinary = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(data, Formatting.None, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
                 DownloadHandlerBuffer downloadHandlerBuffer = new DownloadHandlerBuffer();
                 UploadHandlerRaw uploadHandlerRaw = new UploadHandlerRaw(jsonBinary);
@@ -117,13 +91,22 @@ public class WebRequest
             }
             else if (encode == EncodeMethod.FORM)
             {
-                List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
-                foreach (PropertyInfo property in data.GetType().GetRuntimeProperties())
+                if (data.GetType().Equals(typeof(WWWForm)))
                 {
-                    formData.Add((IMultipartFormSection)property.GetValue(data));
+                    WWWForm formData = (WWWForm)data;
+                    request = UnityWebRequest.Post(url, formData);
+                    request.downloadHandler = new DownloadHandlerBuffer();
                 }
-                request = UnityWebRequest.Post(url, formData);
-                request.downloadHandler = new DownloadHandlerBuffer();
+                else
+                {
+                    List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
+                    foreach (PropertyInfo property in data.GetType().GetRuntimeProperties())
+                    {
+                        formData.Add((IMultipartFormSection)property.GetValue(data));
+                    }
+                    request = UnityWebRequest.Post(url, formData);
+                    request.downloadHandler = new DownloadHandlerBuffer();
+                }
             }
         }
         else if (method == RequestMethod.GET)
@@ -140,6 +123,18 @@ public class WebRequest
             request = UnityWebRequest.Get(url);
             request.downloadHandler = new DownloadHandlerBuffer();
         }
+
+        if (authToken != null)
+        {
+            request.SetRequestHeader("x-auth-token", authToken);
+        }
+
+
+        Debug.Log("New Header: " + SystemInfo.deviceUniqueIdentifier + "/" + Application.platform + "/" + SystemInfo.operatingSystem);
+        request.SetRequestHeader("User-Agent", (SystemInfo.deviceUniqueIdentifier + "/" + Application.platform + "/" + SystemInfo.operatingSystem).ToString());
+        //request.SetRequestHeader("x-real-ip", IP);
+
+
         yield return request.SendWebRequest();
         if (request.result != UnityWebRequest.Result.ConnectionError)
         {
@@ -158,6 +153,7 @@ public class WebRequest
         }
         request.Dispose();
     }
+
 }
 
 public enum RequestMethod

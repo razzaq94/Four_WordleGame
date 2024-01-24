@@ -981,7 +981,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3161819203720076998}
         m_TargetAssemblyTypeName: LogInPanelUI, Assembly-CSharp
-        m_MethodName: LogIn
+        m_MethodName: OnClick_LogIn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1217,6 +1217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93c8c81ea5071ca46907250551135320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UserNameUI: {fileID: 9003782745004459736}
 --- !u!1 &6642830571639264593
 GameObject:
   m_ObjectHideFlags: 0

@@ -56,6 +56,11 @@ public class BoosterManager : MonoBehaviour
 
             }
         }
+        else
+        {
+            print("Ads...");
+            // Run Ad
+        }
     }
     public List<string> getAlphabets()
     {
@@ -105,6 +110,10 @@ public class BoosterManager : MonoBehaviour
                 UIManager.Instance.UpdateEliminateUI(eliminateBoosterCount);
 
             }
+        }
+        else
+        {
+            print("Ads...");
         }
     }
     public void AutoColor()

@@ -330,14 +330,20 @@ public class AutoColorBooster : MonoBehaviour
     }
     public void OnClick_AutoColorButton()
     {
-       
-        BoosterManager.Instance.isAutoColor = true;
-        BoosterManager.Instance.autocolorBoosterCount--;
-        UIManager.Instance.ChangeAllKeyColorToDefault();
-        KeyboardManager.Instance.ClearKeyColor();
-        UIManager.Instance.UpdateAutoColorUI(BoosterManager.Instance.autocolorBoosterCount);
-        AutoColor();
 
+        if (BoosterManager.Instance.autocolorBoosterCount > 0)
+        {
+            BoosterManager.Instance.isAutoColor = true;
+            BoosterManager.Instance.autocolorBoosterCount--;
+            UIManager.Instance.ChangeAllKeyColorToDefault();
+            KeyboardManager.Instance.ClearKeyColor();
+            UIManager.Instance.UpdateAutoColorUI(BoosterManager.Instance.autocolorBoosterCount);
+            AutoColor();
+        }
+        else
+        {
+            print("auto color Ads");
+        }
     }
 
 

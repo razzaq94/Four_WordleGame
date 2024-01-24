@@ -7,6 +7,27 @@ public class GlobalData : MonoBehaviour
 {
     public GameMode gameMode = GameMode.Hard;
     public List<string> WordList;
+    public LogInRequest logInRequest = new LogInRequest();
+
+    //User data 
+    public string token = null;
+    public string userId = null;
+    public string UserName = null;    
+    public int level = 0;
+    public int highestScore = 0;
+    public int totalScore = 0;
+    public bool isPremium = false;
+    public int totalGamesPlayed = 0;
+    public int totalGamesWon = 0;
+    public Stats UserStats = new Stats();
+    public Stats GlobalStats = new Stats();
+
+
+
+
+
+
+
     public static GlobalData Instance;
     private void Awake()
     {

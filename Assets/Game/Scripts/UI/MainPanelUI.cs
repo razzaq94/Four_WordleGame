@@ -49,15 +49,18 @@ public class MainPanelUI : MonoBehaviour
 
 	public void UpdateScoreUI()
 	{
-		ScoreUI.fillAmount = InGameStorage.Instance.GetScore() / 100;
+		//ScoreUI.fillAmount = InGameStorage.Instance.GetScore() / 100;
+		ScoreUI.fillAmount = GlobalData.Instance.totalScore / 100;
 	}
 	public void UpdateLevelUI()
 	{
-		LevelUI.text = (InGameStorage.Instance.GetLevel()).ToString();
+//		LevelUI.text = (InGameStorage.Instance.GetLevel()).ToString();
+		LevelUI.text = (GlobalData.Instance.level).ToString();
 	}
 	public void UpdateNameUI()
 	{
-		UserNameUI.text = (InGameStorage.Instance.GetName()).ToString();
+	//	UserNameUI.text = (InGameStorage.Instance.GetUserName()).ToString();
+		UserNameUI.text = (GlobalData.Instance.UserName).ToString();
 	}
 
 	public void OnClick_PlayButton()

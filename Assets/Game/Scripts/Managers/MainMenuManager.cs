@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using TMPro;
 using UnityEngine.UI;
+using TMPro;
+using SimpleJSON;
+using System;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -15,8 +16,24 @@ public class MainMenuManager : MonoBehaviour
     private void Start()
     {
         MainPanelUI.ShowUI();
+        //if(InGameStorage.Instance.GetUserId() ==  "")
+        //{
+        //    LogInPanelUI.ShowUI();
+        //}
+        //else
+        //{
+        //    LogIn();
+        //    MainPanelUI.ShowUI();
+
+        //}
+
+
+
+
 
     }
+
+  
 }
 
    

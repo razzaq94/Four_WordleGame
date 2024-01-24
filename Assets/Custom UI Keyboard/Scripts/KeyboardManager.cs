@@ -410,6 +410,48 @@ public class KeyboardManager : MonoBehaviour, IPointerDownHandler, IPointerUpHan
                                 themeList[currentTheme].buttonsPressedColor, themeList[currentTheme].buttonsSelectedColor,
                                 themeList[currentTheme].keysTextColor, themeList[currentTheme].glowColor, currentFont, currentFontSize);
                         keyScript.gameObject.SetActive(true);
+                        // Custom Code
+                        if (keyScript.keyType == KeyClass.KeyType.Backspace)
+                        {
+                            keyScript.GetComponent<RectTransform>().sizeDelta = new Vector2(120f, 99f);
+                            keyScript.transform.parent.GetComponent<HorizontalLayoutGroup>().padding.left = 130;
+
+                            Image background = keyScript.transform.Find("Back (1)").GetComponent<Image>();
+                            background.type = Image.Type.Simple;
+                            background.preserveAspect = false ;
+                            background.color = WordManager.Instance.originalBgColor;
+                            background.GetComponent<RectTransform>().localPosition = new Vector3(5, 0, 0);
+
+                            Image shadow = keyScript.transform.Find("Shadow").GetComponent<Image>();
+                            shadow.color = new Color(shadow.color.r, shadow.color.g, shadow.color.b, 1f);
+                           // shadow.GetComponent<RectTransform>().localPosition = new Vector3(5, 0, 0);
+                            shadow.type = Image.Type.Simple;
+                            shadow.preserveAspect = false;
+
+                            Image image = keyScript.transform.Find("Image").GetComponent<Image>();
+                            image.GetComponent<RectTransform>().sizeDelta = new Vector2(72, 50f);
+                            image.preserveAspect = true;
+
+
+
+                        }
+                        else
+                        {
+                            Image shadow = keyScript.transform.Find("Shadow").GetComponent<Image>();
+                            shadow.color = new Color(shadow.color.r, shadow.color.g, shadow.color.b, 1f);
+                            shadow.type = Image.Type.Simple;
+                            shadow.preserveAspect = true;
+
+                            Image background = keyScript.transform.Find("Back (1)").GetComponent<Image>();
+                            background.type = Image.Type.Simple;
+                            background.preserveAspect = true;
+                            background.color = WordManager.Instance.originalBgColor;
+                        }
+                       // print(keyScript.keyType);
+                        
+
+
+
                         CurrentKeyList()[i].keys[j].keyButtonScript = keyScript;
                         if (CurrentKeyList()[i].keys[j].keyType == KeyClass.KeyType.Character) {
                             CurrentKeyList()[i].keys[j].keyButtonScript.SetShiftState(isShifted);
@@ -580,6 +622,7 @@ public class KeyboardManager : MonoBehaviour, IPointerDownHandler, IPointerUpHan
                     //     Color existingBGColor = keyList[i].keys[j].keyButtonScript.transform.Find("Back (1)").GetComponent<Image>().color;
                     //   if ((existingBGColor == WordManager.Instance.partiallyRevealedColor && color == WordManager.Instance.revealedColor) || (existingBGColor == WordManager.Instance.concealedColor && color != WordManager.Instance.concealedColor) || (existingBGColor == WordManager.Instance.originalBgColor))
                     // {
+                    
                     return keyList[i].keys[j].keyButtonScript.transform.Find("Back (1)").GetComponent<Image>().color;
                     //}
                 }

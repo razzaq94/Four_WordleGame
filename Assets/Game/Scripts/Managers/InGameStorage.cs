@@ -48,12 +48,20 @@ public class InGameStorage : MonoBehaviour
     {
         return PlayerPrefs.GetInt("LEVEL", 0);
     } 
-    public void SetName(string nme)
+    public void SetUserName(string nme)
     {
-        PlayerPrefs.SetString("NAME", nme);
+        PlayerPrefs.SetString("USERNAME", nme);
     }
-    public string GetName()
+    public string GetUserName()
     {
-        return PlayerPrefs.GetString("NAME", "Anonymous");
+        return PlayerPrefs.GetString("USERNAME", "itsabubaker");
+    } 
+    public void SetUserId(string id)
+    {
+        PlayerPrefs.SetString("USERID", id);
+    }
+    public string GetUserId()
+    {
+        return PlayerPrefs.GetString("USERID", "65a8abca06bf3eabc9bf7524");
     }
 }

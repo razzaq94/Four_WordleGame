@@ -17,7 +17,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject Reveal;
     [SerializeField] GameObject Eliminate;
     [SerializeField] GameObject AutoColor;
-  
+
+    public Sprite revealedBgSprite;
+    public Sprite concealedBgSprite;
+    public Sprite originalBgSprite;
+
 
     // porivate 
     private int leftPadding =20;
@@ -48,6 +52,7 @@ public class UIManager : MonoBehaviour
             if (i == (int)GlobalData.Instance.gameMode)
             {
                 Destroy(cell.GetComponent<GridCell>());
+                cell.transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.counterBgColor;
             }
         }
         WordManager.Instance.CurrentColNumber = 0;
@@ -70,6 +75,8 @@ public class UIManager : MonoBehaviour
             if(i == (int)GlobalData.Instance.gameMode)
             {
                 Destroy(cell.GetComponent<GridCell>());
+                cell.transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.counterBgColor;
+
             }
         }
         WordManager.Instance.CurrentColNumber = 0;
@@ -97,10 +104,17 @@ public class UIManager : MonoBehaviour
     {
         for (int i = 0; i <= (int)GlobalData.Instance.gameMode; i++)
         {
-     //       ContentHolder.transform.GetChild(0).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = "";
-      //      ContentHolder.transform.GetChild(0).transform.GetChild(i).transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.originalBgColor;
+            //       ContentHolder.transform.GetChild(0).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = "";
+            //      ContentHolder.transform.GetChild(0).transform.GetChild(i).transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.originalBgColor;
             TopRow.transform.GetChild(0).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = "";
-            TopRow.transform.GetChild(0).transform.GetChild(i).transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.originalBgColor;
+            if (i == (int)GlobalData.Instance.gameMode)
+            {
+                TopRow.transform.GetChild(0).transform.GetChild(i).transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.counterBgColor;
+            }
+            else
+            {
+                TopRow.transform.GetChild(0).transform.GetChild(i).transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.originalBgColor;
+            }
         }
         WordManager.Instance.CurrentColNumber = 0;
         WordManager.Instance.CurrentRowNumber = 0;
@@ -268,7 +282,6 @@ public class UIManager : MonoBehaviour
         string tempWordToCheck = "";
         for (int i = 0; i < (int)GlobalData.Instance.gameMode; i++)
         {
-          //  string temp = GamePanel.transform.Find("GridPanel").transform.GetChild(WordManager.Instance.CurrentRowNumber).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text;
             string temp = TopRow.transform.GetChild(0).transform.GetChild(i).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text;
             tempWordToCheck += temp;
         }
@@ -279,42 +292,48 @@ public class UIManager : MonoBehaviour
     {
         if (remaining > 0)
         {
-            Reveal.GetComponent<Button>().interactable = true;
+            Reveal.transform.Find("CountImage").gameObject.SetActive(true);
+            Reveal.transform.Find("AdImage").gameObject.SetActive(false);
+            Reveal.transform.Find("CountImage").transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = remaining.ToString();
+
         }
         else
         {
-            remaining = 0;
-            Reveal.GetComponent<Button>().interactable = false;
+            Reveal.transform.Find("CountImage").gameObject.SetActive(false); ;
+            Reveal.transform.Find("AdImage").gameObject.SetActive(true);
+
         }
-        Reveal.transform.Find("CountImage").transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = remaining.ToString();
 
     } 
     public void UpdateEliminateUI(int remaining)
     {
         if (remaining > 0)
         {
-            Eliminate.GetComponent<Button>().interactable = true;
+            Eliminate.transform.Find("CountImage").gameObject.SetActive(true);
+            Eliminate.transform.Find("AdImage").gameObject.SetActive(false);
+            Eliminate.transform.Find("CountImage").transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = remaining.ToString();
+
         }
         else
         {
-            remaining = 0;
-            Eliminate.GetComponent<Button>().interactable = false;
+            Eliminate.transform.Find("CountImage").gameObject.SetActive(false) ;
+            Eliminate.transform.Find("AdImage").gameObject.SetActive(true);
         }
-        Eliminate.transform.Find("CountImage").transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = remaining.ToString();
 
     }
     public void UpdateAutoColorUI(int remaining)
     {
         if (remaining > 0)
         {
-            AutoColor.GetComponent<Button>().interactable = true;
+            AutoColor.transform.Find("CountImage").gameObject.SetActive(true);
+            AutoColor.transform.Find("AdImage").gameObject.SetActive(false);
+            AutoColor.transform.Find("CountImage").transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = remaining.ToString();
         }
         else
         {
-            remaining = 0;
-            AutoColor.GetComponent<Button>().interactable = false;
+            AutoColor.transform.Find("CountImage").gameObject.SetActive(false);
+            AutoColor.transform.Find("AdImage").gameObject.SetActive(true);
         }
-        AutoColor.transform.Find("CountImage").transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = remaining.ToString();
 
     }
 

@@ -22,6 +22,7 @@ public class WordManager : MonoBehaviour
     public Color revealedColor;
     public Color concealedColor;
     public Color originalBgColor;
+    public Color counterBgColor;
     public List<Color> colors;
     public string WordToGuess = "ABROAD";
     public string WordDefinition = null;

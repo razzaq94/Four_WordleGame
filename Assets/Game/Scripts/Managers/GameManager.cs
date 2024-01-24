@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
 
+
     private void Awake()
     {
         Instance = this;
@@ -15,6 +16,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         StartGame();
+
+        APIManager.Instance.SaveGameData("TAKE", 321, 157, 17, true, "Easy");
     }
 
     private void StartGame()
