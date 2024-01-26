@@ -6,5 +6,5 @@ using UnityEngine;
 public class Statistics 
 {
     public float StandardDeviation =0f;
-    public int Median = 0;
+    public float Median = 0;
 }

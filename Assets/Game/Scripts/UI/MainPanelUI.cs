@@ -23,6 +23,7 @@ public class MainPanelUI : MonoBehaviour
 		UpdateScoreUI();
 		UpdateLevelUI();
 		UpdateNameUI();
+	//	APIManager.Instance.GetLeaderboardData();
 	}
 	public static MainPanelUI ShowUI()
 	{
@@ -78,10 +79,12 @@ public class MainPanelUI : MonoBehaviour
 	}
 	public void OnClick_LeaderboardButton()
 	{
-		LeaderboardPanelUI.ShowUI();
+		APIManager.Instance.GetLeaderboardData();
 	}
 	public void OnClick_ProfileButton()
 	{
-		LeaderboardPanelUI.ShowUI();
+		ProfilePanelUI.ShowUI();
+		ProfilePanelUI.Instance.SetProfileData();
 	}
+
 }

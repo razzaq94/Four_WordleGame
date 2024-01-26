@@ -26,7 +26,6 @@ public class LogInManager : MonoBehaviour
         else
         {
             APIManager.Instance.LogIn();
-			OpenGameScene();
 
         }
     }
@@ -43,13 +42,19 @@ public class LogInManager : MonoBehaviour
 		//	SoundManager.instance.Play_BUTTON_CLICK_Sound();
 		StartCoroutine(LoadScene());
 	}
+	public void UpdateSceneActivationStatus(bool status)
+	{
+		asyncOperation.allowSceneActivation = status;
+
+	}
+	AsyncOperation asyncOperation;
 	IEnumerator LoadScene()
 	{
 		float progress = 0f;
 		//LoadingPanel.SetActive(true);
 		string sceneName = "MainMenu";
-		AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
-		asyncOperation.allowSceneActivation = false;
+		asyncOperation = SceneManager.LoadSceneAsync(sceneName);
+		asyncOperation.allowSceneActivation = true;
 
 
 
@@ -74,6 +79,7 @@ public class LogInManager : MonoBehaviour
 			//Output the current progress
 			ProgressText.text = "Loading progress: " + (asyncOperation.progress * 100) + "%";
 			ProgressBar.fillAmount = (asyncOperation.progress );
+			
 
 			// Check if the load has finished
 			if (asyncOperation.progress >= 0.90f)
@@ -82,7 +88,7 @@ public class LogInManager : MonoBehaviour
 				ProgressBar.fillAmount = (asyncOperation.progress );
 
 
-				asyncOperation.allowSceneActivation = true;
+				asyncOperation.allowSceneActivation = false;
 			}
 
 			yield return null;

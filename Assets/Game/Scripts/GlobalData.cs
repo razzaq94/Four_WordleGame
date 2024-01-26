@@ -22,6 +22,11 @@ public class GlobalData : MonoBehaviour
     public Stats UserStats = new Stats();
     public Stats GlobalStats = new Stats();
 
+    public int RevealBoosterCount = 0;
+    public int AutoColorBoosterCount = 0;
+    public int EliminateBoosterCount = 0;
+
+
 
 
 
