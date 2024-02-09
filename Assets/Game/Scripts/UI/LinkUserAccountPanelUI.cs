@@ -2,19 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 
 public class LinkUserAccountPanelUI : MonoBehaviour
 {
-	[SerializeField] TextMeshProUGUI newUserName;
+	[SerializeField] TextMeshProUGUI currentUserId;
+	[SerializeField] TextMeshProUGUI newUserId;
+	
 	public static LinkUserAccountPanelUI Instance;
 
 	private void Awake()
 	{
 		Instance = this;
 	}
+    private void Start()
+    {
+		currentUserId.text = GlobalData.Instance.userId;
+    }
 
-	public static LinkUserAccountPanelUI ShowUI()
+    public static LinkUserAccountPanelUI ShowUI()
 	{
 		if (Instance == null)
 		{
@@ -38,8 +45,18 @@ public class LinkUserAccountPanelUI : MonoBehaviour
 	}
 	public void LinkUserAccount()
 	{
-		APIManager.Instance.LogIn();
+		GlobalData.Instance.IsRestart = true;
+		GlobalData.Instance.userId = newUserId.text;
+		Destroy(NetworkAPIManager.Instance.gameObject);
+		SceneManager.LoadScene("SplashScene");
 		OnBackPressed();
+	}
+	public void CopyOldUserId()
+    {
+		string oldUserID = currentUserId.text.ToString();
+		print("oldUserID length : " + oldUserID);
+		GUIUtility.systemCopyBuffer = oldUserID;  
+
 	}
 
 }

@@ -6,9 +6,8 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timerText;
-    [SerializeField] private float MaxTime = 3f;
-    [SerializeField] private float MaxChallengeTime = 30f;
-    [SerializeField] private float CurrentTime = 3f;
+    [SerializeField] public float MaxTime ;
+    [SerializeField] public float CurrentTime ;
     //   [SerializeField] private Image progressImage;
     private bool stopTimer = false;
     public static Timer Instance;
@@ -18,7 +17,7 @@ public class Timer : MonoBehaviour
     }
     void Update()
     {
-        if (CurrentTime >= 0f && stopTimer == false)
+        if (CurrentTime > 0f && stopTimer == false)
         {
             CurrentTime -= Time.deltaTime;
 
@@ -31,15 +30,21 @@ public class Timer : MonoBehaviour
         else if (stopTimer == false)
         {
             StopTimer(true);
-            GameOverPanelUI.ShowUI();
-            GameOverPanelUI.Instance.SetText("BetterLuck next time !!!", WordManager.Instance.WordToGuess,WordManager.Instance.WordDefinition);
+            APIManager.Instance.SaveGameData(false);
+            ScoreManager.Instance.CalculateScore(UIManager.Instance.ContentHolder.transform.childCount + 1, ((int)Timer.Instance.MaxTime - (int)Timer.Instance.CurrentTime),false);
+
+            KeyboardManager.Instance.IsInterectable = true;
+            UIManager.Instance.UpdateInterectabilityBossterButtons(true);
+            UIManager.Instance.UpdateInterectabilityBackButton(true);
+            //GameOverPanelUI.ShowUI();
+            //GameOverPanelUI.Instance.SetText("BetterLuck next time !!!", WordManager.Instance.WordToGuess,WordManager.Instance.WordDefinition);
         }
 
     }
     public void ResetTimer()
     {
 
-        CurrentTime = MaxChallengeTime;
+        CurrentTime = MaxTime;
 
     }
     public void StopTimer(bool status)

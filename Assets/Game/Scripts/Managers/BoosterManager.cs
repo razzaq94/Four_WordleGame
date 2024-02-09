@@ -8,9 +8,9 @@ using UnityEngine.UIElements;
 
 public class BoosterManager : MonoBehaviour
 {
-    [SerializeField] int revealBoosterCount = 2;
-    [SerializeField] int eliminateBoosterCount = 3;
-    [SerializeField]public int autocolorBoosterCount = 1;
+   // [SerializeField] int revealBoosterCount = 2;
+  //  [SerializeField] int eliminateBoosterCount = 3;
+  //  [SerializeField]public int autocolorBoosterCount = 1;
     public bool isAutoColor = false;
     public static BoosterManager Instance;
     private void Awake()
@@ -20,9 +20,42 @@ public class BoosterManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        UIManager.Instance.UpdateRevealUI(revealBoosterCount);
-        UIManager.Instance.UpdateEliminateUI(eliminateBoosterCount);
-        UIManager.Instance.UpdateAutoColorUI(autocolorBoosterCount);
+        UIManager.Instance.UpdateRevealUI(GlobalData.Instance.RevealBoosterCount);
+        UIManager.Instance.UpdateEliminateUI(GlobalData.Instance.EliminateBoosterCount);
+     //   UIManager.Instance.UpdateAutoColorUI(GlobalData.Instance.AutoColorBoosterCount);
+
+
+        Boosters mybooster = new Boosters();
+        
+        mybooster.id = GlobalData.Instance.RevealBoosterId;
+        mybooster.count = GlobalData.Instance.RevealBoosterCount;
+        GlobalData.Instance.boosters[0] = mybooster;
+        
+        mybooster.id = GlobalData.Instance.AutoColorBoosterId;
+        mybooster.count = GlobalData.Instance.AutoColorBoosterCount;
+        GlobalData.Instance.boosters[1] = mybooster;
+        
+        mybooster.id = GlobalData.Instance.EliminateBoosterId;
+        mybooster.count = GlobalData.Instance.EliminateBoosterCount;
+        GlobalData.Instance.boosters[2] = mybooster;
+
+
+        SaveBoosters mySavebooster = new SaveBoosters();
+
+        mySavebooster.name = "Booster1";
+        mySavebooster.count = GlobalData.Instance.RevealBoosterCount;
+        GlobalData.Instance.saveBoosters[0] = mySavebooster;
+        
+        mySavebooster.name = "Booster2";
+        mySavebooster.count = GlobalData.Instance.AutoColorBoosterCount;
+        GlobalData.Instance.saveBoosters[1] = mySavebooster;
+        
+        mySavebooster.name = "Booster3";
+        mySavebooster.count = GlobalData.Instance.EliminateBoosterCount;
+        GlobalData.Instance.saveBoosters[2] = mySavebooster;
+
+
+
 
     }
 
@@ -34,10 +67,11 @@ public class BoosterManager : MonoBehaviour
 
     public void Reveal()
     {
-        if (revealBoosterCount > 0)
+        if (GlobalData.Instance.RevealBoosterCount > 0)
         {
 
             List<string> letterList = WordManager.Instance.getLetterList();
+            List<string> OriginalLetterList = WordManager.Instance.getLetterList();
             int length = letterList.Count;
             for (int i = 0; i < length; i++)
             {
@@ -46,9 +80,15 @@ public class BoosterManager : MonoBehaviour
                 {
                     KeyboardManager.Instance.ChangeKeyColor(letterList[idx].ToString(), WordManager.Instance.revealedColor);
                     UIManager.Instance.ChangeKeyColor(letterList[idx].ToString(), WordManager.Instance.revealedColor);
-                    revealBoosterCount--;
-                    UIManager.Instance.UpdateRevealUI(revealBoosterCount);
-
+                   // GlobalData.Instance.RevealBoosterCount--;
+                    GlobalData.Instance.UpdateBoosterCount("Reveal",-1);
+                    UIManager.Instance.UpdateRevealUI(GlobalData.Instance.RevealBoosterCount);
+                    Reveal r = new Reveal();
+                    r.word = letterList[idx].ToString();
+                    //r.index = idx;
+                    r.index = OriginalLetterList.IndexOf(letterList[idx]);
+                    WordManager.Instance.revealList.Add(r);
+                    UIManager.Instance.ShowRevealLetterOnTopRow();
                     break;
                 }
 
@@ -76,7 +116,7 @@ public class BoosterManager : MonoBehaviour
     }
     public void Eliminate()
     {
-        if (eliminateBoosterCount > 0)
+        if (GlobalData.Instance.EliminateBoosterCount > 0)
         {
             List<string> alphabetList = getAlphabets();
 
@@ -106,8 +146,9 @@ public class BoosterManager : MonoBehaviour
             }
             if (count > 0)
             {
-                eliminateBoosterCount--;
-                UIManager.Instance.UpdateEliminateUI(eliminateBoosterCount);
+  //              GlobalData.Instance.EliminateBoosterCount--;
+                GlobalData.Instance.UpdateBoosterCount("Eliminate", -1);
+                UIManager.Instance.UpdateEliminateUI(GlobalData.Instance.EliminateBoosterCount);
 
             }
         }
@@ -119,8 +160,9 @@ public class BoosterManager : MonoBehaviour
     public void AutoColor()
     {
         isAutoColor = true;
-        autocolorBoosterCount--;
-        UIManager.Instance.UpdateAutoColorUI(autocolorBoosterCount);
+//        GlobalData.Instance.AutoColorBoosterCount--;
+        GlobalData.Instance.UpdateBoosterCount("AutoColor", -1);
+        UIManager.Instance.UpdateAutoColorUI(GlobalData.Instance.AutoColorBoosterCount);
         GameObject rows = UIManager.Instance.ContentHolder;
         int counterIndex = (int)GlobalData.Instance.gameMode;
         Color color = WordManager.Instance.concealedColor;
@@ -242,6 +284,10 @@ public class BoosterManager : MonoBehaviour
 
 
     }
+
+   
+
+   
 }
 
 

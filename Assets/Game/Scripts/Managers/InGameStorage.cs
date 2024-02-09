@@ -50,11 +50,11 @@ public class InGameStorage : MonoBehaviour
     } 
     public void SetUserName(string nme)
     {
-        PlayerPrefs.SetString("USERNAME", nme);
+        PlayerPrefs.SetString("USERNAME", nme.ToUpper());
     }
     public string GetUserName()
     {
-        return PlayerPrefs.GetString("USERNAME", "itsabubaker");
+        return PlayerPrefs.GetString("USERNAME", "Anonymous"+ Random.Range(0,100));
     } 
     public void SetUserId(string id)
     {
@@ -62,6 +62,7 @@ public class InGameStorage : MonoBehaviour
     }
     public string GetUserId()
     {
-        return PlayerPrefs.GetString("USERID", "65a8abca06bf3eabc9bf7524");
+    //    return PlayerPrefs.GetString("USERID", null);
+        return PlayerPrefs.GetString("USERID", null);
     }
 }

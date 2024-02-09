@@ -9,9 +9,11 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] public GameObject GamePanel;
     [SerializeField] public GameObject TopRow;
+    public List<TextMeshProUGUI> TopRowCellHintTextList =  new List<TextMeshProUGUI>();
     [SerializeField] public GameObject ContentHolder;
     [SerializeField] public GameObject Row_PF;
     [SerializeField] public GameObject Cell_PF;
+    [SerializeField] public Button GameBackButton;
 
     //Boasters
     [SerializeField] GameObject Reveal;
@@ -37,6 +39,32 @@ public class UIManager : MonoBehaviour
         //CreateEmptyRow();
         KeyboardManager.Instance.ChangeKeySize("Backspace", new Vector2(200, 99));
     }
+    public void ShowRevealLetterOnTopRow()
+    {
+        for (int j = 0; j < WordManager.Instance.revealList.Count; j++)
+        {
+            if (TopRow.transform.childCount > 0)
+            {
+              
+                TextMeshProUGUI t = TopRow.transform.GetChild(0).transform.GetChild(WordManager.Instance.revealList[j].index).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
+                if (t.text == "")
+                {
+                    TopRowCellHintTextList[WordManager.Instance.revealList[j].index].gameObject.SetActive(true);
+                    TextMeshProUGUI tHint = TopRow.transform.GetChild(0).transform.GetChild(WordManager.Instance.revealList[j].index).transform.Find("HintText").GetComponent<TextMeshProUGUI>();
+                    tHint.text = WordManager.Instance.revealList[j].word;
+                    tHint.color = Color.grey;
+                }
+                else
+                {
+                    TopRowCellHintTextList[WordManager.Instance.revealList[j].index].gameObject.SetActive(false);
+
+                }
+                //   .transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = WordManager.Instance.revealList[j].word;
+                //cell.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().color = Color.grey;
+            }
+        }
+
+    }
     public void CreateTopRow()
     {
         adjustDimenssions();
@@ -54,12 +82,13 @@ public class UIManager : MonoBehaviour
                 Destroy(cell.GetComponent<GridCell>());
                 cell.transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.counterBgColor;
             }
+            TopRowCellHintTextList.Add(cell.transform.Find("HintText").GetComponent<TextMeshProUGUI>());
         }
         WordManager.Instance.CurrentColNumber = 0;
         WordManager.Instance.CurrentRowNumber = 0;
         WordManager.Instance.CanWrite = true;
         KeyboardManager.Instance.UpdateEnterButton(false);
-
+        ShowRevealLetterOnTopRow();
     }
     public void CreateEmptyRow()
     {
@@ -78,11 +107,13 @@ public class UIManager : MonoBehaviour
                 cell.transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.counterBgColor;
 
             }
+           
         }
         WordManager.Instance.CurrentColNumber = 0;
         WordManager.Instance.CurrentRowNumber = 0;
         WordManager.Instance.CanWrite = true;
         KeyboardManager.Instance.UpdateEnterButton(false);
+       // ShowRevealLetterOnTopRow();
 
 
 
@@ -120,7 +151,7 @@ public class UIManager : MonoBehaviour
         WordManager.Instance.CurrentRowNumber = 0;
         WordManager.Instance.CanWrite = true;
         KeyboardManager.Instance.UpdateEnterButton(false);
-
+        ShowRevealLetterOnTopRow();
 
     }
     private void adjustDimenssions()
@@ -218,6 +249,7 @@ public class UIManager : MonoBehaviour
         //  int row = WordManager.Instance.CurrentRowNumber;
         if (WordManager.Instance.CanWrite)
         {
+        
             int row = 0;
             int col = WordManager.Instance.CurrentColNumber;
             //   string letterOnCurrentCell = GamePanel.transform.Find("GridPanel").transform.GetChild(row).transform.GetChild(col).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text;
@@ -227,24 +259,30 @@ public class UIManager : MonoBehaviour
                 //   GamePanel.transform.Find("GridPanel").transform.GetChild(row).transform.GetChild(col).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = letter;
                 TopRow.transform.GetChild(row).transform.GetChild(col).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = letter;
                 TopRow.transform.GetChild(row).transform.GetChild(col).GetComponent<GridCell>().SetCellBg_Color(KeyboardManager.Instance.GetKeyColor(letter));
+               // TopRow.transform.GetChild(row).transform.GetChild(col).transform.Find("HintText").gameObject.SetActive(false);
                 WordManager.Instance.SetNextColNumber();
+                UIManager.Instance.ShowRevealLetterOnTopRow();
+
             }
             else if (letter != "" && WordManager.Instance.CanWrite && letterOnCurrentCell != "" && col < ((int)GlobalData.Instance.gameMode - 1))
             {
                 //  GamePanel.transform.Find("GridPanel").transform.GetChild(row).transform.GetChild(col+1).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = letter;
                 TopRow.transform.GetChild(row).transform.GetChild(col + 1).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = letter;
                 TopRow.transform.GetChild(row).transform.GetChild(col).GetComponent<GridCell>().SetCellBg_Color(KeyboardManager.Instance.GetKeyColor(letter));
+             //   TopRow.transform.GetChild(row).transform.GetChild(col).transform.Find("HintText").gameObject.SetActive(false);
                 WordManager.Instance.SetNextColNumber();
+                UIManager.Instance.ShowRevealLetterOnTopRow();
+
             }
             // print("wordlength : " + WordManager.Instance.GetCurrentWordLength() + "game mode count : " + (((int)GlobalData.Instance.gameMode)));
-            if (WordManager.Instance.GetCurrentWordLength() == (((int)GlobalData.Instance.gameMode)))
-            {
+            /*   if (WordManager.Instance.GetCurrentWordLength() == (((int)GlobalData.Instance.gameMode)))
+               {
+                   UIManager.Instance.ContentHolder.GetComponent<RectTransform>().transform.localPosition = new Vector2(0, 0);
+                   //WordManager.Instance.CheckWordOnline();
+                   WordManager.Instance.CheckWordOffline();
 
-                //WordManager.Instance.CheckWordOnline();
-                WordManager.Instance.CheckWordOffline();
-       
-                //KeyboardManager.Instance.UpdateEnterButton(true);
-            }
+                   //KeyboardManager.Instance.UpdateEnterButton(true);
+               }*/
         }
     }
     public void RemoveLetter()
@@ -258,8 +296,10 @@ public class UIManager : MonoBehaviour
         {
             //GamePanel.transform.Find("GridPanel").transform.GetChild(row).transform.GetChild(col-1).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = "";
             TopRow.transform.GetChild(row).transform.GetChild(col-1).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = "";
+           // TopRow.transform.GetChild(row).transform.GetChild(col - 1).transform.Find("HintText").gameObject.SetActive(true);
             TopRow.transform.GetChild(row).transform.GetChild(col - 1).transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.originalBgColor;
             WordManager.Instance.SetPreviousColNumber();
+            UIManager.Instance.ShowRevealLetterOnTopRow();
 
         }
         else 
@@ -267,8 +307,11 @@ public class UIManager : MonoBehaviour
          //   GamePanel.transform.Find("GridPanel").transform.GetChild(row).transform.GetChild(col).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = "";
            
             TopRow.transform.GetChild(row).transform.GetChild(col).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = "";
-           TopRow.transform.GetChild(row).transform.GetChild(col ).transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.originalBgColor;
+           // TopRow.transform.GetChild(row).transform.GetChild(col).transform.Find("HintText").gameObject.SetActive(true);
+
+            TopRow.transform.GetChild(row).transform.GetChild(col ).transform.Find("Bg_Color").GetComponent<Image>().color = WordManager.Instance.originalBgColor;
            WordManager.Instance.SetPreviousColNumber();
+            UIManager.Instance.ShowRevealLetterOnTopRow();
 
         }
         WordManager.Instance.CanWrite = true;
@@ -337,11 +380,19 @@ public class UIManager : MonoBehaviour
 
     }
 
+    public void UpdateInterectabilityBossterButtons(bool status)
+    {
+        Reveal.GetComponent<Button>().interactable = status;
+        AutoColor.GetComponent<Button>().interactable = status;
+        Eliminate.GetComponent<Button>().interactable = status;
+    }
+    public void UpdateInterectabilityBackButton(bool status)
+    {
+        GameBackButton.interactable = status;
+    }
 
 
-
-
-    public void OpenQuitPanel()
+        public void OpenQuitPanel()
     {
         QuitPanelUI.ShowUI();
     }

@@ -28,8 +28,11 @@ public class TimerUp : MonoBehaviour
         else if (stopTimer == false)
         {
             StopTimer(true);
-            GameOverPanelUI.ShowUI();
-            GameOverPanelUI.Instance.SetText("BetterLuck next time !!!", WordManager.Instance.WordToGuess, WordManager.Instance.WordDefinition);
+            APIManager.Instance.SaveGameData(false);
+         //   APIManager.Instance.UpdateUserData();
+
+            // GameOverPanelUI.ShowUI();
+            // GameOverPanelUI.Instance.SetText("BetterLuck next time !!!", WordManager.Instance.WordToGuess, WordManager.Instance.WordDefinition);
         }
 
     }

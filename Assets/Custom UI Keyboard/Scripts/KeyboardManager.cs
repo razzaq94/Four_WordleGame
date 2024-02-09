@@ -88,6 +88,8 @@ public class KeyboardManager : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     [SerializeField] private Button enterButton;
     public static KeyboardManager Instance;
     bool isValidate;
+    public bool IsInterectable = true;
+
     private void Awake()
     {
         Instance = this;
@@ -283,25 +285,31 @@ public class KeyboardManager : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     /// </summary>
     /// <param name="key"></param>
     public void PressKey(string key) {
-        
-       // print("Key : " + key);
-        if (key == "Enter")
+        if (IsInterectable)
         {
-           // WordManager.Instance.CheckWordOnline();
+            // print("Key : " + key);
+            if (key == "Enter")
+            {
+                UIManager.Instance.ContentHolder.GetComponent<RectTransform>().transform.localPosition = new Vector2(0, 0);
+                //WordManager.Instance.CheckWordOnline();
+                WordManager.Instance.CheckWordOffline();
+
+                KeyboardManager.Instance.UpdateEnterButton(true);
+            }
+            else if (key == "Backspace")
+            {
+                UIManager.Instance.RemoveLetter();
+            }
+            else
+            {
+                UIManager.Instance.WriteLetter(key);
+
+            }
+            if (targetInput == null) {
+                return;
+            }
+            targetInput.PressKey(key);
         }
-        else if (key == "Backspace")
-        {
-            UIManager.Instance.RemoveLetter();
-        }
-        else
-        {
-            UIManager.Instance.WriteLetter(key);
-            
-        }
-        if(targetInput == null) {
-            return;
-        }
-        targetInput.PressKey(key);
     }
 
     /// <summary>
@@ -414,7 +422,8 @@ public class KeyboardManager : MonoBehaviour, IPointerDownHandler, IPointerUpHan
                         if (keyScript.keyType == KeyClass.KeyType.Backspace)
                         {
                             keyScript.GetComponent<RectTransform>().sizeDelta = new Vector2(120f, 99f);
-                            keyScript.transform.parent.GetComponent<HorizontalLayoutGroup>().padding.left = 130;
+                           // keyScript.transform.parent.GetComponent<HorizontalLayoutGroup>().padding.left = 130;
+                            keyScript.transform.parent.GetComponent<HorizontalLayoutGroup>().padding.left = 0;
 
                             Image background = keyScript.transform.Find("Back (1)").GetComponent<Image>();
                             background.type = Image.Type.Simple;
@@ -435,6 +444,29 @@ public class KeyboardManager : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
 
                         }
+                        else if(keyScript.keyType == KeyClass.KeyType.Enter)
+                        {
+                            keyScript.GetComponent<RectTransform>().sizeDelta = new Vector2(120f, 99f);
+                          //  keyScript.transform.parent.GetComponent<HorizontalLayoutGroup>().padding.left = 130;
+                            keyScript.transform.parent.GetComponent<HorizontalLayoutGroup>().padding.left = 0;
+
+                            Image background = keyScript.transform.Find("Back (1)").GetComponent<Image>();
+                            background.type = Image.Type.Simple;
+                            background.preserveAspect = false;
+                            background.color = WordManager.Instance.originalBgColor;
+                            background.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
+
+                            Image shadow = keyScript.transform.Find("Shadow").GetComponent<Image>();
+                            shadow.color = new Color(shadow.color.r, shadow.color.g, shadow.color.b, 1f);
+                            // shadow.GetComponent<RectTransform>().localPosition = new Vector3(5, 0, 0);
+                            shadow.type = Image.Type.Simple;
+                            shadow.preserveAspect = false;
+
+                            Image image = keyScript.transform.Find("Image").GetComponent<Image>();
+                            image.GetComponent<RectTransform>().sizeDelta = new Vector2(72, 50f);
+                            image.preserveAspect = true;
+                        }
+
                         else
                         {
                             Image shadow = keyScript.transform.Find("Shadow").GetComponent<Image>();
@@ -597,15 +629,16 @@ public class KeyboardManager : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     // user defined functions
     public void UpdateEnterButton(bool status)
     {
-        //if(status == true && WordManager.Instance.GetCurrentWordLength() == (int) GlobalData.Instance.gameMode)
-        //{
-        //    enterButton.interactable = true;
+      //  if (status == true && WordManager.Instance.GetCurrentWordLength() == (int)GlobalData.Instance.gameMode)
+        if (WordManager.Instance.GetCurrentWordLength() == (int)GlobalData.Instance.gameMode)
+        {
+            enterButton.interactable = true;
 
-        //}
-        //else
-        //{
-        //    enterButton.interactable = false;
-        //}
+        }
+        else
+        {
+            enterButton.interactable = false;
+        }
     }
 
     public Color GetKeyColor(string myKey)

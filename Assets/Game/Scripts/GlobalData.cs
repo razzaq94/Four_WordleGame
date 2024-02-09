@@ -7,6 +7,7 @@ public class GlobalData : MonoBehaviour
 {
     public GameMode gameMode = GameMode.Hard;
     public List<string> WordList;
+    public List<string> TempWordList;
     public LogInRequest logInRequest = new LogInRequest();
 
     //User data 
@@ -21,11 +22,30 @@ public class GlobalData : MonoBehaviour
     public int totalGamesWon = 0;
     public Stats UserStats = new Stats();
     public Stats GlobalStats = new Stats();
+    public float EasyFasterTimePercent = 0;
+    public float MediumFasterTimePercent = 0;
+    public float HardFasterTimePercent = 0;
+    public float EasyLessGuessPercent = 0;
+    public float MediumLessGuessPercent = 0;
+    public float HardLessGuessPercent = 0;
+
+    public float PeopleSolvedThisWordInPercent = 0;
+    public float FasterTimeInPercent = 0;
+    public float LessGuessesInPercent = 0;
+
 
     public int RevealBoosterCount = 0;
     public int AutoColorBoosterCount = 0;
     public int EliminateBoosterCount = 0;
+    
+    public string RevealBoosterId = null;
+    public string AutoColorBoosterId = null;
+    public string EliminateBoosterId = null;
 
+    public bool IsRestart = false;
+
+    public Boosters[] boosters = new Boosters[3];
+    public SaveBoosters[] saveBoosters = new SaveBoosters[3];
 
 
 
@@ -74,4 +94,61 @@ public class GlobalData : MonoBehaviour
         Medium = 5,
         Hard = 6
     }
+    public void UpdateBoosterCount(string boosterName, int change)
+    {
+        string boosterId;
+        if (boosterName == "Reveal")
+        {
+            RevealBoosterCount += change;
+            boosterId = RevealBoosterId;
+
+            Boosters mybooster = new Boosters();
+            mybooster.id = RevealBoosterId;
+            mybooster.count = RevealBoosterCount;
+            boosters[0] = mybooster; 
+            
+            SaveBoosters mysavebooster = new SaveBoosters();
+            mysavebooster.name = "Booster1";
+            mysavebooster.count = RevealBoosterCount;
+            saveBoosters[0] = mysavebooster;
+        }
+        else if (boosterName == "AutoColor")
+        {
+            AutoColorBoosterCount += change;
+            //  boosterId = AutoColorBoosterId;
+            
+            Boosters mybooster = new Boosters();
+            mybooster.id = AutoColorBoosterId;
+            mybooster.count = AutoColorBoosterCount;
+            boosters[1] = mybooster;
+
+            SaveBoosters mysavebooster = new SaveBoosters();
+            mysavebooster.name = "Booster2";
+            mysavebooster.count = AutoColorBoosterCount;
+            saveBoosters[1] = mysavebooster;
+
+
+        }
+        else if (boosterName == "Eliminate")
+        {
+            EliminateBoosterCount += change;
+            //boosterId = EliminateBoosterId;
+            
+            Boosters mybooster = new Boosters();
+            mybooster.id = EliminateBoosterId;
+            mybooster.count = EliminateBoosterCount;
+            boosters[2] = mybooster;
+
+
+            SaveBoosters mysavebooster = new SaveBoosters();
+            mysavebooster.name = "Booster3";
+            mysavebooster.count = EliminateBoosterCount;
+            saveBoosters[2] = mysavebooster;
+
+        }
+
+          APIManager.Instance.UpdateUserData();
+
+    }
+
 }

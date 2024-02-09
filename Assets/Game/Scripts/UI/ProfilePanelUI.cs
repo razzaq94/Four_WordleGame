@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
+using System.Numerics;
 
 public class ProfilePanelUI : MonoBehaviour
 {
 	[SerializeField] TextMeshProUGUI Name;
 	[SerializeField] TextMeshProUGUI LevelNumber;
+	[SerializeField] Image FillImage;
+	[SerializeField] TextMeshProUGUI TargetText;
+
+
 	[SerializeField] TextMeshProUGUI HighestScore;
 	[SerializeField] TextMeshProUGUI WonGameCount;
 	[SerializeField] TextMeshProUGUI PlayedGameCount;
@@ -58,11 +64,13 @@ public class ProfilePanelUI : MonoBehaviour
 	public void SetProfileData()
     {
 		Name.text = GlobalData.Instance.UserName;
-		LevelNumber.text = GlobalData.Instance.level.ToString();
+		LevelNumber.text = ((GlobalData.Instance.totalScore / 1000) + 1).ToString();
+		FillImage.fillAmount = ((float)(GlobalData.Instance.totalScore % 1000f)) / 1000f;
+		TargetText.text = (GlobalData.Instance.totalScore % 1000) + "/1000"; 
 		HighestScore.text = GlobalData.Instance.highestScore.ToString();
 		WonGameCount.text = GlobalData.Instance.totalGamesWon.ToString();
 		PlayedGameCount.text = GlobalData.Instance.totalGamesPlayed.ToString();
-		UpdateEasyButton();
+	//	UpdateEasyButton();
 
 
 
@@ -71,6 +79,7 @@ public class ProfilePanelUI : MonoBehaviour
 	public void SetUserName()
     {
 		Name.text = GlobalData.Instance.UserName;
+		MainPanelUI.Instance.UpdateNameUI();
 	}
 	public void OnClick_UpdateUserName()
     {
@@ -87,9 +96,13 @@ public class ProfilePanelUI : MonoBehaviour
 		easyButton.GetComponent<Image>().sprite = modeSelectionBgSelected;
 		mediumButton.GetComponent<Image>().sprite = modeSelectionBgUnSelected;
 		hardButton.GetComponent<Image>().sprite = modeSelectionBgUnSelected;
-		
-		FasterText.text = "YOU ARE FASTER THAN " + 30 + "% OF PEOPLE";
-		QuickestText.text = "YOU USE LESS WORDS THAN " + 10 + "% OF PEOPLE";  
+
+		float zScoreTime = (GlobalData.Instance.UserStats.EasyModeStats.Time.Median  - GlobalData.Instance.UserStats.EasyModeStats.Time.Median) / GlobalData.Instance.UserStats.EasyModeStats.Time.StandardDeviation;
+	//	float percentFasterTime = Math.Round((1 - normalDistribution.CumulativeDistribution(zScoreTime)) * 100);
+
+
+		FasterText.text = "YOU ARE FASTER THAN " + GlobalData.Instance.EasyFasterTimePercent + "% OF PEOPLE";
+		QuickestText.text = "YOU USE LESS WORDS THAN " + GlobalData.Instance.EasyLessGuessPercent + "% OF PEOPLE";  
 	}
 
     public void UpdateMediumButton()
@@ -98,17 +111,17 @@ public class ProfilePanelUI : MonoBehaviour
 		mediumButton.GetComponent<Image>().sprite = modeSelectionBgSelected;
 		hardButton.GetComponent<Image>().sprite = modeSelectionBgUnSelected;
 
-		FasterText.text = "YOU ARE FASTER THAN " + 32 + "% OF PEOPLE";
-		QuickestText.text = "YOU USE LESS WORDS THAN " + 12 + "% OF PEOPLE";  
+		FasterText.text = "YOU ARE FASTER THAN " + GlobalData.Instance.MediumFasterTimePercent + "% OF PEOPLE";
+		QuickestText.text = "YOU USE LESS WORDS THAN " + GlobalData.Instance.MediumLessGuessPercent + "% OF PEOPLE";
 	}
 
-    public void UpdateHardButton()
+	public void UpdateHardButton()
     {
 		easyButton.GetComponent<Image>().sprite = modeSelectionBgUnSelected;
 		mediumButton.GetComponent<Image>().sprite = modeSelectionBgUnSelected;
 		hardButton.GetComponent<Image>().sprite = modeSelectionBgSelected;
 
-		FasterText.text = "YOU ARE FASTER THAN " + 33 + "% OF PEOPLE";
-		QuickestText.text = "YOU USE LESS WORDS THAN " + 13 + "% OF PEOPLE";  
+		FasterText.text = "YOU ARE FASTER THAN " + GlobalData.Instance.HardFasterTimePercent + "% OF PEOPLE";
+		QuickestText.text = "YOU USE LESS WORDS THAN " + GlobalData.Instance.HardLessGuessPercent + "% OF PEOPLE";
 	}
 }

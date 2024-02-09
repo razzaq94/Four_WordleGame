@@ -279,6 +279,10 @@ public class AutoColorBooster : MonoBehaviour
     /// <param name="guesses">History of guesses and their corresponding responses.</param>
     public void AutoColor()
     {
+        if(UIManager.Instance.ContentHolder.transform.childCount <=0)
+        {
+            return;
+        }
 
         List<Tuple<string, int>> guesses = WordManager.Instance.guesses;
 
@@ -331,13 +335,15 @@ public class AutoColorBooster : MonoBehaviour
     public void OnClick_AutoColorButton()
     {
 
-        if (BoosterManager.Instance.autocolorBoosterCount > 0)
+        if (GlobalData.Instance.AutoColorBoosterCount > 0)
         {
             BoosterManager.Instance.isAutoColor = true;
-            BoosterManager.Instance.autocolorBoosterCount--;
+            //GlobalData.Instance.AutoColorBoosterCount--;
+            GlobalData.Instance.UpdateBoosterCount("AutoColor", -1);
+
             UIManager.Instance.ChangeAllKeyColorToDefault();
             KeyboardManager.Instance.ClearKeyColor();
-            UIManager.Instance.UpdateAutoColorUI(BoosterManager.Instance.autocolorBoosterCount);
+            UIManager.Instance.UpdateAutoColorUI(GlobalData.Instance.AutoColorBoosterCount);
             AutoColor();
         }
         else

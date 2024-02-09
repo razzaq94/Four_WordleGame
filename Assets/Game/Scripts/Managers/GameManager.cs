@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     {
         StartGame();
 
-        APIManager.Instance.SaveGameData("TAKE", 321, 157, 17, true, "Easy");
+     //   APIManager.Instance.SaveGameData("TAKE", 321, 157, 17, true, "Easy");
     }
 
     private void StartGame()
@@ -26,6 +26,10 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.ResetGamePanelUI();
         //   UIManager.Instance.CreateEmptyRow();
         UIManager.Instance.CreateTopRow();
+        KeyboardManager.Instance.IsInterectable = true;
+        UIManager.Instance.UpdateInterectabilityBossterButtons(true);
+        UIManager.Instance.UpdateInterectabilityBackButton(true);
+        WordManager.Instance.revealList.Clear();
         StartCoroutine(waitAndCallGetWordDefinition());
     }
     IEnumerator waitAndCallGetWordDefinition()
@@ -36,7 +40,8 @@ public class GameManager : MonoBehaviour
     }
     public void BackToMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        Destroy(NetworkAPIManager.Instance.gameObject);
+        SceneManager.LoadScene("SplashScene");
     }
     public void ReloadLevel()
     {

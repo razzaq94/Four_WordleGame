@@ -5,10 +5,13 @@ using SimpleJSON;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using System;
+
 public class LogInManager : MonoBehaviour
 {
 	[SerializeField] Image ProgressBar;
 	[SerializeField] TextMeshProUGUI ProgressText;
+	AsyncOperation asyncOperation;
 
 
 	public static LogInManager Instance;
@@ -19,16 +22,20 @@ public class LogInManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (InGameStorage.Instance.GetUserId() == "")
-        {
-            LogInPanelUI.ShowUI();
-        }
-        else
-        {
-            APIManager.Instance.LogIn();
 
-        }
-    }
+		//if (InGameStorage.Instance.GetUserId() == "")
+  //      {
+  //          LogInPanelUI.ShowUI();
+  //      }
+  //      else
+  //      {
+            APIManager.Instance.LogIn();
+			LogInManager.Instance.OpenGameScene();
+			UpdateSceneActivationStatus(false);
+
+
+		//}
+	}
 
     // Update is called once per frame
     void Update()
@@ -47,7 +54,6 @@ public class LogInManager : MonoBehaviour
 		asyncOperation.allowSceneActivation = status;
 
 	}
-	AsyncOperation asyncOperation;
 	IEnumerator LoadScene()
 	{
 		float progress = 0f;
@@ -77,14 +83,15 @@ public class LogInManager : MonoBehaviour
 		while (!asyncOperation.isDone)
 		{
 			//Output the current progress
-			ProgressText.text = "Loading progress: " + (asyncOperation.progress * 100) + "%";
+			ProgressText.text = Math.Round(asyncOperation.progress * 100) + "%";
 			ProgressBar.fillAmount = (asyncOperation.progress );
 			
 
 			// Check if the load has finished
 			if (asyncOperation.progress >= 0.90f)
 			{
-				ProgressText.text = "Loading progress: " + (asyncOperation.progress * 100) + "%";
+				ProgressText.text = Math.Round(asyncOperation.progress * 100) + "%";
+//				ProgressText.text = "Loading progress: " + (asyncOperation.progress * 100) + "%";
 				ProgressBar.fillAmount = (asyncOperation.progress );
 
 

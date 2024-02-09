@@ -1,17 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class SettingPanelUI : MonoBehaviour
 {
 	public static SettingPanelUI Instance;
+	[SerializeField] private TextMeshProUGUI UserIdUI;
 
 	private void Awake()
 	{
 		Instance = this;
 	}
+    private void Start()
+    {
+		UserIdUI.text = " USER_ID:"+GlobalData.Instance.userId;
 
-	public static SettingPanelUI ShowUI()
+	}
+    public static SettingPanelUI ShowUI()
 	{
 		if (Instance == null)
 		{
@@ -29,6 +35,20 @@ public class SettingPanelUI : MonoBehaviour
 		}
 		return Instance;
 	}
+	public void CopyOldUserId()
+	{
+		GUIUtility.systemCopyBuffer = GlobalData.Instance.userId;
+	}
+	public void Logout()
+    {
+		string newUsername = "Anonymous"+ Random.Range(0,100);
+		InGameStorage.Instance.SetUserId("");
+		InGameStorage.Instance.SetUserName(newUsername);
+		GlobalData.Instance.userId = "";
+		GlobalData.Instance.UserName = newUsername;
+
+		Application.Quit();
+    }
 	public void OnBackPressed()
 	{
 		Destroy(gameObject);

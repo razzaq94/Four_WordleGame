@@ -989,6 +989,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameMode: 6
   WordList: []
+  TempWordList: []
   token: 
   userId: 
   UserName: 
@@ -998,6 +999,22 @@ MonoBehaviour:
   isPremium: 0
   totalGamesPlayed: 0
   totalGamesWon: 0
+  EasyFasterTimePercent: 0
+  MediumFasterTimePercent: 0
+  HardFasterTimePercent: 0
+  EasyLessGuessPercent: 0
+  MediumLessGuessPercent: 0
+  HardLessGuessPercent: 0
+  PeopleSolvedThisWordInPercent: 0
+  FasterTimeInPercent: 0
+  LessGuessesInPercent: 0
+  RevealBoosterCount: 1
+  AutoColorBoosterCount: 0
+  EliminateBoosterCount: 1
+  RevealBoosterId: 
+  AutoColorBoosterId: 
+  EliminateBoosterId: 
+  IsRestart: 0
 --- !u!4 &1784561158
 Transform:
   m_ObjectHideFlags: 0
