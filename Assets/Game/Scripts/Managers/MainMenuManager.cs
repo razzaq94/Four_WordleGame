@@ -16,6 +16,9 @@ public class MainMenuManager : MonoBehaviour
     private void Start()
     {
         MainPanelUI.ShowUI();
+
+        //StartCoroutine(waitAndShowUI());
+
         //if(InGameStorage.Instance.GetUserId() ==  "")
         //{
         //    LogInPanelUI.ShowUI();
@@ -32,8 +35,14 @@ public class MainMenuManager : MonoBehaviour
 
 
     }
+    IEnumerator waitAndShowUI()
+    {
+        yield return new WaitForSeconds(0.1f);
+        MainPanelUI.ShowUI();
 
-  
+    }
+
+
 }
 
    

@@ -392,10 +392,16 @@ public class UIManager : MonoBehaviour
     }
 
 
-        public void OpenQuitPanel()
+    public void OpenQuitPanel()
     {
         QuitPanelUI.ShowUI();
     }
+    public void OpenTutorialPanel()
+    {
+        TutorialPanelUI.ShowUI();
+    }
+
+
 
 
 

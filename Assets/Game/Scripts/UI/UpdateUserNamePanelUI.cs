@@ -7,7 +7,13 @@ using Unity.VisualScripting;
 public class UpdateUserNamePanelUI : MonoBehaviour
 {
 	[SerializeField] TextMeshProUGUI newUserName;
+	[SerializeField] TMP_InputField InputFieldText;
 	[SerializeField] TextMeshProUGUI lengthCheck;
+	[SerializeField] private Animator PanelAnimator;
+	[SerializeField] private Animator BackButtonAnimator;
+	[SerializeField] private Animator PanelFadingAnimator;
+	private List<string> panelExitAnimationCondition = new List<string>();
+
 	public static UpdateUserNamePanelUI Instance;
 
 	private void Awake()
@@ -16,9 +22,17 @@ public class UpdateUserNamePanelUI : MonoBehaviour
 	}
     private void Start()
     {
+
+		panelExitAnimationCondition.Add("IsLeftOut");
+		panelExitAnimationCondition.Add("IsRightOut");
+		panelExitAnimationCondition.Add("IsBottomOut");
+
 		lengthCheck.gameObject.SetActive(false);
+		InputFieldText.text = GlobalData.Instance.UserName;
+
     }
-    public static UpdateUserNamePanelUI ShowUI()
+    
+	public static UpdateUserNamePanelUI ShowUI()
 	{
 		if (Instance == null)
 		{
@@ -38,7 +52,16 @@ public class UpdateUserNamePanelUI : MonoBehaviour
 	}
 	public void OnBackPressed()
 	{
+		StartCoroutine(waitAndDestroy());
+	}
+	IEnumerator waitAndDestroy()
+	{
+		PanelAnimator.SetBool(panelExitAnimationCondition[UnityEngine.Random.Range(0, 3)], true);
+		BackButtonAnimator.SetBool("IsOut", true);
+		PanelFadingAnimator.SetBool("IsOut", true);
+		yield return new WaitForSeconds(0.8f);
 		Destroy(gameObject);
+
 	}
 	public void CheckUserNameLength()
 	{

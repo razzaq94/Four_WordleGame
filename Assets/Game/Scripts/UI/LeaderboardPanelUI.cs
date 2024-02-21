@@ -13,15 +13,23 @@ public class LeaderboardPanelUI : MonoBehaviour
 	[SerializeField] GameObject CurrentUser;
 	[SerializeField] GameObject Item_PF;
 	[SerializeField] Transform Parent;
-
-
-
+	[SerializeField] private Animator PanelAnimator;
+	[SerializeField] private Animator BackButtonAnimator;
+	[SerializeField] private Animator PanelFadingAnimator;
+	private List<string> panelExitAnimationCondition = new List<string>();
 	public static LeaderboardPanelUI Instance;
-
 	private void Awake()
 	{
 		Instance = this;
 	}
+	private void Start()
+	{
+		panelExitAnimationCondition.Add("IsLeftOut");
+		panelExitAnimationCondition.Add("IsRightOut");
+		panelExitAnimationCondition.Add("IsBottomOut");
+
+	}
+	
 
 	public static LeaderboardPanelUI ShowUI()
 	{
@@ -43,7 +51,16 @@ public class LeaderboardPanelUI : MonoBehaviour
 	}
 	public void OnBackPressed()
 	{
+		StartCoroutine(waitAndDestroy());
+	}
+	IEnumerator waitAndDestroy()
+	{
+		PanelAnimator.SetBool(panelExitAnimationCondition[UnityEngine.Random.Range(0, 3)], true);
+		BackButtonAnimator.SetBool("IsOut", true);
+		PanelFadingAnimator.SetBool("IsOut", true);
+		yield return new WaitForSeconds(0.8f);
 		Destroy(gameObject);
+
 	}
 	//public void SetLeaderboardData(string [] arr)
 	public void SetLeaderboardData(JSONNode node)

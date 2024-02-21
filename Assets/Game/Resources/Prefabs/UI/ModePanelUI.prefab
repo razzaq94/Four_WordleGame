@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1005113279865638618}
   - component: {fileID: 2669426977021300321}
   - component: {fileID: 2689365640530107427}
+  - component: {fileID: 5535560695018262581}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -133,6 +134,27 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!95 &5535560695018262581
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543788779392835464}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1ff48b414c70b014f8e8ed096352e85e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1460708977497555038
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,6 +298,7 @@ GameObject:
   - component: {fileID: 4909231658748254192}
   - component: {fileID: 7374959589356950774}
   - component: {fileID: 5825370108847306690}
+  - component: {fileID: 8545647090132566509}
   m_Layer: 5
   m_Name: ModeButtonPanel
   m_TagString: Untagged
@@ -334,7 +357,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a3577d8bfdc7cc244b39ee3a9d4232be, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5fd0f6ca1dbbd26459903db4ba2f54ce, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -344,6 +367,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &8545647090132566509
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5515556818235713167}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cdd7bbf322eff0045ab388e171b66cc3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5848191140398835127
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,6 +400,7 @@ GameObject:
   - component: {fileID: 5453640779129593659}
   - component: {fileID: 1129178942297444125}
   - component: {fileID: 6749751865442877510}
+  - component: {fileID: 5347608296068820467}
   m_Layer: 5
   m_Name: ModePanelUI
   m_TagString: Untagged
@@ -434,6 +479,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f35700d55086039478ef803f7069d9ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PanelAnimator: {fileID: 8545647090132566509}
+  BackButtonAnimator: {fileID: 5535560695018262581}
+  PanelFadingAnimator: {fileID: 5347608296068820467}
+--- !u!95 &5347608296068820467
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5848191140398835127}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d4f7419081dfcc242b1f48e481356b3b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6415232467604424898
 GameObject:
   m_ObjectHideFlags: 0

@@ -1018,6 +1018,7 @@ GameObject:
   - component: {fileID: 6891797829708625735}
   - component: {fileID: 4562251970644091022}
   - component: {fileID: 3270255055758520385}
+  - component: {fileID: 512912296610705460}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -1139,6 +1140,27 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!95 &512912296610705460
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2799135111904293493}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1ff48b414c70b014f8e8ed096352e85e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3003730396579746869
 GameObject:
   m_ObjectHideFlags: 0
@@ -1885,6 +1907,7 @@ GameObject:
   - component: {fileID: 48220022647765797}
   - component: {fileID: 2975554574921791238}
   - component: {fileID: 3607137298734126900}
+  - component: {fileID: 26150956370940234}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -1952,6 +1975,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &26150956370940234
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5156863708371526530}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cdd7bbf322eff0045ab388e171b66cc3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5224405285547917591
 GameObject:
   m_ObjectHideFlags: 0
@@ -2422,6 +2466,7 @@ GameObject:
   - component: {fileID: 1848576503844267803}
   - component: {fileID: 1048789710770632970}
   - component: {fileID: 7288152966033526788}
+  - component: {fileID: 4892530269774530181}
   m_Layer: 5
   m_Name: LeaderboardPanelUI
   m_TagString: Untagged
@@ -2506,6 +2551,30 @@ MonoBehaviour:
   CurrentUser: {fileID: 4505923739822460187}
   Item_PF: {fileID: 4220753126914529961, guid: 48b74b4d578994447ba2a317bdaf7a9f, type: 3}
   Parent: {fileID: 4326298166522362502}
+  PanelAnimator: {fileID: 26150956370940234}
+  BackButtonAnimator: {fileID: 512912296610705460}
+  PanelFadingAnimator: {fileID: 4892530269774530181}
+--- !u!95 &4892530269774530181
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6364827740714562292}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d4f7419081dfcc242b1f48e481356b3b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6686377552390590097
 GameObject:
   m_ObjectHideFlags: 0

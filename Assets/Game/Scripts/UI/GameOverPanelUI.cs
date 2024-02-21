@@ -16,13 +16,24 @@ public class GameOverPanelUI : MonoBehaviour
 
 	[SerializeField] TextMeshProUGUI word;
 	[SerializeField] TextMeshProUGUI definition;
+
+	[SerializeField] private Animator PanelAnimator;
+	[SerializeField] private Animator PanelFadingAnimator;
+	private List<string> panelExitAnimationCondition = new List<string>();
+
 	public static GameOverPanelUI Instance;
 
 	private void Awake()
 	{
 		Instance = this;
 	}
+    private void Start()
+    {
+		panelExitAnimationCondition.Add("IsLeftOut");
+		panelExitAnimationCondition.Add("IsRightOut");
+		panelExitAnimationCondition.Add("IsBottomOut");
 
+	}
 	public static GameOverPanelUI ShowUI()
 	{
 		if (Instance == null)
@@ -65,7 +76,15 @@ public class GameOverPanelUI : MonoBehaviour
     }
 	public void OnBackPressed()
 	{
+		StartCoroutine(waitAndDestroy());
+	}
+	IEnumerator waitAndDestroy()
+	{
+		PanelAnimator.SetBool(panelExitAnimationCondition[Random.Range(0, 3)], true);
+		PanelFadingAnimator.SetBool("IsOut", true);
+		yield return new WaitForSeconds(0.8f);
 		Destroy(gameObject);
+
 	}
 	public void CallToQuitGame()
 	{

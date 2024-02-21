@@ -7,12 +7,21 @@ using UnityEngine.SceneManagement;
 public class InvalidUserIdMessagePanelUI : MonoBehaviour
 {
 	public static InvalidUserIdMessagePanelUI Instance;
+	[SerializeField] private Animator PanelAnimator;
+	[SerializeField] private Animator PanelFadingAnimator;
+	private List<string> panelExitAnimationCondition = new List<string>();
 
 	private void Awake()
 	{
 		Instance = this;
 	}
+    private void Start()
+    {
+		panelExitAnimationCondition.Add("IsLeftOut");
+		panelExitAnimationCondition.Add("IsRightOut");
+		panelExitAnimationCondition.Add("IsBottomOut");
 
+	}
 	public static InvalidUserIdMessagePanelUI ShowUI()
 	{
 		if (Instance == null)
@@ -33,7 +42,15 @@ public class InvalidUserIdMessagePanelUI : MonoBehaviour
 	}
 	public void OnBackPressed()
 	{
+		StartCoroutine(waitAndDestroy());
+	}
+	IEnumerator waitAndDestroy()
+	{
+		PanelAnimator.SetBool(panelExitAnimationCondition[Random.Range(0, 3)], true);
+		PanelFadingAnimator.SetBool("IsOut", true);
+		yield return new WaitForSeconds(0.8f);
 		Destroy(gameObject);
+
 	}
 	public void QuitGame()
 	{

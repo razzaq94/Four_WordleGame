@@ -20,21 +20,37 @@ public class BoosterManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UpdateBoosterCountAndUI();
+    }
+    public void UpdateAllBoosterCount(int count)
+    {
+        if (GlobalData.Instance.RevealBoosterCount <= 0)
+        {
+            GlobalData.Instance.RevealBoosterCount += count;
+        }
+        if (GlobalData.Instance.EliminateBoosterCount <= 0)
+        {
+            GlobalData.Instance.EliminateBoosterCount += count;
+        }
+    }
+    public void UpdateBoosterCountAndUI()
+    {
+        UpdateAllBoosterCount(1);
         UIManager.Instance.UpdateRevealUI(GlobalData.Instance.RevealBoosterCount);
         UIManager.Instance.UpdateEliminateUI(GlobalData.Instance.EliminateBoosterCount);
-     //   UIManager.Instance.UpdateAutoColorUI(GlobalData.Instance.AutoColorBoosterCount);
+        //   UIManager.Instance.UpdateAutoColorUI(GlobalData.Instance.AutoColorBoosterCount);
 
 
         Boosters mybooster = new Boosters();
-        
+
         mybooster.id = GlobalData.Instance.RevealBoosterId;
         mybooster.count = GlobalData.Instance.RevealBoosterCount;
         GlobalData.Instance.boosters[0] = mybooster;
-        
+
         mybooster.id = GlobalData.Instance.AutoColorBoosterId;
         mybooster.count = GlobalData.Instance.AutoColorBoosterCount;
         GlobalData.Instance.boosters[1] = mybooster;
-        
+
         mybooster.id = GlobalData.Instance.EliminateBoosterId;
         mybooster.count = GlobalData.Instance.EliminateBoosterCount;
         GlobalData.Instance.boosters[2] = mybooster;
@@ -45,20 +61,15 @@ public class BoosterManager : MonoBehaviour
         mySavebooster.name = "Booster1";
         mySavebooster.count = GlobalData.Instance.RevealBoosterCount;
         GlobalData.Instance.saveBoosters[0] = mySavebooster;
-        
+
         mySavebooster.name = "Booster2";
         mySavebooster.count = GlobalData.Instance.AutoColorBoosterCount;
         GlobalData.Instance.saveBoosters[1] = mySavebooster;
-        
+
         mySavebooster.name = "Booster3";
         mySavebooster.count = GlobalData.Instance.EliminateBoosterCount;
         GlobalData.Instance.saveBoosters[2] = mySavebooster;
-
-
-
-
     }
-
     // Update is called once per frame
     void Update()
     {

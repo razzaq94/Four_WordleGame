@@ -4,13 +4,24 @@ using UnityEngine;
 
 public class ShopPanelUI : MonoBehaviour
 {
+	[SerializeField] private Animator PanelAnimator;
+	[SerializeField] private Animator BackButtonAnimator;
+	[SerializeField] private Animator PanelFadingAnimator;
+	private List<string> panelExitAnimationCondition = new List<string>();
+
 	public static ShopPanelUI Instance;
 
 	private void Awake()
 	{
 		Instance = this;
 	}
+	private void Start()
+	{
+		panelExitAnimationCondition.Add("IsLeftOut");
+		panelExitAnimationCondition.Add("IsRightOut");
+		panelExitAnimationCondition.Add("IsBottomOut");
 
+	}
 	public static ShopPanelUI ShowUI()
 	{
 		if (Instance == null)
@@ -31,7 +42,15 @@ public class ShopPanelUI : MonoBehaviour
 	}
 	public void OnBackPressed()
 	{
-		Destroy(gameObject);
+		StartCoroutine(waitAndDestroy());
 	}
+	IEnumerator waitAndDestroy()
+	{
+		PanelAnimator.SetBool(panelExitAnimationCondition[UnityEngine.Random.Range(0, 3)], true);
+		BackButtonAnimator.SetBool("IsOut", true);
+		PanelFadingAnimator.SetBool("IsOut", true);
+		yield return new WaitForSeconds(0.8f);
+		Destroy(gameObject);
 
+	}
 }

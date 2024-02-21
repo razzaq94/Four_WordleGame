@@ -9,7 +9,11 @@ public class LinkUserAccountPanelUI : MonoBehaviour
 {
 	[SerializeField] TextMeshProUGUI currentUserId;
 	[SerializeField] TextMeshProUGUI newUserId;
-	
+	[SerializeField] private Animator PanelAnimator;
+	[SerializeField] private Animator BackButtonAnimator;
+	[SerializeField] private Animator PanelFadingAnimator;
+	private List<string> panelExitAnimationCondition = new List<string>();
+
 	public static LinkUserAccountPanelUI Instance;
 
 	private void Awake()
@@ -19,9 +23,13 @@ public class LinkUserAccountPanelUI : MonoBehaviour
     private void Start()
     {
 		currentUserId.text = GlobalData.Instance.userId;
-    }
+		panelExitAnimationCondition.Add("IsLeftOut");
+		panelExitAnimationCondition.Add("IsRightOut");
+		panelExitAnimationCondition.Add("IsBottomOut");
 
-    public static LinkUserAccountPanelUI ShowUI()
+	}
+
+	public static LinkUserAccountPanelUI ShowUI()
 	{
 		if (Instance == null)
 		{
@@ -41,7 +49,15 @@ public class LinkUserAccountPanelUI : MonoBehaviour
 	}
 	public void OnBackPressed()
 	{
+	}
+	IEnumerator waitAndDestroy()
+	{
+		PanelAnimator.SetBool(panelExitAnimationCondition[UnityEngine.Random.Range(0, 3)], true);
+		BackButtonAnimator.SetBool("IsOut", true);
+		PanelFadingAnimator.SetBool("IsOut", true);
+		yield return new WaitForSeconds(0.8f);
 		Destroy(gameObject);
+
 	}
 	public void LinkUserAccount()
 	{

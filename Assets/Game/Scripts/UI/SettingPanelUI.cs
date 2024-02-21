@@ -7,14 +7,21 @@ public class SettingPanelUI : MonoBehaviour
 {
 	public static SettingPanelUI Instance;
 	[SerializeField] private TextMeshProUGUI UserIdUI;
-
+	[SerializeField] private Animator PanelAnimator;
+	[SerializeField] private Animator BackButtonAnimator;
+	[SerializeField] private Animator LogOutButtonAnimator;
+	[SerializeField] private Animator PanelFadingAnimator;
+	private List<string> panelExitAnimationCondition = new List<string>();
 	private void Awake()
 	{
 		Instance = this;
 	}
     private void Start()
     {
-		UserIdUI.text = " USER_ID:"+GlobalData.Instance.userId;
+		UserIdUI.text = "USER_ID:"+GlobalData.Instance.userId;
+		panelExitAnimationCondition.Add("IsLeftOut");
+		panelExitAnimationCondition.Add("IsRightOut");
+		panelExitAnimationCondition.Add("IsBottomOut");
 
 	}
     public static SettingPanelUI ShowUI()
@@ -51,7 +58,24 @@ public class SettingPanelUI : MonoBehaviour
     }
 	public void OnBackPressed()
 	{
-		Destroy(gameObject);
+		StartCoroutine(waitAndDestroy());
 	}
+	IEnumerator waitAndDestroy()
+    {
+		PanelAnimator.SetBool(panelExitAnimationCondition[Random.Range(0, 2)], true);
+		BackButtonAnimator.SetBool("IsOut", true);
+		LogOutButtonAnimator.SetBool("IsOut", true);
+		PanelFadingAnimator.SetBool("IsOut", true);
+		yield return new WaitForSeconds(0.8f);
+		Destroy(gameObject);
+
+    }
+
+	void PlayExitAnim()
+    {
+		//int num = Random.Range(0, 3);
+
+    }
+	
 	
 }

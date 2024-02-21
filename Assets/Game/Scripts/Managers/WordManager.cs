@@ -326,6 +326,7 @@ public class WordManager : MonoBehaviour
             }
             else
             {
+                WriteMiscellaneousWord(wordToCheck);
                 UIManager.Instance.ClearCurrentRow();
                 WarningPanelUI.ShowUI();
                 WarningPanelUI.Instance.CallToQuitPanelAutomatically();
@@ -406,7 +407,49 @@ public class WordManager : MonoBehaviour
 
 
       }
-      public static void WriteString(string fName)
+    public static void WriteMiscellaneousWord(string miscellaneousWord)
+    {
+
+        string path = Application.persistentDataPath + "/MiscellaneousWords.txt";
+       // string path = System.IO.Directory.GetCurrentDirectory() + "/MiscellaneousWord.txt";
+        print("Path : " + path);
+
+        if (!File.Exists(path))
+        {
+            using (StreamWriter sw = File.CreateText(path))
+            {
+                sw.Write((miscellaneousWord));
+                sw.Write('\n');
+                sw.Close();
+
+            }
+        }
+        else
+        {
+            StreamWriter sw = File.AppendText(path);
+            sw.Write((miscellaneousWord));
+            sw.Write('\n');
+            sw.Close();
+        }
+
+
+        /*   string path = Application.dataPath + "/MiscellaneousWord.txt";
+           print("Path : " + path);
+          // StreamWriter sw = new StreamWriter("D:\\MySourceWordList.txt", true, Encoding.ASCII);
+           StreamWriter sw = new StreamWriter(path, true, Encoding.ASCII);
+           if (!File.Exists(path))
+           {
+               File.WriteAllText(path, miscellaneousWord);
+               sw.Write('\n');
+           }
+           else
+           {
+               sw.Write((miscellaneousWord));
+               sw.Write('\n');
+           }
+           sw.Close(); */
+    }
+    public static void WriteString(string fName)
       {
           //StreamWriter sw = new StreamWriter("D:\\Dictionary.txt", true, Encoding.ASCII);
           StreamWriter sw = new StreamWriter("D:\\MySourceWordList.txt", true, Encoding.ASCII);

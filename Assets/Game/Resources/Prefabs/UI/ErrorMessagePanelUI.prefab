@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 3121405424420121164}
   - component: {fileID: 8958293172110146452}
   - component: {fileID: 7904568785732171550}
+  - component: {fileID: 7892389326802289313}
   m_Layer: 5
   m_Name: ErrorMessagePanelUI
   m_TagString: Untagged
@@ -224,6 +225,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d57bdde0f71bad645aa49f611ddb2f45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PanelAnimator: {fileID: 8624190338871147346}
+  PanelFadingAnimator: {fileID: 7892389326802289313}
+--- !u!95 &7892389326802289313
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 816713442138919807}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d4f7419081dfcc242b1f48e481356b3b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2234634388422554616
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,6 +393,7 @@ GameObject:
   - component: {fileID: 566006216825750733}
   - component: {fileID: 2443719188635666530}
   - component: {fileID: 5240429699425416061}
+  - component: {fileID: 8624190338871147346}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -436,6 +461,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &8624190338871147346
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4865172596926205903}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cdd7bbf322eff0045ab388e171b66cc3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5004298716360901493
 GameObject:
   m_ObjectHideFlags: 0

@@ -64,6 +64,7 @@ GameObject:
   - component: {fileID: 5513897497246775321}
   - component: {fileID: 7419274736743748887}
   - component: {fileID: 46105239824540549}
+  - component: {fileID: 5841680479863980158}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -184,6 +185,27 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!95 &5841680479863980158
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 156491480894326846}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1ff48b414c70b014f8e8ed096352e85e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4259530042512049353
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,6 +218,7 @@ GameObject:
   - component: {fileID: 4256350383984667896}
   - component: {fileID: 8060110931099069539}
   - component: {fileID: 3855535726005637172}
+  - component: {fileID: 6652644860769180863}
   m_Layer: 5
   m_Name: UpdateUserNamePanelUI
   m_TagString: Untagged
@@ -275,7 +298,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newUserName: {fileID: 3097012302698569405}
+  InputFieldText: {fileID: 4836755907900624281}
   lengthCheck: {fileID: 9072724267939596784}
+  PanelAnimator: {fileID: 7373553025146486714}
+  BackButtonAnimator: {fileID: 5841680479863980158}
+  PanelFadingAnimator: {fileID: 6652644860769180863}
+--- !u!95 &6652644860769180863
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4259530042512049353}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d4f7419081dfcc242b1f48e481356b3b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4513617629709614995
 GameObject:
   m_ObjectHideFlags: 0
@@ -1164,6 +1212,7 @@ GameObject:
   - component: {fileID: 2327889167608698842}
   - component: {fileID: 1623216842269514596}
   - component: {fileID: 9146173812029116831}
+  - component: {fileID: 7373553025146486714}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -1231,3 +1280,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &7373553025146486714
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8672305442938984811}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cdd7bbf322eff0045ab388e171b66cc3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

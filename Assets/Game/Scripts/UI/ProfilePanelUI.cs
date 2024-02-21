@@ -28,6 +28,10 @@ public class ProfilePanelUI : MonoBehaviour
 	[SerializeField] Sprite modeSelectionBgUnSelected;
 
 
+	[SerializeField] private Animator PanelAnimator;
+	[SerializeField] private Animator BackButtonAnimator;
+	[SerializeField] private Animator PanelFadingAnimator;
+	private List<string> panelExitAnimationCondition = new List<string>();
 
 
 
@@ -37,7 +41,12 @@ public class ProfilePanelUI : MonoBehaviour
 	{
 		Instance = this;
 	}
-
+    private void Start()
+    {
+		panelExitAnimationCondition.Add("IsLeftOut");
+		panelExitAnimationCondition.Add("IsRightOut");
+		panelExitAnimationCondition.Add("IsBottomOut");
+	}
 	public static ProfilePanelUI ShowUI()
 	{
 		if (Instance == null)
@@ -58,9 +67,17 @@ public class ProfilePanelUI : MonoBehaviour
 	}
 	public void OnBackPressed()
 	{
-		Destroy(gameObject);
+		StartCoroutine(waitAndDestroy());
 	}
+	IEnumerator waitAndDestroy()
+	{
+		PanelAnimator.SetBool(panelExitAnimationCondition[UnityEngine.Random.Range(0, 3)], true);
+		BackButtonAnimator.SetBool("IsOut", true);
+		PanelFadingAnimator.SetBool("IsOut", true);
+		yield return new WaitForSeconds(0.8f);
+		Destroy(gameObject);
 
+	}
 	public void SetProfileData()
     {
 		Name.text = GlobalData.Instance.UserName;
