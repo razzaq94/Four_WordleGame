@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopPanelUI : MonoBehaviour
 {
+	[SerializeField] Button PurchasePremiumButton;
 	[SerializeField] private Animator PanelAnimator;
 	[SerializeField] private Animator BackButtonAnimator;
 	[SerializeField] private Animator PanelFadingAnimator;
@@ -17,6 +19,10 @@ public class ShopPanelUI : MonoBehaviour
 	}
 	private void Start()
 	{
+		if(GlobalData.Instance.isPremium ==  true)
+        {
+			PurchasePremiumButton.interactable = false;
+        }
 		panelExitAnimationCondition.Add("IsLeftOut");
 		panelExitAnimationCondition.Add("IsRightOut");
 		panelExitAnimationCondition.Add("IsBottomOut");
@@ -24,8 +30,10 @@ public class ShopPanelUI : MonoBehaviour
 	}
 	public static ShopPanelUI ShowUI()
 	{
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
 		if (Instance == null)
 		{
+			SoundManager.instance.Play_PANEL_INSTANTIATE_Sound();
 			GameObject obj = Instantiate(Resources.Load("Prefabs/UI/ShopPanelUI")) as GameObject;
 			Canvas[] cans = GameObject.FindObjectsOfType<Canvas>() as Canvas[];
 			for (int i = 0; i < cans.Length; i++)
@@ -42,6 +50,8 @@ public class ShopPanelUI : MonoBehaviour
 	}
 	public void OnBackPressed()
 	{
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
+		SoundManager.instance.Play_PANEL_DESTROY_Sound();
 		StartCoroutine(waitAndDestroy());
 	}
 	IEnumerator waitAndDestroy()
@@ -53,4 +63,24 @@ public class ShopPanelUI : MonoBehaviour
 		Destroy(gameObject);
 
 	}
+
+	public void PurchaseEliminateBooster()
+    {
+	//	GlobalData.Instance.EliminateBoosterCount += 10;
+		GlobalData.Instance.UpdateBoosterCount("Eliminate", 5);
+
+	}
+	public void PurchaseRevealBooster()
+    {
+		//GlobalData.Instance.RevealBoosterCount += 5;
+		GlobalData.Instance.UpdateBoosterCount("Reveal", 10);
+
+	}
+	public void PurchasePremiumBooster()
+    {
+		GlobalData.Instance.isPremium = true;
+		PurchasePremiumButton.interactable = false;
+
+	}
+
 }

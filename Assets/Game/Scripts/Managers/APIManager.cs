@@ -275,6 +275,21 @@ public class APIManager : MonoBehaviour
         NetworkAPIManager.Instance.SaveGameData((isSolved),
                 (resposne) =>
                 {
+                   // AdsManager.instance.ShowInterstitialAd();
+
+                    if (isSolved)
+                    {
+                        SoundManager.instance.Play_VICTORY_COMPLETE_Sound();
+                        SoundManager.instance.Play_BUTTON_Vibrate();
+
+                    }
+                    else
+                    {
+                        SoundManager.instance.Play_LEVEL_FAILED_Sound();
+                        SoundManager.instance.Play_BUTTON_Vibrate();
+
+
+                    }
                     LoadingPanel.Instance.OnBackPressed();
                     JSONNode body = JSONNode.Parse(resposne);
                     if (Convert.ToBoolean(body["success"].Value) == true)

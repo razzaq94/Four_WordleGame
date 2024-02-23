@@ -659,7 +659,19 @@ MonoBehaviour:
   m_Value: 0.615
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8295609179022607610}
+        m_TargetAssemblyTypeName: SettingPanelUI, Assembly-CSharp
+        m_MethodName: OnChangeSFX
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2044343231655886304
 GameObject:
   m_ObjectHideFlags: 0
@@ -2044,10 +2056,22 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.615
+  m_Value: 0.52
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8295609179022607610}
+        m_TargetAssemblyTypeName: SettingPanelUI, Assembly-CSharp
+        m_MethodName: OnChangeMusic
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6320514559986853740
 GameObject:
   m_ObjectHideFlags: 0
@@ -2290,6 +2314,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f4ac724500aad24d916b2dbfce1bda1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MusicUI: {fileID: 5902652003209158121}
+  SFXUI: {fileID: 1641815842632891834}
+  VibrationUI: {fileID: 7951998800996339875}
   UserIdUI: {fileID: 7978189628811893917}
   PanelAnimator: {fileID: 3526179531633959334}
   BackButtonAnimator: {fileID: 684338495690699865}
@@ -2881,7 +2908,19 @@ MonoBehaviour:
   m_Value: 0.615
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8295609179022607610}
+        m_TargetAssemblyTypeName: SettingPanelUI, Assembly-CSharp
+        m_MethodName: OnChangeVibration
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8309915969084948748
 GameObject:
   m_ObjectHideFlags: 0

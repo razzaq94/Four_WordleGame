@@ -311,6 +311,7 @@ public class WordManager : MonoBehaviour
                 }
                 else
                 {
+                    SoundManager.instance.Play_VALID_WORD_Sound();
                     UIManager.Instance.CreateEmptyRow();
                     UIManager.Instance.CopyLetters();
                     UIManager.Instance.ClearCurrentRow();
@@ -326,6 +327,9 @@ public class WordManager : MonoBehaviour
             }
             else
             {
+                SoundManager.instance.Play_INVALID_WORD_Sound();
+                SoundManager.instance.Play_BUTTON_Vibrate();
+
                 WriteMiscellaneousWord(wordToCheck);
                 UIManager.Instance.ClearCurrentRow();
                 WarningPanelUI.ShowUI();

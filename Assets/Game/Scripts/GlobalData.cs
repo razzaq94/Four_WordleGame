@@ -47,7 +47,8 @@ public class GlobalData : MonoBehaviour
     public Boosters[] boosters = new Boosters[3];
     public SaveBoosters[] saveBoosters = new SaveBoosters[3];
 
-
+    public bool isRevealBoosterAdShown = false;
+    public bool isEliminateBoosterAdShown = false;
 
 
 

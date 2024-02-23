@@ -34,8 +34,10 @@ public class UpdateUserNamePanelUI : MonoBehaviour
     
 	public static UpdateUserNamePanelUI ShowUI()
 	{
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
 		if (Instance == null)
 		{
+			SoundManager.instance.Play_PANEL_INSTANTIATE_Sound();
 			GameObject obj = Instantiate(Resources.Load("Prefabs/UI/UpdateUserNamePanelUI")) as GameObject;
 			Canvas[] cans = GameObject.FindObjectsOfType<Canvas>() as Canvas[];
 			for (int i = 0; i < cans.Length; i++)
@@ -52,6 +54,8 @@ public class UpdateUserNamePanelUI : MonoBehaviour
 	}
 	public void OnBackPressed()
 	{
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
+		SoundManager.instance.Play_PANEL_DESTROY_Sound();
 		StartCoroutine(waitAndDestroy());
 	}
 	IEnumerator waitAndDestroy()
@@ -83,8 +87,9 @@ public class UpdateUserNamePanelUI : MonoBehaviour
 	}
 	public void UpdateUserName()
 	{
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
 		string name = newUserName.text.Trim();
-		int ind = 0;
+		//int ind = 0;
 		//start trim
 		bool isStartCopying = false;
 		for (int i = 0; i < name.Length; i++)

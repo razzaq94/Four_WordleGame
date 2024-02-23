@@ -78,6 +78,7 @@ public class BoosterManager : MonoBehaviour
 
     public void Reveal()
     {
+        SoundManager.instance.Play_BUTTON_CLICK_Sound();
         if (GlobalData.Instance.RevealBoosterCount > 0)
         {
 
@@ -111,6 +112,10 @@ public class BoosterManager : MonoBehaviour
         {
             print("Ads...");
             // Run Ad
+            AdsManager.instance.ShowRewardedVideoAd();
+            GlobalData.Instance.isRevealBoosterAdShown = true;
+            //Reward
+
         }
     }
     public List<string> getAlphabets()
@@ -127,6 +132,7 @@ public class BoosterManager : MonoBehaviour
     }
     public void Eliminate()
     {
+        SoundManager.instance.Play_BUTTON_CLICK_Sound();
         if (GlobalData.Instance.EliminateBoosterCount > 0)
         {
             List<string> alphabetList = getAlphabets();
@@ -166,6 +172,12 @@ public class BoosterManager : MonoBehaviour
         else
         {
             print("Ads...");
+            AdsManager.instance.ShowRewardedVideoAd();
+
+            //Reward
+            GlobalData.Instance.isEliminateBoosterAdShown = true;
+           
+
         }
     }
     public void AutoColor()

@@ -287,6 +287,8 @@ public class KeyboardManager : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     public void PressKey(string key) {
         if (IsInterectable)
         {
+            SoundManager.instance.Play_BUTTON_CLICK_Sound();
+
             // print("Key : " + key);
             if (key == "Enter")
             {

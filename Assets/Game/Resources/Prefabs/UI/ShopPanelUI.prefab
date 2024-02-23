@@ -983,6 +983,7 @@ GameObject:
   - component: {fileID: 8442005285594517974}
   - component: {fileID: 7133718683892074579}
   - component: {fileID: 1986702417355395426}
+  - component: {fileID: 1523315259492955475}
   m_Layer: 5
   m_Name: RemoveAdBgImage
   m_TagString: Untagged
@@ -1093,6 +1094,46 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1523315259492955475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1953298442556102393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b79b5624d944058bd39aad2b90fb275, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productId: RemoveAds
+  buttonType: 0
+  consumePurchase: 1
+  onTransactionsRestored:
+    m_PersistentCalls:
+      m_Calls: []
+  onPurchaseComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9173596402377708125}
+        m_TargetAssemblyTypeName: ShopPanelUI, Assembly-CSharp
+        m_MethodName: PurchasePremiumBooster
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onPurchaseFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  onProductFetched:
+    m_PersistentCalls:
+      m_Calls: []
+  button: {fileID: 1986702417355395426}
 --- !u!1 &2337342140077950380
 GameObject:
   m_ObjectHideFlags: 0
@@ -1185,6 +1226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e4a5885a9273834880eb127aeeb7b95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PurchasePremiumButton: {fileID: 1986702417355395426}
   PanelAnimator: {fileID: 5141539889352885954}
   BackButtonAnimator: {fileID: 4329915294009739907}
   PanelFadingAnimator: {fileID: 986001927621615188}
@@ -3209,6 +3251,7 @@ GameObject:
   - component: {fileID: 365798025235519612}
   - component: {fileID: 2775336619896931463}
   - component: {fileID: 614711128668290519}
+  - component: {fileID: 7681871097463219918}
   m_Layer: 5
   m_Name: RevealBoosterButton
   m_TagString: Untagged
@@ -3331,6 +3374,46 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7681871097463219918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5777132621003126612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b79b5624d944058bd39aad2b90fb275, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productId: RevealBooster
+  buttonType: 0
+  consumePurchase: 1
+  onTransactionsRestored:
+    m_PersistentCalls:
+      m_Calls: []
+  onPurchaseComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9173596402377708125}
+        m_TargetAssemblyTypeName: ShopPanelUI, Assembly-CSharp
+        m_MethodName: PurchaseRevealBooster
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onPurchaseFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  onProductFetched:
+    m_PersistentCalls:
+      m_Calls: []
+  button: {fileID: 614711128668290519}
 --- !u!1 &6032318190666350168
 GameObject:
   m_ObjectHideFlags: 0
@@ -4312,6 +4395,7 @@ GameObject:
   - component: {fileID: 5459871354459258387}
   - component: {fileID: 5363328795630348533}
   - component: {fileID: 8966467390049492077}
+  - component: {fileID: 2686725887224160140}
   m_Layer: 5
   m_Name: EliminateBoosterButton
   m_TagString: Untagged
@@ -4434,6 +4518,46 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2686725887224160140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8988123305650260793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b79b5624d944058bd39aad2b90fb275, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productId: EliminateBooster
+  buttonType: 0
+  consumePurchase: 1
+  onTransactionsRestored:
+    m_PersistentCalls:
+      m_Calls: []
+  onPurchaseComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9173596402377708125}
+        m_TargetAssemblyTypeName: ShopPanelUI, Assembly-CSharp
+        m_MethodName: PurchaseEliminateBooster
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onPurchaseFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  onProductFetched:
+    m_PersistentCalls:
+      m_Calls: []
+  button: {fileID: 8966467390049492077}
 --- !u!1 &8996534389291571340
 GameObject:
   m_ObjectHideFlags: 0

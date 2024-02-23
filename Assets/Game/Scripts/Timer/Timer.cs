@@ -10,6 +10,7 @@ public class Timer : MonoBehaviour
     [SerializeField] public float CurrentTime ;
     //   [SerializeField] private Image progressImage;
     private bool stopTimer = false;
+    private bool isRingTimer = false;
     public static Timer Instance;
     private void Awake()
     {
@@ -25,6 +26,11 @@ public class Timer : MonoBehaviour
             float seconds = Mathf.FloorToInt(CurrentTime % 60);
             timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
             //timerText.text = CurrentTime.ToString("00");
+            if(CurrentTime <=11f && isRingTimer ==false)
+            {
+                isRingTimer = true;
+                SoundManager.instance.Play_COUNT_DOWN_Sound();
+            }
 
         }
         else if (stopTimer == false)
@@ -45,6 +51,7 @@ public class Timer : MonoBehaviour
     {
 
         CurrentTime = MaxTime;
+        isRingTimer = false;
 
     }
     public void StopTimer(bool status)

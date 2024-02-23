@@ -25,8 +25,10 @@ public class TutorialPanelUI : MonoBehaviour
 	}
 	public static TutorialPanelUI ShowUI()
 	{
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
 		if (Instance == null)
 		{
+			SoundManager.instance.Play_PANEL_INSTANTIATE_Sound();
 			GameObject obj = Instantiate(Resources.Load("Prefabs/UI/TutorialPanelUI")) as GameObject;
 			Canvas[] cans = GameObject.FindObjectsOfType<Canvas>() as Canvas[];
 			for (int i = 0; i < cans.Length; i++)
@@ -43,6 +45,8 @@ public class TutorialPanelUI : MonoBehaviour
 	}
 	public void OnBackPressed()
 	{
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
+		SoundManager.instance.Play_PANEL_DESTROY_Sound();
 		StartCoroutine(waitAndDestroy());
 	}
 	IEnumerator waitAndDestroy()

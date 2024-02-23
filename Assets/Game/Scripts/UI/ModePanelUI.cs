@@ -25,8 +25,10 @@ public class ModePanelUI : MonoBehaviour
 
 	public static ModePanelUI ShowUI()
 	{
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
 		if (Instance == null)
 		{
+			SoundManager.instance.Play_PANEL_INSTANTIATE_Sound();
 			GameObject obj = Instantiate(Resources.Load("Prefabs/UI/ModePanelUI")) as GameObject;
 			Canvas[] cans = GameObject.FindObjectsOfType<Canvas>() as Canvas[];
 			for (int i = 0; i < cans.Length; i++)
@@ -43,6 +45,8 @@ public class ModePanelUI : MonoBehaviour
 	}
 	public void OnBackPressed()
 	{
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
+		SoundManager.instance.Play_PANEL_DESTROY_Sound();
 		StartCoroutine(waitAndDestroy());
 	}
 	IEnumerator waitAndDestroy()
@@ -56,6 +60,7 @@ public class ModePanelUI : MonoBehaviour
 	}
 	public void CallToSetGamemode(int gm)
 	{
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
 		GlobalData.Instance.SetGamemode(gm);
 		GlobalData.Instance.Loadlevel("Game");
 	}

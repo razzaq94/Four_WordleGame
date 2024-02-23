@@ -31,8 +31,10 @@ public class LinkUserAccountPanelUI : MonoBehaviour
 
 	public static LinkUserAccountPanelUI ShowUI()
 	{
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
 		if (Instance == null)
 		{
+			SoundManager.instance.Play_PANEL_INSTANTIATE_Sound();
 			GameObject obj = Instantiate(Resources.Load("Prefabs/UI/LinkUserAccountPanelUI")) as GameObject;
 			Canvas[] cans = GameObject.FindObjectsOfType<Canvas>() as Canvas[];
 			for (int i = 0; i < cans.Length; i++)
@@ -49,6 +51,9 @@ public class LinkUserAccountPanelUI : MonoBehaviour
 	}
 	public void OnBackPressed()
 	{
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
+		SoundManager.instance.Play_PANEL_DESTROY_Sound();
+		StartCoroutine(waitAndDestroy());
 	}
 	IEnumerator waitAndDestroy()
 	{
@@ -61,6 +66,7 @@ public class LinkUserAccountPanelUI : MonoBehaviour
 	}
 	public void LinkUserAccount()
 	{
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
 		GlobalData.Instance.IsRestart = true;
 		GlobalData.Instance.userId = newUserId.text;
 		Destroy(NetworkAPIManager.Instance.gameObject);
@@ -69,6 +75,7 @@ public class LinkUserAccountPanelUI : MonoBehaviour
 	}
 	public void CopyOldUserId()
     {
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
 		string oldUserID = currentUserId.text.ToString();
 		print("oldUserID length : " + oldUserID);
 		GUIUtility.systemCopyBuffer = oldUserID;  

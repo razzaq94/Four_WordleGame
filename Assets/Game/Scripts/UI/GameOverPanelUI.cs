@@ -36,8 +36,11 @@ public class GameOverPanelUI : MonoBehaviour
 	}
 	public static GameOverPanelUI ShowUI()
 	{
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
+
 		if (Instance == null)
 		{
+			SoundManager.instance.Play_PANEL_INSTANTIATE_Sound();
 			GameObject obj = Instantiate(Resources.Load("Prefabs/UI/GameOverPanelUI")) as GameObject;
 			Canvas[] cans = GameObject.FindObjectsOfType<Canvas>() as Canvas[];
 			for (int i = 0; i < cans.Length; i++)
@@ -76,6 +79,8 @@ public class GameOverPanelUI : MonoBehaviour
     }
 	public void OnBackPressed()
 	{
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
+		SoundManager.instance.Play_PANEL_DESTROY_Sound();
 		StartCoroutine(waitAndDestroy());
 	}
 	IEnumerator waitAndDestroy()
@@ -88,10 +93,14 @@ public class GameOverPanelUI : MonoBehaviour
 	}
 	public void CallToQuitGame()
 	{
+		AdsManager.instance.ShowInterstitialAd();
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
 		GameManager.Instance.BackToMainMenu();
 	}
 	public void CallToPlayAgainGame()
 	{
+		AdsManager.instance.ShowInterstitialAd();
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
 		GameManager.Instance.ReloadLevel();
 	}
 }

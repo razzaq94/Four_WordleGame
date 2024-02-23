@@ -29,6 +29,7 @@ public class MainPanelUI : MonoBehaviour
 	{
 		if (Instance == null)
 		{
+			SoundManager.instance.Play_PANEL_INSTANTIATE_Sound();
 			GameObject obj = Instantiate(Resources.Load("Prefabs/UI/MainPanelUI")) as GameObject;
 			Canvas[] cans = GameObject.FindObjectsOfType<Canvas>() as Canvas[];
 			for (int i = 0; i < cans.Length; i++)
@@ -45,6 +46,8 @@ public class MainPanelUI : MonoBehaviour
 	}
 	public void OnBackPressed()
 	{
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
+		SoundManager.instance.Play_PANEL_DESTROY_Sound();
 		Destroy(gameObject);
 	}
 
@@ -66,23 +69,28 @@ public class MainPanelUI : MonoBehaviour
 
 	public void OnClick_PlayButton()
 	{
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
 		ModePanelUI.ShowUI();
 
 	}
 	public void OnClick_SettingButton()
 	{
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
 		SettingPanelUI.ShowUI();
 	}
 	public void OnClick_ShopButton()
 	{
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
 		ShopPanelUI.ShowUI();
 	}
 	public void OnClick_LeaderboardButton()
 	{
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
 		APIManager.Instance.GetLeaderboardData();
 	}
 	public void OnClick_ProfileButton()
 	{
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
 		ProfilePanelUI.ShowUI();
 		ProfilePanelUI.Instance.SetProfileData();
 	}
