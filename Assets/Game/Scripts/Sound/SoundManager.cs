@@ -23,6 +23,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip levelFailed_Clip;
     [SerializeField] private AudioClip victory_Clip;
     [SerializeField] private AudioClip CountDown_Clip;
+    [SerializeField] private AudioClip ChangeColor_Clip;
 
     [SerializeField] private AudioClip smallEnemy_Clip;
     [SerializeField] private AudioClip playerHurt_Clip;
@@ -101,13 +102,27 @@ public class SoundManager : MonoBehaviour
 
         Vibration.Vibrate((int)vibrationIntensity);
 
+    }  public void Play_KEY_BUTTON_Vibrate()
+    {
+
+        //   print("Vibration Intensity : " + (int)vibrationIntensity + "   " + vibrationIntensity);
+        if (vibrationIntensity > 0)
+        {
+            Vibration.Vibrate(20 + (int)(vibrationIntensity / 10));
+        }
     }
+ 
 
 
 
     public void Play_BUTTON_CLICK_Sound()
     {
         asrc.PlayOneShot(buttonClick_Clip);
+
+    }
+    public void Play_BUTTON_CHANGE_COLOR_Sound()
+    {
+        asrc.PlayOneShot(ChangeColor_Clip);
 
     }
     public void Play_PANEL_INSTANTIATE_Sound()
@@ -234,7 +249,8 @@ public class SoundManager : MonoBehaviour
 
     public void OnClick_SETTINGS()
     {
-        Time.timeScale = 0f;
+       // Time.timeScale = 0f;
+        Time.timeScale = 1f;
     }
 
 

@@ -30,7 +30,8 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.UpdateInterectabilityBossterButtons(true);
         UIManager.Instance.UpdateInterectabilityBackButton(true);
         WordManager.Instance.revealList.Clear();
-        StartCoroutine(waitAndCallGetWordDefinition());
+        AdsManager.instance.GetBooster = false;
+    StartCoroutine(waitAndCallGetWordDefinition());
     }
     IEnumerator waitAndCallGetWordDefinition()
     {

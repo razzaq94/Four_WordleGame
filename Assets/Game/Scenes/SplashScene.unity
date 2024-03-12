@@ -1537,6 +1537,7 @@ MonoBehaviour:
   levelFailed_Clip: {fileID: 8300000, guid: 2979918bb278fb24a95b4b6e02743a9f, type: 3}
   victory_Clip: {fileID: 8300000, guid: d83bb75f02dcfa04481addfa73297733, type: 3}
   CountDown_Clip: {fileID: 8300000, guid: 5a0d6044610ed7a4dbd4e4a54d458922, type: 3}
+  ChangeColor_Clip: {fileID: 8300000, guid: 709c8a61649b3d041abf6280e1b6d8a8, type: 3}
   smallEnemy_Clip: {fileID: 0}
   playerHurt_Clip: {fileID: 0}
   monsterHurt_Clip: {fileID: 0}

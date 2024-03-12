@@ -6,7 +6,9 @@ using UnityEngine.Advertisements;
 public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityAdsLoadListener, IUnityAdsShowListener
 {
     public const string AdRemovedKey = "IsAdsRemoved";
-
+    DateTime adStartingTime ;
+    DateTime adFinishingTime ;
+    public bool GetBooster = false;
     public bool IsAdsEnabled
     {
         get => PlayerPrefs.GetInt(AdRemovedKey, 0) == 0;
@@ -57,6 +59,24 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnity
         _gameId = (Application.platform == RuntimePlatform.IPhonePlayer) ? _iOSGameId : _androidGameId;
         Advertisement.Initialize(_gameId, _testMode, this);
     }
+
+    private void OnApplicationFocus(bool focus)
+    {
+        LoadBannerAd();
+    }
+    void OnApplicationPause(bool isPaused)
+    {
+        if (isPaused)
+        {
+            Advertisement.Banner.Hide(true);
+
+        }
+        else
+        {
+            LoadBannerAd();
+        }
+    }
+
 
     public void OnInitializationComplete()
     {
@@ -191,6 +211,11 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnity
         }
 
         Debug.Log("Showing Ad: " + _adUnitId);
+        if (Timer.Instance != null && GetBooster==true )
+        {
+            Timer.Instance.StopTimer(true);
+            adStartingTime = System.DateTime.Now;
+        }
         Advertisement.Show(_adUnitId, this);
     }
 
@@ -244,6 +269,11 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnity
         }
 
         Debug.Log("Showing Ad: " + _adUnitId);
+        if (Timer.Instance != null && GetBooster == true)
+        {
+            Timer.Instance.StopTimer(true);
+            adStartingTime = System.DateTime.Now;
+        }
         Advertisement.Show(_adUnitId, this);
     }
 
@@ -299,7 +329,8 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnity
 
     public void OnUnityAdsShowStart(string adUnitId)
     {
-        Time.timeScale = 0;
+      //  Time.timeScale = 0;
+        Time.timeScale = 1;
     }
     public void OnUnityAdsShowClick(string adUnitId) { }
     public void OnUnityAdsShowComplete(string adUnitId, UnityAdsShowCompletionState showCompletionState)
@@ -307,6 +338,20 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnity
         if (showCompletionState == UnityAdsShowCompletionState.COMPLETED)
         {
             print("Ad is completed before..");
+            if (Timer.Instance != null && GetBooster == true)
+            {
+                adFinishingTime = System.DateTime.Now;
+                print(adFinishingTime + "  " + adStartingTime);
+                TimeSpan timeDiff = adFinishingTime - adStartingTime;
+                print(timeDiff);
+                print("Current time before " + Timer.Instance.CurrentTime);
+
+                Timer.Instance.CurrentTime -= (float)timeDiff.TotalSeconds;
+                print("Current time after" + Timer.Instance.CurrentTime);
+                timeDiff = TimeSpan.Zero;
+                Timer.Instance.StopTimer(false);
+                GetBooster = false;
+            }
             if (GlobalData.Instance.isRevealBoosterAdShown)
             {
                 GlobalData.Instance.isRevealBoosterAdShown = false;
@@ -324,7 +369,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnity
                 if (OnRewardedCallback != null)
                 {
                     print("Ad is completed..");
-                    OnRewardedCallback.Invoke();
+                      OnRewardedCallback.Invoke();
                    
                 }
             }

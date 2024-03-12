@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+//using System;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -84,40 +84,91 @@ public class BoosterManager : MonoBehaviour
 
             List<string> letterList = WordManager.Instance.getLetterList();
             List<string> OriginalLetterList = WordManager.Instance.getLetterList();
+            List<string> TempRevealLetterList = new List<string>();
+            for(int i =0; i < WordManager.Instance.revealList.Count; i++)
+            {
+                TempRevealLetterList.Add(WordManager.Instance.revealList[i].word);
+            }
             int length = letterList.Count;
+
+
             for (int i = 0; i < length; i++)
             {
                 int idx = UnityEngine.Random.Range(0, letterList.Count);
-                if (KeyboardManager.Instance.GetKeyColor(letterList[idx].ToString()) != WordManager.Instance.revealedColor)
+                string tempLetter = letterList[idx].ToString();
+                if (TempRevealLetterList.IndexOf(tempLetter) < 0)
                 {
                     KeyboardManager.Instance.ChangeKeyColor(letterList[idx].ToString(), WordManager.Instance.revealedColor);
                     UIManager.Instance.ChangeKeyColor(letterList[idx].ToString(), WordManager.Instance.revealedColor);
-                   // GlobalData.Instance.RevealBoosterCount--;
-                    GlobalData.Instance.UpdateBoosterCount("Reveal",-1);
+                    GlobalData.Instance.UpdateBoosterCount("Reveal", -1);
                     UIManager.Instance.UpdateRevealUI(GlobalData.Instance.RevealBoosterCount);
                     Reveal r = new Reveal();
                     r.word = letterList[idx].ToString();
-                    //r.index = idx;
                     r.index = OriginalLetterList.IndexOf(letterList[idx]);
                     WordManager.Instance.revealList.Add(r);
                     UIManager.Instance.ShowRevealLetterOnTopRow();
                     break;
                 }
-
-                letterList.Remove(letterList[idx]);
-
+                else
+                {
+                    letterList.Remove(letterList[idx]);
+                }
             }
         }
         else
         {
             print("Ads...");
             // Run Ad
+            AdsManager.instance.GetBooster = true;
             AdsManager.instance.ShowRewardedVideoAd();
+
             GlobalData.Instance.isRevealBoosterAdShown = true;
             //Reward
 
         }
     }
+    //public void Reveal()
+    //{
+    //    SoundManager.instance.Play_BUTTON_CLICK_Sound();
+    //    if (GlobalData.Instance.RevealBoosterCount > 0)
+    //    {
+
+    //        List<string> letterList = WordManager.Instance.getLetterList();
+    //        List<string> OriginalLetterList = WordManager.Instance.getLetterList();
+    //        int length = letterList.Count;
+    //        for (int i = 0; i < length; i++)
+    //        {
+    //            int idx = UnityEngine.Random.Range(0, letterList.Count);
+    //            if (KeyboardManager.Instance.GetKeyColor(letterList[idx].ToString()) != WordManager.Instance.revealedColor)
+    //            {
+    //                KeyboardManager.Instance.ChangeKeyColor(letterList[idx].ToString(), WordManager.Instance.revealedColor);
+    //                UIManager.Instance.ChangeKeyColor(letterList[idx].ToString(), WordManager.Instance.revealedColor);
+    //               // GlobalData.Instance.RevealBoosterCount--;
+    //                GlobalData.Instance.UpdateBoosterCount("Reveal",-1);
+    //                UIManager.Instance.UpdateRevealUI(GlobalData.Instance.RevealBoosterCount);
+    //                Reveal r = new Reveal();
+    //                r.word = letterList[idx].ToString();
+    //                //r.index = idx;
+    //                r.index = OriginalLetterList.IndexOf(letterList[idx]);
+    //                WordManager.Instance.revealList.Add(r);
+    //                UIManager.Instance.ShowRevealLetterOnTopRow();
+    //                break;
+    //            }
+
+    //            letterList.Remove(letterList[idx]);
+
+    //        }
+    //    }
+    //    else
+    //    {
+    //        print("Ads...");
+    //        // Run Ad
+    //        AdsManager.instance.ShowRewardedVideoAd();
+    //        GlobalData.Instance.isRevealBoosterAdShown = true;
+    //        //Reward
+
+    //    }
+    //}
     public List<string> getAlphabets()
     {
         char alp = 'A';
@@ -172,8 +223,8 @@ public class BoosterManager : MonoBehaviour
         else
         {
             print("Ads...");
+            AdsManager.instance.GetBooster = true;
             AdsManager.instance.ShowRewardedVideoAd();
-
             //Reward
             GlobalData.Instance.isEliminateBoosterAdShown = true;
            
@@ -194,7 +245,7 @@ public class BoosterManager : MonoBehaviour
         for (int i = rows.transform.childCount - 1; i > 0; i--)
         {
             color = WordManager.Instance.revealedColor;
-            int matchedLetterCount = Convert.ToInt32(rows.transform.GetChild(i).transform.GetChild((int)GlobalData.Instance.gameMode).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text.ToString());
+            int matchedLetterCount = System.Convert.ToInt32(rows.transform.GetChild(i).transform.GetChild((int)GlobalData.Instance.gameMode).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text.ToString());
             if (matchedLetterCount != 0)
             {
                 GameObject row = rows.transform.GetChild(i).gameObject;
@@ -230,7 +281,7 @@ public class BoosterManager : MonoBehaviour
         for (int i = rows.transform.childCount-1; i > 0 ; i--)
         {
             color = WordManager.Instance.concealedColor;
-            int matchedLetterCount = Convert.ToInt32(rows.transform.GetChild(i).transform.GetChild((int)GlobalData.Instance.gameMode).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text.ToString());
+            int matchedLetterCount = System.Convert.ToInt32(rows.transform.GetChild(i).transform.GetChild((int)GlobalData.Instance.gameMode).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text.ToString());
            // if (rows.transform.GetChild(i).transform.GetChild(4).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text == "0")
             if(matchedLetterCount == 0)
             {
@@ -285,7 +336,7 @@ public class BoosterManager : MonoBehaviour
         GameObject rows = UIManager.Instance.ContentHolder;
         int counterIndex = (int)GlobalData.Instance.gameMode;
         Color color = WordManager.Instance.concealedColor;
-        int matchedLetterCount = Convert.ToInt32(rows.transform.GetChild(1).transform.GetChild((int)GlobalData.Instance.gameMode).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text.ToString());
+        int matchedLetterCount = System.Convert.ToInt32(rows.transform.GetChild(1).transform.GetChild((int)GlobalData.Instance.gameMode).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text.ToString());
         // if (rows.transform.GetChild(1).transform.GetChild((int)GlobalData.Instance.gameMode).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text == "0")
         if (matchedLetterCount == 0)
         {

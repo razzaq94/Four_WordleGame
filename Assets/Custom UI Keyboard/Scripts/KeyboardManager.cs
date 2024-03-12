@@ -288,6 +288,7 @@ public class KeyboardManager : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         if (IsInterectable)
         {
             SoundManager.instance.Play_BUTTON_CLICK_Sound();
+            SoundManager.instance.Play_KEY_BUTTON_Vibrate();
 
             // print("Key : " + key);
             if (key == "Enter")

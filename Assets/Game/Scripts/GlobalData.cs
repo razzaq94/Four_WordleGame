@@ -68,6 +68,89 @@ public class GlobalData : MonoBehaviour
         }
 
     }
+    private void Update()
+    {
+        Time.timeScale = 1;
+        if (Application.platform == RuntimePlatform.Android)
+        { 
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+
+                Canvas[] cans = GameObject.FindObjectsOfType<Canvas>() as Canvas[];
+                for (int i = 0; i < cans.Length; i++)
+                {
+                    if (cans[i].gameObject.activeInHierarchy && cans[i].gameObject.tag.Equals("Canvas") && cans[i].transform.childCount > 0     )
+                    {
+                        GameObject g = cans[i].transform.GetChild(cans[i].transform.childCount - 1).gameObject;
+
+                        //if (!g.CompareTag("WarningPanelUI") && !g.CompareTag("QuitPanelUI") && !g.CompareTag("MainPanelUI") && !g.CompareTag("LoadingPanel") && !g.CompareTag("InvalidUserIdMessagePanelUI") && !g.CompareTag("GameOverPanelUI"))
+                        //{
+
+                            
+
+                        //    Destroy(g);
+                        //};
+
+                        if(g.CompareTag("ModePanelUI"))
+                        {
+                            g.GetComponent<ModePanelUI>().OnBackPressed();
+                        }
+                        else if(g.CompareTag("LinkUserAccountPanelUI"))
+                        {
+                            g.GetComponent<LinkUserAccountPanelUI>().OnBackPressed();
+
+                        } else if(g.CompareTag("LeaderboardPanelUI"))
+                        {
+                            g.GetComponent<LeaderboardPanelUI>().OnBackPressed();
+
+                        } 
+                        else if(g.CompareTag("ProfilePanelUI"))
+                        {
+                            g.GetComponent<ProfilePanelUI>().OnBackPressed();
+
+                        }
+                       else if(g.CompareTag("QuitPanelUI"))
+                        {
+                            g.GetComponent<QuitPanelUI>().OnBackPressed();
+
+                        }
+                       else if(g.CompareTag("SettingPanelUI"))
+                        {
+                            g.GetComponent<SettingPanelUI>().OnBackPressed();
+
+                        }
+                       else if(g.CompareTag("ShopPanelUI"))
+                        {
+                            g.GetComponent<ShopPanelUI>().OnBackPressed();
+
+                        }
+                       else if(g.CompareTag("TutorialPanelUI"))
+                        {
+                            g.GetComponent<TutorialPanelUI>().OnBackPressed();
+
+                        }
+                       else if(g.CompareTag("UpdateUserNamePanelUI"))
+                        {
+                            g.GetComponent<UpdateUserNamePanelUI>().OnBackPressed();
+
+                        } else if(g.CompareTag("TopPanel"))
+                        {
+                            UIManager.Instance.OpenQuitPanel();
+
+                        } 
+
+
+                        //       obj.transform.SetParent(cans[i].transform, false);
+                        break;
+                    }
+                }
+
+                // Handle the back button press here
+                Debug.Log("Back button pressed!");
+
+                // Add your own logic for handling the back button press, such as navigating back or showing a confirmation dialog
+            }
+    }   }
     public void SetGamemode(int gm)
     {
         if(gm == 1)
@@ -151,5 +234,9 @@ public class GlobalData : MonoBehaviour
           APIManager.Instance.UpdateUserData();
 
     }
+
+
+
+
 
 }

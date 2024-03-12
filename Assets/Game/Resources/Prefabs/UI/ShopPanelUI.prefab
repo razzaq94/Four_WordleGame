@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: $4.99
+  m_text: $0.99
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
   m_sharedMaterial: {fileID: 8419118694830641256, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
@@ -199,7 +199,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: $4.99
+  m_text: $0.99
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
   m_sharedMaterial: {fileID: 8419118694830641256, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
@@ -467,7 +467,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: $4.99
+  m_text: $0.99
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
   m_sharedMaterial: {fileID: 8419118694830641256, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
@@ -1149,7 +1149,7 @@ GameObject:
   - component: {fileID: 986001927621615188}
   m_Layer: 5
   m_Name: ShopPanelUI
-  m_TagString: Untagged
+  m_TagString: ShopPanelUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

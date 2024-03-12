@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 6652644860769180863}
   m_Layer: 5
   m_Name: UpdateUserNamePanelUI
-  m_TagString: Untagged
+  m_TagString: UpdateUserNamePanelUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

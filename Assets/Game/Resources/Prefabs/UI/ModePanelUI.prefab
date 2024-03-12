@@ -403,7 +403,7 @@ GameObject:
   - component: {fileID: 5347608296068820467}
   m_Layer: 5
   m_Name: ModePanelUI
-  m_TagString: Untagged
+  m_TagString: ModePanelUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

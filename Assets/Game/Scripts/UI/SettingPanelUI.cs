@@ -25,7 +25,7 @@ public class SettingPanelUI : MonoBehaviour
 	}
     private void Start()
     {
-		UserIdUI.text = "USER_ID:"+GlobalData.Instance.userId;
+		UserIdUI.text = GlobalData.Instance.userId;
 		panelExitAnimationCondition.Add("IsLeftOut");
 		panelExitAnimationCondition.Add("IsRightOut");
 		panelExitAnimationCondition.Add("IsBottomOut");

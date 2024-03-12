@@ -94,5 +94,10 @@ public class MainPanelUI : MonoBehaviour
 		ProfilePanelUI.ShowUI();
 		ProfilePanelUI.Instance.SetProfileData();
 	}
+	public void OnClick_TutorialButton()
+	{
+		SoundManager.instance.Play_BUTTON_CLICK_Sound();
+		TutorialPanelUI.ShowUI();
+	}
 
 }

@@ -6,6 +6,22 @@ TagManager:
   tags:
   - Standart
   - Canvas
+  - GameOverPanelUI
+  - InvalidUserIdMessagePanelUI
+  - LoadingPanel
+  - MainPanelUI
+  - QuitPanelUI
+  - WarningPanelUI
+  - ErrorMessagePanelUI
+  - LeaderboardPanelUI
+  - LinkUserAccountPanelUI
+  - ModePanelUI
+  - ProfilePanelUI
+  - SettingPanelUI
+  - ShopPanelUI
+  - TutorialPanelUI
+  - UpdateUserNamePanelUI
+  - TopPanel
   layers:
   - Default
   - TransparentFX

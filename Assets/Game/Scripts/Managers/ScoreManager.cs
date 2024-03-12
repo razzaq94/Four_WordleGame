@@ -28,7 +28,8 @@ public class ScoreManager : MonoBehaviour
         {
             int turnFactor = (numberOfTurns < 1) ? 1 : numberOfTurns;
             int timeFactor = (time < 30) ? 1 : time % 30;
-            currentGameScore = ((100 / turnFactor) + (100 / timeFactor)) * ((int)GlobalData.Instance.gameMode - 3);
+           // currentGameScore = ((100 / turnFactor) + (100 / timeFactor)) * (((int)GlobalData.Instance.gameMode - 3));
+            currentGameScore = ((100 / turnFactor) + (100 / timeFactor)) * (((int)GlobalData.Instance.gameMode))/5;
         }
         else
         {

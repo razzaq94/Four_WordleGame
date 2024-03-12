@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 7892389326802289313}
   m_Layer: 5
   m_Name: ErrorMessagePanelUI
-  m_TagString: Untagged
+  m_TagString: ErrorMessagePanelUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

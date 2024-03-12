@@ -141,7 +141,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 2. Each guess must be valid word. Hit the enter butto to submit.
+  m_text: 2. Ensure that every guess is a valid word, then press the enter button
+    to submit.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
   m_sharedMaterial: {fileID: 8419118694830641256, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
@@ -275,7 +276,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Double tab to turn background of letter to green.
+  m_text: Tap twice to change the letter's background to green.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
   m_sharedMaterial: {fileID: 8419118694830641256, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
@@ -1184,7 +1185,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1. Guess the WORD within time.
+  m_text: 1. Guess the game word within time. The word will have unique letters.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
   m_sharedMaterial: {fileID: 8419118694830641256, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
@@ -1318,7 +1319,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Single tab to turn background of letter to red.
+  m_text: Tap once to change the letter's background to red.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
   m_sharedMaterial: {fileID: 8419118694830641256, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
@@ -1902,8 +1903,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "4. Tab the letter to change the letter's background  color  to red or
-    green.\t "
+  m_text: 4. Tap on the letter to change its background color, choosing between red
+    or green.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
   m_sharedMaterial: {fileID: 8419118694830641256, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
@@ -2307,7 +2308,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 5. Use reveal booster to reveal one letter of actual word.
+  m_text: 5. Use the reveal booster to unveil a single letter of the actual word.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
   m_sharedMaterial: {fileID: 8419118694830641256, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
@@ -2666,7 +2667,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 6. Use eliminate booster to show five letters which are not part of actual
+  m_text: 6. Use eliminate booster to unveil five letters which are not part of actual
     word.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
@@ -2751,7 +2752,7 @@ GameObject:
   - component: {fileID: 9169770530472885240}
   m_Layer: 5
   m_Name: TutorialPanelUI
-  m_TagString: Untagged
+  m_TagString: TutorialPanelUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3128,7 +3129,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7399785762566668163}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -3216,8 +3217,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "3. After each guess, the number of matched letters are shown on the right
-    of each word.  \t"
+  m_text: 3. After every guess, the number of matching letters is indicated on the
+    right side of each word.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
   m_sharedMaterial: {fileID: 8419118694830641256, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
@@ -3917,7 +3918,7 @@ MonoBehaviour:
   m_Direction: 2
   m_Value: 1
   m_Size: 0.34246576
-  m_NumberOfSteps: 0
+  m_NumberOfSteps: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

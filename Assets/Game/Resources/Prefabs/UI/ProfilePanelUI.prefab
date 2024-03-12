@@ -2208,7 +2208,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GAMES YOU PLAYED
+  m_text: GAMES PLAYED
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
   m_sharedMaterial: {fileID: 8419118694830641256, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
@@ -2235,8 +2235,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 33.8
-  m_fontSizeBase: 33.8
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -14009,7 +14009,7 @@ GameObject:
   - component: {fileID: 8492110757112864410}
   m_Layer: 5
   m_Name: ProfilePanelUI
-  m_TagString: Untagged
+  m_TagString: ProfilePanelUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17875,8 +17875,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 41.35
-  m_fontSizeBase: 41.35
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -19367,7 +19367,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GAMES YOU WON
+  m_text: GAMES WON
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
   m_sharedMaterial: {fileID: 8419118694830641256, guid: bd406d656cd2fbe44bcd34e2a0c4d72e, type: 2}
@@ -19394,8 +19394,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 37.5
-  m_fontSizeBase: 37.5
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

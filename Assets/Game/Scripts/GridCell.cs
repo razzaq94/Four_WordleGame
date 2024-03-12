@@ -24,6 +24,7 @@ public class GridCell : MonoBehaviour
         if (CellText.text.ToString() != "" && BoosterManager.Instance.isAutoColor == false)
         {
             int ind = currentColorIndex % WordManager.Instance.colors.Count;
+            SoundManager.instance.Play_BUTTON_CHANGE_COLOR_Sound();
             switch (ind)
             {
                 case 0:

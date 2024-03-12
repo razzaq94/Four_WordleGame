@@ -356,7 +356,7 @@ GameObject:
   - component: {fileID: 1446340494162261096}
   m_Layer: 5
   m_Name: QuitPanelUI
-  m_TagString: Untagged
+  m_TagString: QuitPanelUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
