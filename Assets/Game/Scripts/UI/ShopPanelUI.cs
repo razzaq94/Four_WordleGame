@@ -67,7 +67,7 @@ public class ShopPanelUI : MonoBehaviour
 	public void PurchaseEliminateBooster()
     {
 	//	GlobalData.Instance.EliminateBoosterCount += 10;
-		GlobalData.Instance.UpdateBoosterCount("Eliminate", 5);
+		GlobalData.Instance.UpdateBoosterCount("Eliminate", 10);
 
 	}
 	public void PurchaseRevealBooster()
