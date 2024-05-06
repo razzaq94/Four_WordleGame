@@ -540,10 +540,10 @@ public class WordManager : MonoBehaviour
         string dictionarName = "Dictionary" + GlobalData.Instance.gameMode;
       //  string str = Resources.Load("WordList").ToString();     
         string str = Resources.Load(dictionarName).ToString();
-        print("dictionary : " + str);
+   //     print("dictionary : " + str);
        // string str = Resources.Load("Z").ToString();     
         string[] rowOfIndex = str.Split('\n');
-        print("length : " + rowOfIndex.Length);
+     //   print("length : " + rowOfIndex.Length);
         GlobalData.Instance.WordList.Clear();
         for (int i = 0; i < rowOfIndex.Length-1; i++)
         {
@@ -704,7 +704,7 @@ public class WordManager : MonoBehaviour
                 break;
             }
         }
-        print("Length from fun : " + length);
+      //  print("Length from fun : " + length);
         return length;
     }
     

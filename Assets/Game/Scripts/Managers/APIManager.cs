@@ -39,12 +39,12 @@ public class APIManager : MonoBehaviour
 
         if (GlobalData.Instance.IsRestart == false)
         {
-            print("111");
+        //    print("111");
             GlobalData.Instance.logInRequest.user_id = InGameStorage.Instance.GetUserId();
         }
         else
         {
-            print("222");
+          //  print("222");
             GlobalData.Instance.logInRequest.user_id = GlobalData.Instance.userId;
             if (GlobalData.Instance.logInRequest.user_id.Length >= 24)
             {
@@ -53,7 +53,7 @@ public class APIManager : MonoBehaviour
         }
         for(int i =0; i < GlobalData.Instance.logInRequest.user_id.Length; i++ )
         {
-            print(GlobalData.Instance.logInRequest.user_id[i]);
+            //print(GlobalData.Instance.logInRequest.user_id[i]);
         }
         GlobalData.Instance.logInRequest.username = InGameStorage.Instance.GetUserName().ToLower();
         
@@ -70,7 +70,7 @@ public class APIManager : MonoBehaviour
                      //   LogInManager.Instance.OpenGameScene();
                     }
                     JSONNode body = JSONNode.Parse(resposne);
-                    print("logIn Data ....  : " + body.ToString());
+              //      print("logIn Data ....  : " + body.ToString());
                     JSONArray boosters = body["user"]["boosters"].AsArray;
                     GlobalData.Instance.token = body["token"].Value;
                     GlobalData.Instance.userId = body["user"]["_id"].Value;
