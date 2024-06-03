@@ -62,7 +62,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnity
 
     private void OnApplicationFocus(bool focus)
     {
-        LoadBannerAd();
+            LoadBannerAd();
     }
     void OnApplicationPause(bool isPaused)
     {
@@ -73,6 +73,9 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnity
         }
         else
         {
+            //if (Advertisement.Banner.isLoaded) 
+            //    Advertisement.Banner.Hide(true);
+
             LoadBannerAd();
         }
     }
@@ -89,7 +92,10 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnity
         else
         {
         }
-            LoadBannerAd();
+        //if (Advertisement.Banner.isLoaded) 
+        //    Advertisement.Banner.Hide(true);
+
+        LoadBannerAd();
         LoadInterstitialAd();
         LoadRewardedVideoAd();
     }
@@ -105,11 +111,23 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnity
 
     public void LoadBannerAd()
     {
-        if (!Advertisement.isInitialized)
+        if (GlobalData.Instance.isPremium == false)
+        {
+            return;
+        }
+
+
+            if (!Advertisement.isInitialized)
             return;
 
         if (!IsAdsEnabled)
             return;
+
+        if (Advertisement.Banner.isLoaded)
+            Advertisement.Banner.Hide(true);
+
+        print("Is Banner Loaded  : " + Advertisement.Banner.isLoaded);
+
 
         Advertisement.Banner.SetPosition(_bannerPosition);
 
@@ -127,17 +145,21 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnity
     void OnBannerLoaded()
     {
         Debug.Log("Banner loaded");
-        //if (GlobalData.Instance.isPremium == false)
-        //{
+        if (GlobalData.Instance.isPremium == false)
+        {
             ShowBannerAd();
-        //}
+        }
     }
 
     void OnBannerError(string message)
     {
         Debug.Log($"Banner Error: {message}");
         // Optionally execute additional code, such as attempting to load another ad.
-        LoadBannerAd();
+        //if (Advertisement.Banner.isLoaded) 
+        //    Advertisement.Banner.Hide(true);
+
+      //  LoadBannerAd();
+        
     }
 
     public void ShowBannerAd()
@@ -178,6 +200,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnity
 
     public void LoadInterstitialAd()
     {
+
         if (!Advertisement.isInitialized)
             return;
 

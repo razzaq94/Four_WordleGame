@@ -80,6 +80,7 @@ public class APIManager : MonoBehaviour
                     GlobalData.Instance.level = Convert.ToInt32(body["user"]["level"].Value);
                     GlobalData.Instance.highestScore = Convert.ToInt32(body["user"]["highest_obtained_score"].Value);
                     GlobalData.Instance.isPremium = Convert.ToBoolean(body["user"]["isPremium"].Value);
+                    InGameStorage.Instance.SetPremiumStatus(GlobalData.Instance.isPremium);
                     GlobalData.Instance.totalScore = Convert.ToInt32(body["user"]["total_obtained_score"].Value);
                     GlobalData.Instance.totalGamesPlayed = Convert.ToInt32(body["total_games_played"].Value);
                     GlobalData.Instance.totalGamesWon = Convert.ToInt32(body["total_games_won"].Value);
@@ -249,23 +250,40 @@ public class APIManager : MonoBehaviour
                     if (type == UnityEngine.Networking.UnityWebRequest.Result.ConnectionError)
                     {
                         ErrorMessagePanelUI.ShowUI();
-                        //....... For testing only 
-                        //  GameManager.Instance.ResetGame();
-                        //..........
-
-                        //            string title = "Network Error";
-                        //         string definition = "No internet connection. Please try again.";
-                        //             ErrorPanelUI.ShowUI();
-                        //       ErrorPanelUI.instance.setText(title, definition);
                     }
                     else
                     {
-                        //     if (LoadingPanelUI.instance != null)
-                        //   {
-                        //     LoadingPanelUI.instance.OnBackPressed();
-                        //}
+                    }
+                });
+    }
+    public void UpdatePremiumStatus( )
+    {
+        LoadingPanel.ShowUI();
+        NetworkAPIManager.Instance.UpdatePremiumStatus(
+                (resposne) =>
+                {
+                    JSONNode body = JSONNode.Parse(resposne);
+                    if (Convert.ToBoolean(body["success"].Value) == true)
+                    {
+                       
+                        LoadingPanel.Instance.OnBackPressed();
+                    }
+                    else
+                    {
 
-                        //    UIManager.Instance.UpdatePlayerGhostUI(false, CharList, CharacterColorList);
+                    }
+                    print(body.ToString());
+                },
+                (error, type) =>
+                {
+                    LoadingPanel.Instance.OnBackPressed();
+
+                    if (type == UnityEngine.Networking.UnityWebRequest.Result.ConnectionError)
+                    {
+                        ErrorMessagePanelUI.ShowUI();
+                    }
+                    else
+                    {
                     }
                 });
     }

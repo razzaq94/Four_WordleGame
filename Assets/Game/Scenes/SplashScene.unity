@@ -1179,7 +1179,7 @@ MonoBehaviour:
   _iOSGameId: 5610418
   _testMode: 0
   _bannerID:
-    Android_ID: Banner_Android
+    Android_ID: Banner
     IOS_ID: Banner_iOS
   _interstitialID:
     Android_ID: Interstitial_Android
@@ -1406,6 +1406,67 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1001 &1383453452
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 908944328893990733, guid: a6b5d36e116804638969ac2a12c73958, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 908944328893990733, guid: a6b5d36e116804638969ac2a12c73958, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 908944328893990733, guid: a6b5d36e116804638969ac2a12c73958, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 908944328893990733, guid: a6b5d36e116804638969ac2a12c73958, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 908944328893990733, guid: a6b5d36e116804638969ac2a12c73958, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 908944328893990733, guid: a6b5d36e116804638969ac2a12c73958, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 908944328893990733, guid: a6b5d36e116804638969ac2a12c73958, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 908944328893990733, guid: a6b5d36e116804638969ac2a12c73958, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 908944328893990733, guid: a6b5d36e116804638969ac2a12c73958, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 908944328893990733, guid: a6b5d36e116804638969ac2a12c73958, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 908944328893990735, guid: a6b5d36e116804638969ac2a12c73958, type: 3}
+      propertyPath: m_Name
+      value: Screenshot For Publishing
+      objectReference: {fileID: 0}
+    - target: {fileID: 908944328893990735, guid: a6b5d36e116804638969ac2a12c73958, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a6b5d36e116804638969ac2a12c73958, type: 3}
 --- !u!1 &1522253426
 GameObject:
   m_ObjectHideFlags: 0
@@ -2092,3 +2153,4 @@ SceneRoots:
   - {fileID: 797261663}
   - {fileID: 868071813}
   - {fileID: 931315138}
+  - {fileID: 1383453452}

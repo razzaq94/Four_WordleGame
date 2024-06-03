@@ -65,4 +65,28 @@ public class InGameStorage : MonoBehaviour
     //    return PlayerPrefs.GetString("USERID", null);
         return PlayerPrefs.GetString("USERID", null);
     }
+    public void SetPremiumStatus(bool status)
+    {
+        if (status)
+        {
+            PlayerPrefs.SetInt("PREMIUM", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("PREMIUM", 0);
+        }
+
+    }
+    
+    public bool GetPremiumStatus()
+    {
+        if( PlayerPrefs.GetInt("PREMIUM",0) == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

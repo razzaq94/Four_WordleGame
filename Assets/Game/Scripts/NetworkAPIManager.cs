@@ -30,6 +30,10 @@ public class NetworkAPIManager : SingletonBehaviourGameObject<NetworkAPIManager>
     {
         new WebRequest(this, new { username = newuserName }, "https://playwordage.com/api/update-username", GlobalData.Instance.token , RequestMethod.POST, EncodeMethod.JSON, OnSuccess, OnFail);
     } 
+    public void UpdatePremiumStatus( Action<string> OnSuccess, Action<string, UnityWebRequest.Result> OnFail)
+    {
+        new WebRequest(this, new { isPremium = GlobalData.Instance.isPremium }, "", GlobalData.Instance.token , RequestMethod.POST, EncodeMethod.JSON, OnSuccess, OnFail);
+    } 
     public void SaveGameData(bool IsSolved, Action<string> OnSuccess, Action<string, UnityWebRequest.Result> OnFail)
     {
         string mode = null;

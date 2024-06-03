@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ShopPanelUI : MonoBehaviour
 {
+	[SerializeField] Button RestorePurchaseButton;
 	[SerializeField] Button PurchasePremiumButton;
+	[SerializeField] TextMeshProUGUI PurchasePremiumText;
 	[SerializeField] private Animator PanelAnimator;
 	[SerializeField] private Animator BackButtonAnimator;
 	[SerializeField] private Animator PanelFadingAnimator;
@@ -19,9 +22,13 @@ public class ShopPanelUI : MonoBehaviour
 	}
 	private void Start()
 	{
-		if(GlobalData.Instance.isPremium ==  true)
+		#if UNITY_ANDROID
+		RestorePurchaseButton.gameObject.SetActive(false);
+	    #endif
+        if (GlobalData.Instance.isPremium ==  true)
         {
 			PurchasePremiumButton.interactable = false;
+			PurchasePremiumText.text = "PURCHASED";
         }
 		panelExitAnimationCondition.Add("IsLeftOut");
 		panelExitAnimationCondition.Add("IsRightOut");
@@ -80,7 +87,12 @@ public class ShopPanelUI : MonoBehaviour
     {
 		GlobalData.Instance.isPremium = true;
 		PurchasePremiumButton.interactable = false;
+        PurchasePremiumText.text = "PURCHASED";
+		InGameStorage.Instance.SetPremiumStatus(true);
+		//APIManager.Instance.UpdatePremiumStatus();
 
-	}
+
+
+    }
 
 }

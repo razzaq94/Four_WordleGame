@@ -93,14 +93,20 @@ public class GameOverPanelUI : MonoBehaviour
 	}
 	public void CallToQuitGame()
 	{
-		AdsManager.instance.ShowInterstitialAd();
+		if (GlobalData.Instance.isPremium == false)
+		{
+			AdsManager.instance.ShowInterstitialAd();
+		} 
 		SoundManager.instance.Play_BUTTON_CLICK_Sound();
 		GameManager.Instance.BackToMainMenu();
 	}
 	public void CallToPlayAgainGame()
 	{
-		AdsManager.instance.ShowInterstitialAd();
-		SoundManager.instance.Play_BUTTON_CLICK_Sound();
+        if (GlobalData.Instance.isPremium == false)
+        {
+            AdsManager.instance.ShowInterstitialAd();
+        }
+        SoundManager.instance.Play_BUTTON_CLICK_Sound();
 		GameManager.Instance.ReloadLevel();
 	}
 }

@@ -68,6 +68,10 @@ public class GlobalData : MonoBehaviour
         }
 
     }
+    private void Start()
+    {
+        isPremium = InGameStorage.Instance.GetPremiumStatus();
+    }
     private void Update()
     {
         Time.timeScale = 1;
