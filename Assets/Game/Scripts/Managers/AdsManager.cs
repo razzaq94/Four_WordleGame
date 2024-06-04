@@ -111,10 +111,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnity
 
     public void LoadBannerAd()
     {
-        if (GlobalData.Instance.isPremium == false)
-        {
-            return;
-        }
+       
 
 
             if (!Advertisement.isInitialized)
@@ -158,7 +155,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnity
         //if (Advertisement.Banner.isLoaded) 
         //    Advertisement.Banner.Hide(true);
 
-      //  LoadBannerAd();
+       // LoadBannerAd();
         
     }
 

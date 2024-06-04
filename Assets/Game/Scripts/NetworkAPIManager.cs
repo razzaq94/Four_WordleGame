@@ -32,7 +32,7 @@ public class NetworkAPIManager : SingletonBehaviourGameObject<NetworkAPIManager>
     } 
     public void UpdatePremiumStatus( Action<string> OnSuccess, Action<string, UnityWebRequest.Result> OnFail)
     {
-        new WebRequest(this, new { isPremium = GlobalData.Instance.isPremium }, "", GlobalData.Instance.token , RequestMethod.POST, EncodeMethod.JSON, OnSuccess, OnFail);
+        new WebRequest(this, new { isPremium = true }, "https://playwordage.com/api/update-user-as-premium", GlobalData.Instance.token , RequestMethod.POST, EncodeMethod.JSON, OnSuccess, OnFail);
     } 
     public void SaveGameData(bool IsSolved, Action<string> OnSuccess, Action<string, UnityWebRequest.Result> OnFail)
     {

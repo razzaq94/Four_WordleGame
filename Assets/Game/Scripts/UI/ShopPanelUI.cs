@@ -24,7 +24,8 @@ public class ShopPanelUI : MonoBehaviour
 	{
 		#if UNITY_ANDROID
 		RestorePurchaseButton.gameObject.SetActive(false);
-	    #endif
+#endif
+		print("is premium : " + GlobalData.Instance.isPremium);
         if (GlobalData.Instance.isPremium ==  true)
         {
 			PurchasePremiumButton.interactable = false;
@@ -89,7 +90,8 @@ public class ShopPanelUI : MonoBehaviour
 		PurchasePremiumButton.interactable = false;
         PurchasePremiumText.text = "PURCHASED";
 		InGameStorage.Instance.SetPremiumStatus(true);
-		//APIManager.Instance.UpdatePremiumStatus();
+		APIManager.Instance.UpdatePremiumStatus();
+		AdsManager.instance.HideBannerAd();
 
 
 

@@ -81,9 +81,14 @@ public class APIManager : MonoBehaviour
                     GlobalData.Instance.highestScore = Convert.ToInt32(body["user"]["highest_obtained_score"].Value);
                     GlobalData.Instance.isPremium = Convert.ToBoolean(body["user"]["isPremium"].Value);
                     InGameStorage.Instance.SetPremiumStatus(GlobalData.Instance.isPremium);
+                    if(GlobalData.Instance.isPremium)
+                    {
+                        AdsManager.instance.HideBannerAd();
+                    }
                     GlobalData.Instance.totalScore = Convert.ToInt32(body["user"]["total_obtained_score"].Value);
                     GlobalData.Instance.totalGamesPlayed = Convert.ToInt32(body["total_games_played"].Value);
                     GlobalData.Instance.totalGamesWon = Convert.ToInt32(body["total_games_won"].Value);
+                    print(body);
                     for(int i= 0; i < boosters.Count;i++)
                     {
                        if(boosters[i]["name"].Value == "Booster1")
